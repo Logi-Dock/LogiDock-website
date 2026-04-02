@@ -1,10 +1,12 @@
 function calcular() {
-    // Valores usados na simulação
+    // Valores INPUTS
     const docas = 10; // Quantidade de docas em operação
     const caminhoesPorDoca = 5; // Média de caminhões atendidos por doca por dia
-    const percentualAtraso = 0.3; // 30% das operações geram atraso
-    const toneladas = 10; // Peso médio do caminhão em toneladas
+    const toneladas = 14; // Peso médio do caminhão em toneladas
+
+    // Valores MOCKADOS
     const horas = 3; // Horas excedidas na operação
+    const percentualAtraso = 0.3; // 30% das operações geram atraso
     const valor = 2.41; // Valor da estadia por tonelada/hora
 
     // Cálculo da quantidade total de operações e das ocorrências com atraso
