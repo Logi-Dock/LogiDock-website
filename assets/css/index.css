@@ -1,0 +1,60 @@
+.hero {
+    min-height: 85vh;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0 0 8%;
+    background: #105DDA;
+    background-image: url('/assets/images/globo_fundo.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.hero-content {
+    max-width: 750px;
+    color: #fff;
+}
+
+.hero-content h1 {
+    padding: 15% 0 0 0;
+    font-size: clamp(3rem, 5vw, 4rem);
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 1rem;
+    margin-bottom: 28px;
+    max-width: 380px;
+    font-weight: bold;
+}
+
+.hero-content button {
+    background: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 12px 28px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.hero-content button:hover {
+    background: #fff;
+    color: #105DDA;
+}
+
+.arrow-btn {
+    width: 7%;
+}
+
+.truck {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.truck img {
+    max-width: 100%;
+}
