@@ -58,3 +58,103 @@
 .truck img {
     max-width: 100%;
 }
+
+.cenario {
+    background-image: url("../images/bg_scenario.png");
+    background-size: cover;
+    width: 100%;
+    height: 1100px;
+    padding: 150px 250px 0;
+}
+
+.cenario-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 130px;
+}
+
+.cenario-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 55%;
+}
+
+.cenario-rotulo {
+    font-size: 30px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    color: #a8c4e0;
+}
+
+.cenario-titulo {
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+}
+
+.cenario-destaque {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+    border: 1.5px solid rgba(255, 255, 255, 0.45);
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 40px 70px;
+}
+
+.destaque-valor {
+    font-size: 80px;
+    font-weight: 800;
+    color: #fff;
+}
+
+.destaque-descricao {
+    font-size: 24px;
+    color: #a8c4e0;
+    max-width: 200px;
+    line-height: 1.4;
+}
+
+.cenario-estatisticas {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.estatistica {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 60px;
+}
+
+.estatistica-numero {
+    font-size: 64px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.estatistica-titulo {
+    font-size: 30px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.3;
+}
+
+.estatistica-descricao {
+    font-size: 28px;
+    color: #a8c4e0;
+    line-height: 1.6;
+}
+
+.separador {
+    width: 1px;
+    height: 400px;
+    background-color: rgba(255, 255, 255, 0.25);
+    margin-right: 90px;
+}
