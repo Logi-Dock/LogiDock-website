@@ -1,0 +1,236 @@
+/* reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+:root {
+    --preto: #000000;
+    --branco: #ffffff;
+    --azul-claro: #0056E0;
+    --azul-destaque: #09139D;
+    --azul-navbar: #0F172A;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+    width: 100%; /* quanto de largura o container ocupa da tela */
+    max-width: 1200px; /* não passa de 1200px */
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* estilo geral das seções */
+.secao {
+    padding: 80px 0; /* para separar visualmente cada seção */
+}
+
+/* títulos */
+h1, h2 {
+    font-weight: 700; /* bold */
+    line-height: 1.2; /* espaço entre linhas do título menor */
+    margin-bottom: 18px; /* espaço abaixo do título */
+}
+
+/* especificações dos títulos */
+h1 {
+    font-size:50px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 28px;
+}
+
+/* span azul dos títulos */
+h1 span, h2 span {
+    color: #0056E0;
+}
+
+/* parágrafo com o destaque visual azul */
+.destaque {
+    color: #09139D;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+/* para os parágrafos gerais */
+p {
+    font-size: 14px;
+    color: #000000;
+}
+
+p span {
+    color: #09139D;
+    font-weight: bold;
+}
+ /* Seção Missão */
+.secao-missao {
+    position: relative; /* posicionamento relativo a sua posição original (se torns um ponto de referencia para elementos filhos) */
+    padding: 120px 0 180px; /* ajuste de até onde o espaço dos caminhões vão ocupar: 120px em cima, 0 nas laterais e 180px embaixo */
+    overflow: hidden; /* esconde elementos filhos que ultrapassem a area de seção */
+}
+
+.bloco-texto-centro {
+    max-width: 560px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2; /* deixa o texto "Missão..." ficar na frente da arte */
+    text-align: center;
+}
+
+.imagem-caminhoes {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    max-width: 1920px;
+    height: 500px;
+    z-index: 1; /* fica atrás do texto (z-index: 2) */
+    pointer-events: none; /* impede que a camada interfira em cliques */
+}
+
+.imagem-caminhoes img {
+    position: absolute; /* posiciona a imagem livremente */
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%); /* centraliza a imagem horizontalmente */
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* camada de trás */
+.imagem-caminhoes img:nth-child(1) {
+    transform: translateX(-50%) translateY(20px); /* centraliza e move 20px para baixo. */
+}
+
+/* camada do meio */
+.imagem-caminhoes img:nth-child(2) {
+    transform: translateX(-50%) translateY(124px);
+}
+
+/* camada da frente/baixo */
+.imagem-caminhoes img:nth-child(3) {
+    transform: translateX(-50%) translateY(224px);
+}
+
+/* Seção Visão e Valores */
+.secao-visao, .secao-valores {
+    position: relative;
+    overflow: hidden;
+    padding: 40px 0 70px;
+}
+
+.bloco-duas-colunas {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 48px;
+    position: relative;
+    z-index: 2;
+}
+
+/* parte que vai inverter: primeiro a imagem e depois o texto */
+.invertido {
+    flex-direction: row;
+}
+
+.texto {
+    flex: 1;
+    max-width: 500px;
+}
+
+.imagem {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.imagem img {
+    width: 100%;
+    max-width: 500px;
+    display: block;
+    border-radius: 20px; /* arredonda os cantos da imagem */
+    object-fit: cover; /* faz a imagem preencher a área sem distorcer */
+    filter: drop-shadow(4px 4px 4px rgba(0,0,0,0.5)); /* adiciona sombra por trás da img */
+
+}
+
+/* ajustes específicos dos títulos */
+.secao-visao h2, .secao-valores h2 {
+    margin-bottom: 14px;
+}
+
+.secao-visao .destaque, .secao-valores .destaque {
+    font-size: 14px;
+    line-height: 1.4;
+    max-width: 320px;
+}
+
+.secao-visao p, .secao-valores p {
+    line-height: 1.5;
+    max-width: 330px;
+}
+
+/* lista */
+.lista-valores {
+    list-style: disc;
+    padding-left: 18px;
+    max-width: 360px;
+}
+
+.lista-valores li {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.lista-valores li span {
+    color: var(--azul-destaque);
+    font-weight: 700;
+}
+
+
+/* camada de fundo decorativa das duas últimas seções */
+.secao-visao, .secao-valores {
+    position: relative;
+    overflow: hidden;
+    padding: 40px 0 70px;
+}
+
+.secao-visao::before, .secao-valores::before {
+    content: ""; /* ::before só aparece se tiver content */
+    position: absolute;
+    inset: 0; /* a camada ocupa a seção inteira */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 1500px 1500px;
+    z-index: 1; /* isso coloca a arte atás do conteúdo */
+    pointer-events: none; /* impede que a camada atrapalhe na interação do usuário com o site */
+}
+
+/* imagem da linha da seção visão */
+.secao-visao::before {
+    background-image: url("../images/linha-azul1.png");
+    background-position: 50px -230px;
+    background-size: 1500px auto;
+}
+
+/* imagem da linha da seção valores */
+.secao-valores::before {
+    background-image: url("../images/linha-azul2.png");
+    background-position: 50px -20px;
+    background-size: 1500px auto;
+}
