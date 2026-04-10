@@ -4,7 +4,7 @@
     justify-content: space-between;
     padding: 0 0 0 8%;
     background: #105DDA;
-    background-image: url('/assets/images/globo_fundo.svg');
+    background-image: url('../images/globo_fundo.svg');
     background-repeat: no-repeat;
     background-position: center;
 }
