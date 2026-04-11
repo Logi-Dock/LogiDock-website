@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pré desenvolvimento</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/assets/css/dashboard.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+
+<body>
+    <header>
+        <a href="/index.html"><img src="/assets/images/logidock_logov2.png" alt="Logo da LogiDock" class="logo"></a>
+        <h1>PAINEL LOGÍSTICO</h1>
+    </header>
+        
+    <div class="kpi">
+        <div class="kpi-item">
+            <h1 id="kpi-title">Tempo médio por Doca</h1>
+            <div class="kpi-item-content">
+                <img src="/assets/icons/icone_relogio.png" alt="Relógio">
+                <h1 id="ipt_TempoMediaDocas"></h1>
+            </div>
+        </div>
+
+        <div class="kpi-item">
+            <h1 id="kpi-title">Docas que tiveram ocorrência</h1>
+            <div class="kpi-item-content">
+                <img src="/assets/icons/icone_alarme.png" alt="Alarme">
+                <h1>8</h1>
+            </div>
+        </div>
+
+        <div class="kpi-item">
+            <h1 id="kpi-title">Operações fora do prazo</h1>
+            <div class="kpi-item-content">
+                <img src="/assets/icons/icone_caminhao.png" alt="Caminhão">
+                <h1>3%</h1>
+            </div>
+        </div>
+
+        <div class="kpi-item">
+            <h1 id="kpi-title">Operações dentro do prazo</h1>
+            <div class="kpi-item-content">
+                <img src="/assets/icons/icone_verificado.png" alt="Verificado">
+                <h1>93%</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="container_charts">
+        <div class="top-left">
+            <canvas id="ipt_GraficoBarrasLinhas"></canvas>
+        </div>
+
+        <div class="top-right">
+            <canvas id="grafico_1"></canvas>
+        </div>
+
+        <div class="bottom">
+            <canvas id="ipt_GraficoDeGantt"></canvas>
+        </div>
+    </div>
+</body>
+
+<script>
+    // Aqui eu declaro as variaveis do canvas
+    const GraficoBarrasLinhas = document.getElementById('ipt_GraficoBarrasLinhas');
+    const GraficoDeGantt = document.getElementById('ipt_GraficoDeGantt');
+
+    // Simulando registro dos sensores do banco de dados
+    const RegistroDeSensores = [
+        { Nome: 'Doca 1', HorarioEntrada: '2026-04-04T07:00:00', HorarioSaida: '2026-04-04T08:30:00' },
+        { Nome: 'Doca 2', HorarioEntrada: '2026-04-04T07:15:00', HorarioSaida: '2026-04-04T09:00:00' },
+        { Nome: 'Doca 3', HorarioEntrada: '2026-04-04T07:45:00', HorarioSaida: '2026-04-04T10:15:00' },
+        { Nome: 'Doca 4', HorarioEntrada: '2026-04-04T08:00:00', HorarioSaida: '2026-04-04T11:00:00' },
+        { Nome: 'Doca 5', HorarioEntrada: '2026-04-04T08:30:00', HorarioSaida: '2026-04-04T10:00:00' },
+        { Nome: 'Doca 6', HorarioEntrada: '2026-04-04T09:00:00', HorarioSaida: '2026-04-04T12:00:00' },
+        { Nome: 'Doca 7', HorarioEntrada: '2026-04-04T15:20:00', HorarioSaida: '2026-04-04T20:45:00' },
+        { Nome: 'Doca 8', HorarioEntrada: '2026-04-04T07:00:00', HorarioSaida: '2026-04-04T13:00:00' },
+        { Nome: 'Doca 1', HorarioEntrada: '2026-04-04T09:30:00', HorarioSaida: '2026-04-04T18:30:00' },
+        { Nome: 'Doca 2', HorarioEntrada: '2026-04-04T10:15:00', HorarioSaida: '2026-04-04T12:45:00' },
+        { Nome: 'Doca 3', HorarioEntrada: '2026-04-04T11:00:00', HorarioSaida: '2026-04-04T14:00:00' },
+        { Nome: 'Doca 4', HorarioEntrada: '2026-04-04T12:15:00', HorarioSaida: '2026-04-04T15:30:00' },
+        { Nome: 'Doca 5', HorarioEntrada: '2026-04-04T11:00:00', HorarioSaida: '2026-04-04T13:45:00' },
+        { Nome: 'Doca 6', HorarioEntrada: '2026-04-04T13:00:00', HorarioSaida: '2026-04-04T16:00:00' },
+        { Nome: 'Doca 7', HorarioEntrada: '2026-04-04T12:30:00', HorarioSaida: '2026-04-04T14:45:00' },
+        { Nome: 'Doca 8', HorarioEntrada: '2026-04-04T14:15:00', HorarioSaida: '2026-04-04T19:30:00' }
+    ]
+
+    // Função de reutilização para calcular o tempo de permanencia com base nos dados
+    function TempoPermanencia(Entrada, Saida) {
+
+        // Aqui transforma a data e hora que estavam em texto, em um formato de Data para calculo
+        let CalEntrada = new Date(Entrada);
+        let CalSaida = new Date(Saida);
+
+
+
+        // Aqui é um calculo que pega a diferença das datas (Vai dar em milissegundos)
+        // então é transformado em horas
+        let resultado = (CalSaida - CalEntrada) / (1000 * 60 * 60);
+        console.log(resultado)
+        return resultado
+    }
+
+    // Aqui ele retorna um objeto que contem o total de tempo que tem em cada doca e a contagem de registros de cada,
+    // para então posteriormente calcular a média, que é melhor para ler quantidades massivas de dados
+    const TratamentoDocas = RegistroDeSensores.reduce(function (ObjetoVazio, item) {
+        const tempo = TempoPermanencia(item.HorarioEntrada, item.HorarioSaida);
+
+        if (!ObjetoVazio[item.Nome]) {
+            ObjetoVazio[item.Nome] = { totalTempo: 0, contagem: 0 };
+        }
+
+        ObjetoVazio[item.Nome].totalTempo += tempo;
+        ObjetoVazio[item.Nome].contagem += 1;
+
+        return ObjetoVazio;
+    }, {});
+
+
+
+    // Object.key faz o objeto virar um array para ser lido pelo chart
+    const DadosPrimeiroGrafico = Object.keys(TratamentoDocas).map(function (nome) {
+        return {
+            Nome: nome,
+            TempoMedio: (TratamentoDocas[nome].totalTempo / TratamentoDocas[nome].contagem).toFixed(2)
+        };
+    });
+
+    // Aqui eu faço um array apenas contendo apenas os dados
+    // das docas que a média está dentro do prazo
+    const LinhasDadosAzuis = DadosPrimeiroGrafico
+        .map(function (row) {
+            return row.TempoMedio < 5 ? row.TempoMedio : null;
+        });
+
+    // Aqui eu faço um array apenas contendo apenas os dados
+    // das docas que a média está fora do prazo
+    const LinhasDadosVermelhos = DadosPrimeiroGrafico
+        .map(function (row) {
+            return row.TempoMedio >= 5 ? row.TempoMedio : null;
+        });
+
+
+    new Chart(GraficoBarrasLinhas, {
+        type: 'bar',
+        data: {
+            labels: DadosPrimeiroGrafico.map(row => row.Nome),
+            datasets: [
+
+                {
+                    label: 'Dentro do prazo',
+                    data: LinhasDadosAzuis,
+                    backgroundColor: 'blue',
+                    borderColor: 'black',
+
+                },
+                {
+                    label: 'Fora do prazo',
+                    data: LinhasDadosVermelhos,
+                    backgroundColor: 'red',
+                    borderColor: 'black',
+                },
+                {
+                    type: 'line',
+                    label: 'Limite Invisivel',
+                    data: DadosPrimeiroGrafico.map(() => 5),
+                    borderColor: 'black',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    fill: false,
+                    borderDash: [5, 5],
+                    order: 1,
+                    stepped: true
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Horas'
+                    },
+                    stacked: true
+                },
+                x: {
+                    offset: true,
+                    stacked: true
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'TEMPO MÉDIO POR DOCA',
+                    color: 'black',
+                    font: {
+                        size: 32
+                    }
+                },
+                legend: {
+                    labels: {
+                        filter: (item) => item.text !== 'Limite Invisivel'
+                    }
+                }
+            }
+        }
+    });
+
+
+    // Função que converte horas para decimal para moldar o eixo X do gráfico de gantt
+    function converterParaHoraDecimal(DadosHoras) {
+        const data = new Date(DadosHoras);
+
+        return data.getHours() + (data.getMinutes() / 60);
+    }
+
+
+    // Aqui eu crio os objetivos
+    // Eu guardo o nome para exibir na coluna vertical
+    // E no eixo x eu guardo os horario em decimal para apontar o começo e o fim deles no gráfico
+    const dadosGanttSemAdaptador = RegistroDeSensores.map(function (item) {
+        return {
+            y: item.Nome,
+            x: [
+                converterParaHoraDecimal(item.HorarioEntrada),
+                converterParaHoraDecimal(item.HorarioSaida)
+            ]
+        };
+    });
+
+    // Eu separo as operações das docas que estão dentro do prazo
+    // Onde eu filtro primeiro as que estão abaixo de 5 horas e depois guardo em um objeto
+    const GanttDadosAzuis = dadosGanttSemAdaptador
+        .filter(function (row) {
+            return (row.x[1] - row.x[0]) <= 5
+        })
+        .map(function (row) {
+            return ({ x: row.x, y: row.y });
+        });
+
+    // Eu separo as operações das docas que estão fora do prazo
+    // Onde eu filtro primeiro as que estão abaixo de 5 horas e depois guardo em um objeto
+    const GanttDadosVermelhos = dadosGanttSemAdaptador
+        .filter(function (row) {
+            return (row.x[1] - row.x[0]) > 5
+        })
+        .map(function (row) {
+            return ({ x: row.x, y: row.y });
+        });
+
+    new Chart(GraficoDeGantt, {
+        type: 'bar',
+        data: {
+            datasets: [{
+                label: 'Dentro do Prazo',
+                data: GanttDadosAzuis,
+                backgroundColor: 'blue',
+                borderColor: 'black',
+                borderWidth: 1,
+                // base: 0,
+                categoryPercentage: 1.0, // Faz as barras ocuparem toda a altura da linha
+                barPercentage: 0.8,
+                xAxisID: 'x',
+                yAxisID: 'y',
+                borderSkipped: false
+            },
+            {
+                label: 'Atrasado',
+                data: GanttDadosVermelhos,
+                backgroundColor: 'red',
+                borderColor: 'black',
+                borderWidth: 1,
+                categoryPercentage: 1.0,
+                barPercentage: 0.8,
+                xAxisID: 'x',
+                yAxisID: 'y',
+                borderSkipped: false
+            }]
+        },
+        options: {
+            indexAxis: 'y',  // Transforma em barras horizontais
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'VISÃO DETALHADA - TEMPO DE PERMANÊNCIA POR DOCA',
+                    color: 'black',
+                    font: {
+                        size: 32
+                    }
+                },
+            },
+            scales: {
+                x: {
+                    min: 0,
+                    max: 24,
+                    ticks: {
+                        stepSize: 1,
+                        callback: (value) => value + ":00" // Coloca o ":00" no visual
+                    },
+                },
+                y: {
+                    stacked: true
+                }
+            }
+        }
+    })
+
+
+    new Chart('grafico_1', {
+        type: 'pie',
+
+        data:
+        {
+            labels: ['Dentro do prazo', 'Fora do prazo'],
+
+            datasets:
+                [
+                    {
+                        data: [80, 20],
+                        borderWidth: 1
+                    }
+                ]
+        },
+
+        options:
+        {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'STATUS DAS OPERAÇÕES',
+                    color: 'black',
+                    font: {
+                        size: 32
+                    }
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+
+    // Aqui eu faço uma função para mostrar no indicador qual a média de tempo por doca
+    // Onde eu pego a soma da duracao de cada operacao e divido pelas quantidade de operacoes que teve
+    let TotalHorasOperacoes = 0;
+    let contador = 0;
+    const IndicadorTratamentoDocas = RegistroDeSensores.reduce((ObjetoVazio, item) => {
+        const duracao = TempoPermanencia(item.HorarioEntrada, item.HorarioSaida);
+
+        TotalHorasOperacoes += duracao;
+        contador++;
+
+    }, {});
+
+    let mediaGeral = (TotalHorasOperacoes / contador).toFixed(2);
+    let hora = parseInt(mediaGeral);
+    let minutos = Math.round((mediaGeral - hora) * 60);
+
+    ipt_TempoMediaDocas.innerHTML = `${hora}h ${minutos}min`;
+</script>
+
+</html>
