@@ -2,15 +2,8 @@ header {
     background-color: #fff;
     display: flex;
     align-items: center;
-    padding: 2% 0% 2% 8%;
-}
-
-.header-container {
-    width: min(1200px, 90%);
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    padding: 2% 0% 2% 0%;
 }
 
 .logo {
@@ -18,9 +11,8 @@ header {
 }
 
 .nav-list {
-    list-style: none;
     display: flex;
-    gap: 130px;
+    gap: 80px;
 }
 
 .nav-list a {
@@ -31,4 +23,20 @@ header {
 
 .nav-list a:hover {
     color: #105DDA;
+}
+
+.nav-botao{
+    display: flex;
+    gap: 20px;
+}
+
+.nav-botao button {
+    background-color: #105DDA;
+    color: #fff;
+    border: none;
+    padding: 6%;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 1rem;
+    letter-spacing: 1.2px;
 }
