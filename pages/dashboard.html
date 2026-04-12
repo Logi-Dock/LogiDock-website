@@ -26,18 +26,18 @@
         </div>
 
         <div class="kpi-item">
-            <h1 id="kpi-title">Docas que tiveram ocorrência</h1>
+            <h1 id="kpi-title">Taxa de docas que tiveram ocorrência</h1>
             <div class="kpi-item-content">
-                <img src="/assets/icons/icone_alarme.png" alt="Alarme">
-                <h1>8</h1>
+                <img src="/assets/icons/icone_caminhao.png" alt="Caminhão">
+                <h1 id="ipt_DocasQueTiveramOcorrencia"></h1>
             </div>
         </div>
 
         <div class="kpi-item">
-            <h1 id="kpi-title">Operações fora do prazo</h1>
+            <h1 id="kpi-title">Total de ocorrências</h1>
             <div class="kpi-item-content">
-                <img src="/assets/icons/icone_caminhao.png" alt="Caminhão">
-                <h1>3%</h1>
+                <img src="/assets/icons/icone_alarme.png" alt="Alarme">
+                <h1 id="ipt_TotalOcorrencias"></h1>
             </div>
         </div>
 
@@ -45,7 +45,7 @@
             <h1 id="kpi-title">Operações dentro do prazo</h1>
             <div class="kpi-item-content">
                 <img src="/assets/icons/icone_verificado.png" alt="Verificado">
-                <h1>93%</h1>
+                <h1 id="ipt_TaxaDeOperacoesDentroDoPrazo"></h1>
             </div>
         </div>
     </div>
@@ -56,7 +56,7 @@
         </div>
 
         <div class="top-right">
-            <canvas id="grafico_1"></canvas>
+            <canvas id="ipt_GraficoPizza"></canvas>
         </div>
 
         <div class="bottom">
@@ -69,6 +69,7 @@
     // Aqui eu declaro as variaveis do canvas
     const GraficoBarrasLinhas = document.getElementById('ipt_GraficoBarrasLinhas');
     const GraficoDeGantt = document.getElementById('ipt_GraficoDeGantt');
+    const GraficoDePizza = document.getElementById('ipt_GraficoPizza');
 
     // Simulando registro dos sensores do banco de dados
     const RegistroDeSensores = [
@@ -102,7 +103,6 @@
         // Aqui é um calculo que pega a diferença das datas (Vai dar em milissegundos)
         // então é transformado em horas
         let resultado = (CalSaida - CalEntrada) / (1000 * 60 * 60);
-        console.log(resultado)
         return resultado
     }
 
@@ -238,7 +238,7 @@
 
     // Eu separo as operações das docas que estão dentro do prazo
     // Onde eu filtro primeiro as que estão abaixo de 5 horas e depois guardo em um objeto
-    const GanttDadosAzuis = dadosGanttSemAdaptador
+    const OperacoesDentroDoTempo = dadosGanttSemAdaptador
         .filter(function (row) {
             return (row.x[1] - row.x[0]) <= 5
         })
@@ -248,7 +248,7 @@
 
     // Eu separo as operações das docas que estão fora do prazo
     // Onde eu filtro primeiro as que estão abaixo de 5 horas e depois guardo em um objeto
-    const GanttDadosVermelhos = dadosGanttSemAdaptador
+    const OperacoesForaDoTempo = dadosGanttSemAdaptador
         .filter(function (row) {
             return (row.x[1] - row.x[0]) > 5
         })
@@ -261,11 +261,10 @@
         data: {
             datasets: [{
                 label: 'Dentro do Prazo',
-                data: GanttDadosAzuis,
+                data: OperacoesDentroDoTempo,
                 backgroundColor: 'blue',
                 borderColor: 'black',
                 borderWidth: 1,
-                // base: 0,
                 categoryPercentage: 1.0, // Faz as barras ocuparem toda a altura da linha
                 barPercentage: 0.8,
                 xAxisID: 'x',
@@ -274,7 +273,7 @@
             },
             {
                 label: 'Atrasado',
-                data: GanttDadosVermelhos,
+                data: OperacoesForaDoTempo,
                 backgroundColor: 'red',
                 borderColor: 'black',
                 borderWidth: 1,
@@ -315,10 +314,8 @@
         }
     })
 
-
-    new Chart('grafico_1', {
+    new Chart(GraficoDePizza, {
         type: 'pie',
-
         data:
         {
             labels: ['Dentro do prazo', 'Fora do prazo'],
@@ -326,7 +323,7 @@
             datasets:
                 [
                     {
-                        data: [80, 20],
+                        data: [OperacoesDentroDoTempo.length, OperacoesForaDoTempo.length],
                         borderWidth: 1
                     }
                 ]
@@ -370,6 +367,31 @@
     let minutos = Math.round((mediaGeral - hora) * 60);
 
     ipt_TempoMediaDocas.innerHTML = `${hora}h ${minutos}min`;
-</script>
 
+
+    // Verificando quantas docas tiveram ocorrencias
+const TaxaDocasOcorrencias = dadosGanttSemAdaptador
+    // Filtrando todas as operação que tiveram duração maior que 5 horas
+    .filter(row => (row.x[1] - row.x[0]) > 5)
+    // Filtrando para aparecer apenas 1 doca caso ela tenha duas ou mais ocorrencias
+    .filter((row, posicao, arrayCompleto) => 
+        posicao === arrayCompleto.findIndex((r) => r.y === row.y)
+    ).length / Object.keys(TratamentoDocas).length * (100) 
+
+    if (TaxaDocasOcorrencias > 40) {
+            ipt_DocasQueTiveramOcorrencia.innerHTML = `<span style='color: red;'>${TaxaDocasOcorrencias.toFixed(2)}%</span>`;
+    } else {
+        ipt_DocasQueTiveramOcorrencia.innerHTML = `${TaxaDocasOcorrencias.toFixed(2)}%`;
+    }
+
+
+const TotalDeOcorrencias = dadosGanttSemAdaptador
+    .filter(row => (row.x[1] - row.x[0]) > 5).length;
+    
+    ipt_TotalOcorrencias.innerHTML = `${TotalDeOcorrencias}`
+
+const IndicadorOperacoesDentroDoPrazo = dadosGanttSemAdaptador.length - TotalDeOcorrencias;
+
+    ipt_TaxaDeOperacoesDentroDoPrazo.innerHTML = `${IndicadorOperacoesDentroDoPrazo}`
+</script>
 </html>
