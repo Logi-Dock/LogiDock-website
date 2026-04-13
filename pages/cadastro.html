@@ -11,14 +11,14 @@
         <a href="../index.html"><img src="../assets/images/logo.png" alt="" id="logo"></a>
     </div>
     <div class="container">
-        <p id="titulo">CADASTRO</p>
+        <span id="titulo">CADASTRO</span>
         <div class="campo">
             <img src="../assets/icons/icone_usuario.png" alt="" class="icone">
             <input type="text" id="ipt_usuario" placeholder="USUÁRIO">
         </div>
         <div class="campo">
             <img src="../assets/icons/icone_email.png" alt="" class="icone" id="email">
-            <input type="text" id="ipt_usuario" placeholder="EMAIL">
+            <input type="text" id="ipt_email" placeholder="EMAIL">
         </div>
         <div class="campo">
             <img src="../assets/icons/icone_senha.png" alt="" class="icone">
@@ -27,9 +27,34 @@
         </div>
         <div class="campo">
             <img src="../assets/icons/icone_cnpj.png" alt="" class="icone">
-            <input type="text" id="ipt_usuario" placeholder="CNPJ">
+            <input type="text" id="ipt_cnpj" placeholder="CNPJ">
         </div>
-        <button onclick="entrar()">ENTRAR</button>
+        <button onclick="cadastrar()">CADASTRAR</button>
     </div>
 </body>
+<script>
+    let usuarios = [];
+
+    function cadastrar() {
+        let usuario = ipt_usuario.value.trim();
+        let email = ipt_email.value.trim();
+        let senha = ipt_senha.value;
+        let cnpj = ipt_cnpj.value.trim();
+
+        if (!usuario || !email || !senha || !cnpj) {
+            alert("Preencha todos os campos.");
+        } else if (!email.includes("@") || !email.includes(".")) {
+            alert("E-mail inválido.");
+        } else if (senha.length < 6) {
+            alert("A senha deve ter no mínimo 6 caracteres.");
+        } else if (cnpj.length != 14) {
+           alert("CNPJ deve ter 14 dígitos. Exemplo de formato: 12345678901234");
+        } else{
+            usuarios.push({ usuario: usuario, email: email, senha: senha, cnpj: cnpj });
+            console.log(usuarios[usuarios.length-1])
+            alert("Cadastro realizado!");
+            window.location.href = "login.html";
+        }
+    }
+</script>
 </html>
