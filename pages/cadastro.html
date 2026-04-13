@@ -23,7 +23,7 @@
         <div class="campo">
             <img src="../assets/icons/icone_senha.png" alt="" class="icone">
             <input type="password" id="ipt_senha" placeholder="SENHA">
-            <img src="../assets/icons/icone_olho.png" alt="" class="icone" id="olho">
+            <button onclick="visualizar_senha()" class="botao_visualizar_senha"><img src="../assets/icons/icone_olho.png" alt="" class="icone" id="olho"></button>
         </div>
         <div class="campo">
             <img src="../assets/icons/icone_cnpj.png" alt="" class="icone">
@@ -54,6 +54,18 @@
             console.log(usuarios[usuarios.length-1])
             alert("Cadastro realizado!");
             window.location.href = "login.html";
+        }
+    }
+
+    let senha_visivel = false
+    function visualizar_senha(){
+
+        if(!senha_visivel){
+            ipt_senha.type = "text";
+            senha_visivel = true;
+        } else if (senha_visivel){
+            ipt_senha.type = "password"
+            senha_visivel = false;
         }
     }
 </script>

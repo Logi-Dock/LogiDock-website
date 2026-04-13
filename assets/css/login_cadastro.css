@@ -14,6 +14,7 @@ body{
 
 a {
     text-decoration: none;
+    color: #ffffff;
 }
 
 #logo{
@@ -92,6 +93,13 @@ button{
     font-weight: 500;
     margin-bottom: 20px;
     cursor: pointer;
+}
+
+.botao_visualizar_senha{
+    background-color: transparent;
+    width: 25px;
+    height: 20px;
+    margin-top: 15px;
 }
 
 #esqueci_senha{
