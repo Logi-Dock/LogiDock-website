@@ -95,6 +95,16 @@ button{
     cursor: pointer;
 }
 
+.ButtonCadastroLogin {
+    transition: 0.5s;
+}
+
+.ButtonCadastroLogin:hover {
+    color: white;
+    background-color: #3B82F6;
+    border: 1px solid white;
+}
+
 .botao_visualizar_senha{
     background-color: transparent;
     width: 25px;
