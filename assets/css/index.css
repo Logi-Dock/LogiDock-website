@@ -119,7 +119,7 @@
     background-position: center;
     width: 100%;
     height: auto;
-    padding: 150px;
+    padding: 50px 150px 50px 150px;
 }
 
 .cenario-topo {
@@ -137,14 +137,14 @@
 }
 
 .cenario-rotulo {
-    font-size: 30px;
+    font-size: 20px;
     font-weight: 500;
     letter-spacing: 1.5px;
     color: #a8c4e0;
 }
 
 .cenario-titulo {
-    font-size: 64px;
+    font-size: 44px;
     font-weight: 700;
     line-height: 1.2;
     color: #fff;
@@ -163,7 +163,7 @@
 }
 
 .destaque-valor {
-    font-size: 80px;
+    font-size: 60px;
     font-weight: 800;
     color: #fff;
 }
@@ -189,7 +189,7 @@
 }
 
 .estatistica-numero {
-    font-size: 64px;
+    font-size: 44px;
     font-weight: 700;
     color: #fff;
 }
