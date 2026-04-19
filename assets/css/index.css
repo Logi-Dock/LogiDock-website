@@ -45,6 +45,10 @@
     color: #105DDA;
 }
 
+.hero-content button:hover .arrow-btn{
+    filter: brightness(0) saturate(100%) invert(26%) sepia(89%) saturate(5758%) hue-rotate(213deg) brightness(93%) contrast(92%);
+}
+
 .arrow-btn {
     width: 7%;
 }
@@ -404,4 +408,8 @@
     justify-self: center;
     color: rgb(255, 255, 255, 0.75);
     font-size: 9px;
+}
+
+.conteudo-rodape:hover {
+    text-decoration: underline;
 }
