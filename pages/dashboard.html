@@ -15,7 +15,7 @@
         <a href="../index.html"><img src="../assets/images/logidock_logov2.png" alt="Logo da LogiDock" class="logo"></a>
         <h1>PAINEL LOGÍSTICO</h1>
     </header>
-        
+
     <div class="kpi">
         <div class="kpi-item">
             <h1 id="kpi-title">Tempo médio por Doca</h1>
@@ -87,7 +87,7 @@
         { Nome: 'Doca 4', HorarioEntrada: '2026-04-04T12:15:00', HorarioSaida: '2026-04-04T15:30:00' },
         { Nome: 'Doca 5', HorarioEntrada: '2026-04-04T11:00:00', HorarioSaida: '2026-04-04T13:45:00' },
         { Nome: 'Doca 6', HorarioEntrada: '2026-04-04T13:00:00', HorarioSaida: '2026-04-04T16:00:00' },
-        { Nome: 'Doca 7', HorarioEntrada: '2026-04-04T12:30:00', HorarioSaida: '2026-04-04T14:45:00' },
+        { Nome: 'Doca 7', HorarioEntrada: '2026-04-04T11:00:00', HorarioSaida: '2026-04-04T14:45:00' },
         { Nome: 'Doca 8', HorarioEntrada: '2026-04-04T14:15:00', HorarioSaida: '2026-04-04T19:30:00' }
     ]
 
@@ -121,8 +121,6 @@
         return ObjetoVazio;
     }, {});
 
-
-
     // Object.key faz o objeto virar um array para ser lido pelo chart
     const DadosPrimeiroGrafico = Object.keys(TratamentoDocas).map(function (nome) {
         return {
@@ -131,11 +129,16 @@
         };
     });
 
+    // Ordenar por tempo médio (decrescente)
+    DadosPrimeiroGrafico.sort(function (a, b) {
+        return b.TempoMedio - a.TempoMedio;
+    });
+
     // Aqui eu faço um array apenas contendo apenas os dados
     // das docas que a média está dentro do prazo
     const LinhasDadosAzuis = DadosPrimeiroGrafico
         .map(function (row) {
-            return row.TempoMedio < 5 ? row.TempoMedio : null;
+            return row.TempoMedio < 4.5 ? row.TempoMedio : null;
         });
 
     // Aqui eu faço um array apenas contendo apenas os dados
@@ -145,6 +148,10 @@
             return row.TempoMedio >= 5 ? row.TempoMedio : null;
         });
 
+    const LinhasDadosLaranjas = DadosPrimeiroGrafico
+        .map(function (row) {
+            return row.TempoMedio >= 4.5 && row.TempoMedio < 5 ? row.TempoMedio : null;
+        });
 
     new Chart(GraficoBarrasLinhas, {
         type: 'bar',
@@ -166,16 +173,21 @@
                     borderColor: 'black',
                 },
                 {
+                    label: 'Quase fora do prazo',
+                    data: LinhasDadosLaranjas,
+                    backgroundColor: 'orange',
+                    borderColor: 'black',
+                },
+                {
                     type: 'line',
                     label: 'Limite Invisivel',
                     data: DadosPrimeiroGrafico.map(() => 5),
-                    borderColor: 'black',
+                    borderColor: 'red',
                     borderWidth: 2,
                     pointRadius: 0,
                     fill: false,
                     borderDash: [5, 5],
                     order: 1,
-                    stepped: true
                 }
             ]
         },
@@ -214,7 +226,6 @@
         }
     });
 
-
     // Função que converte horas para decimal para moldar o eixo X do gráfico de gantt
     function converterParaHoraDecimal(DadosHoras) {
         const data = new Date(DadosHoras);
@@ -222,67 +233,50 @@
         return data.getHours() + (data.getMinutes() / 60);
     }
 
-
     // Aqui eu crio os objetivos
     // Eu guardo o nome para exibir na coluna vertical
     // E no eixo x eu guardo os horario em decimal para apontar o começo e o fim deles no gráfico
     const dadosGanttSemAdaptador = RegistroDeSensores.map(function (item) {
+        const inicio = converterParaHoraDecimal(item.HorarioEntrada);
+        const fim = converterParaHoraDecimal(item.HorarioSaida);
+
+        const duracao = fim - inicio;
+
         return {
             y: item.Nome,
-            x: [
-                converterParaHoraDecimal(item.HorarioEntrada),
-                converterParaHoraDecimal(item.HorarioSaida)
-            ]
+            x: [inicio, fim],
+            duracao: duracao
         };
     });
 
-    // Eu separo as operações das docas que estão dentro do prazo
-    // Onde eu filtro primeiro as que estão abaixo de 5 horas e depois guardo em um objeto
-    const OperacoesDentroDoTempo = dadosGanttSemAdaptador
-        .filter(function (row) {
-            return (row.x[1] - row.x[0]) <= 5
-        })
-        .map(function (row) {
-            return ({ x: row.x, y: row.y });
-        });
+    // Aqui eu crio dois arrays, um para as operações que ficaram fora do tempo e outro para as que ficaram dentro do tempo
+    const foraDoTempo = dadosGanttSemAdaptador.filter(item => item.duracao >= 5);
+    const dentroDoTempo = dadosGanttSemAdaptador.filter(item => item.duracao < 4.5);
 
-    // Eu separo as operações das docas que estão fora do prazo
-    // Onde eu filtro primeiro as que estão abaixo de 5 horas e depois guardo em um objeto
-    const OperacoesForaDoTempo = dadosGanttSemAdaptador
-        .filter(function (row) {
-            return (row.x[1] - row.x[0]) > 5
-        })
-        .map(function (row) {
-            return ({ x: row.x, y: row.y });
-        });
+    // Aqui eu ordeno os dois arrays para que as operações que ficaram mais tempo fora do prazo fiquem no topo do gráfico, para dar mais destaque
+    foraDoTempo.sort((a, b) => b.duracao - a.duracao);
+    dentroDoTempo.sort((a, b) => b.duracao - a.duracao);
 
     new Chart(GraficoDeGantt, {
         type: 'bar',
         data: {
-            datasets: [{
-                label: 'Dentro do Prazo',
-                data: OperacoesDentroDoTempo,
-                backgroundColor: 'blue',
-                borderColor: 'black',
-                borderWidth: 1,
-                categoryPercentage: 1.0, // Faz as barras ocuparem toda a altura da linha
-                barPercentage: 0.8,
-                xAxisID: 'x',
-                yAxisID: 'y',
-                borderSkipped: false
-            },
-            {
-                label: 'Atrasado',
-                data: OperacoesForaDoTempo,
-                backgroundColor: 'red',
-                borderColor: 'black',
-                borderWidth: 1,
-                categoryPercentage: 1.0,
-                barPercentage: 0.8,
-                xAxisID: 'x',
-                yAxisID: 'y',
-                borderSkipped: false
-            }]
+            datasets: [
+                {
+                    label: 'Fora do Prazo',
+                    data: foraDoTempo,
+                    backgroundColor: 'red',
+                    borderColor: 'black',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Dentro do Prazo',
+                    data: dentroDoTempo,
+                    backgroundColor: 'blue',
+                    borderColor: 'black',
+                    borderWidth: 1
+                }
+
+            ]
         },
         options: {
             indexAxis: 'y',  // Transforma em barras horizontais
@@ -314,17 +308,22 @@
         }
     })
 
+    const PizzaDadosAzuis = LinhasDadosAzuis.filter(item => item !== null);
+    const PizzaDadosLaranjas = LinhasDadosLaranjas.filter(item => item !== null);
+    const PizzaDadosVermelhos = LinhasDadosVermelhos.filter(item => item !== null);
+
     new Chart(GraficoDePizza, {
         type: 'pie',
         data:
         {
-            labels: ['Dentro do prazo', 'Fora do prazo'],
+            labels: ['Dentro do prazo', 'Quase fora do prazo', 'Fora do prazo'],
 
             datasets:
                 [
                     {
-                        data: [OperacoesDentroDoTempo.length, OperacoesForaDoTempo.length],
-                        borderWidth: 1
+                        data: [PizzaDadosAzuis.length, PizzaDadosLaranjas.length, PizzaDadosVermelhos.length],
+                        borderWidth: 1,
+                        backgroundColor: ['blue', 'orange', 'red'],
                     }
                 ]
         },
@@ -349,7 +348,6 @@
         }
     });
 
-
     // Aqui eu faço uma função para mostrar no indicador qual a média de tempo por doca
     // Onde eu pego a soma da duracao de cada operacao e divido pelas quantidade de operacoes que teve
     let TotalHorasOperacoes = 0;
@@ -370,28 +368,30 @@
 
 
     // Verificando quantas docas tiveram ocorrencias
-const TaxaDocasOcorrencias = dadosGanttSemAdaptador
-    // Filtrando todas as operação que tiveram duração maior que 5 horas
-    .filter(row => (row.x[1] - row.x[0]) > 5)
-    // Filtrando para aparecer apenas 1 doca caso ela tenha duas ou mais ocorrencias
-    .filter((row, posicao, arrayCompleto) => 
-        posicao === arrayCompleto.findIndex((r) => r.y === row.y)
-    ).length / Object.keys(TratamentoDocas).length * (100) 
+    const TaxaDocasOcorrencias = dadosGanttSemAdaptador
+        // Filtrando todas as operação que tiveram duração maior que 5 horas
+        .filter(row => (row.x[1] - row.x[0]) > 5)
+        // Filtrando para aparecer apenas 1 doca caso ela tenha duas ou mais ocorrencias
+        .filter((row, posicao, arrayCompleto) =>
+            posicao === arrayCompleto.findIndex((r) => r.y === row.y)
+        ).length / Object.keys(TratamentoDocas).length * (100)
 
     if (TaxaDocasOcorrencias > 40) {
-            ipt_DocasQueTiveramOcorrencia.innerHTML = `<span style='color: red;'>${TaxaDocasOcorrencias.toFixed(2)}%</span>`;
+        ipt_DocasQueTiveramOcorrencia.innerHTML = `<span style='color: red;'>${TaxaDocasOcorrencias.toFixed(2)}%</span>`;
     } else {
         ipt_DocasQueTiveramOcorrencia.innerHTML = `${TaxaDocasOcorrencias.toFixed(2)}%`;
     }
 
 
-const TotalDeOcorrencias = dadosGanttSemAdaptador
-    .filter(row => (row.x[1] - row.x[0]) > 5).length;
-    
+    const TotalDeOcorrencias = dadosGanttSemAdaptador
+        .filter(row => (row.x[1] - row.x[0]) > 5).length;
+
     ipt_TotalOcorrencias.innerHTML = `${TotalDeOcorrencias}`
 
-const IndicadorOperacoesDentroDoPrazo = dadosGanttSemAdaptador.length - TotalDeOcorrencias;
+    const IndicadorOperacoesDentroDoPrazo = dadosGanttSemAdaptador.length - TotalDeOcorrencias;
 
     ipt_TaxaDeOperacoesDentroDoPrazo.innerHTML = `${IndicadorOperacoesDentroDoPrazo}`
+    
 </script>
+
 </html>
