@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="assets/css/index.css">
     <link rel="stylesheet" href="assets/css/Arquitetura_de_solução.css">
     <link rel="stylesheet" href="assets/css/sobre-o-projeto.css">
+    <link rel="stylesheet" href="assets/css/simulador.css">
 </head>
 
 <body>
@@ -228,6 +229,89 @@
      </div>
 
     </div>
+
+
+<!-- Cenário de redução (fica escondido até o usuário inserir os inputs) -->
+<script src="assets/js/simulador.js"></script>
+ <div id="resultados">
+    <h3 class="sim-cenarios-titulo">Cenários de Redução</h3>
+    <div class="sim-cenarios-grid">
+        
+        <!-- Card 1 - Cenário conservador (30%) -->
+        <div class="sim-cenario-card sim-cenario-conservador">
+            <h4>Cenário Conservador (30%)</h4>
+
+            <div class="sim-cenario-linha">
+                <span>Economia mensal</span>
+                <span class="sim-cenario-valor" id="economia-mes-conservador"></span>
+            </div>
+
+            <div class="sim-cenario-linha">
+                <span>Economia Anual</span>
+                <span class="sim-cenario-valor" id="economia-ano-conservador"></span>
+            </div>
+
+             <hr class="sim-cenario-separador">
+
+            <div class="sim-cenario-linha">
+                <span>Novo Custo Mensal</span>
+                <span class="sim-cenario-valor" id="novo-custo-mes-conservador"></span>
+            </div>
+
+             <div class="sim-cenario-linha">
+                <span>Novo Custo Anual</span>
+                <span class="sim-cenario-valor" id="novo-custo-ano-conservador">—</span>
+            </div>
+        </div>
+
+        <!-- Card 2 - Cenário moderado (50%) -->
+        <div class="sim-cenario-card sim-cenario-moderado">
+            <h4>Cenário Moderado (50%)</h4>
+
+            <div class="sim-cenario-linha">
+                <span class="sim-cenario-valor" id="novo-custo-mes-moderado"></span>
+            </div>
+
+            <hr class="sim-cenario-separador">
+
+            <div class="sim-cenario-linha">
+                <span>Novo Custo Mensal</span>
+                <span class="sim-cenario-valor" id="novo-custo-mes-moderado"></span>
+            </div>
+
+            <div class="sim-cenario-linha">
+                <span>Novo Custo Anual</span>
+                <span class="sim-cenario-valor" id="novo-custo-ano-moderado"></span>
+            </div>
+        </div>
+
+        <!-- Card 3 - Cenário otimista (70%) -->
+         <div class="sim-cenario-card sim-cenario-otimista">
+            <h4>Cenário Otimista (70%)</h4>
+
+            <div class="sim-cenario-linha">
+                <span class="sim-cenario-valor" id="economia-mes-otimista"></span>
+            </div>
+            <div class="sim-cenario-linha">
+                <span> Economia Anual</span>
+                <span class="sim-cenario-valor" id="economia-ano-otimista"></span>
+            </div>
+
+            <hr class="sim-cenario-separador">
+
+            <div class="sim-cenario-linha">
+                <span>Novo Custo Mensal</span>
+                <span class="sim-cenario-valor" id="novo-custo-mes-otimista"></span>
+            </div>
+            <div class="sim-cenario-linha">
+                <span>Novo Custo Anual</span>
+                <span class="sim-cenario-valor" id="novo-custo-ano-otimista"></span>
+            </div>
+         </div>
+
+
+    </div>
+ </div>
 
  </section>
 
