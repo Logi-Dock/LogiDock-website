@@ -1,0 +1,250 @@
+.simulador {
+  padding: 80px 60px;
+  background-color: #f8f9fb; 
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Cabeçalho do Simulador */
+.simulador-header {
+  margin-bottom: 40px;
+}
+
+.simulador-header h2 {
+  font-size: 48px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 10px 0;
+}
+
+.simulador-header h2 span {
+  color: #1565C0;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+ 
+.simulador-header p {
+  color: #444;
+  font-size: 24px;
+  max-width: 620px;
+  line-height: 1.5;
+}
+
+/* Parte do painel de inputs e prejuízo atual */
+.simulador-painel {
+  display: flex;  /* coloca os dois cards na mesma linha */
+  gap: 24px; /* espaço entre eles */
+  align-items: flex-start; /* alinha pelo topo */
+  margin-bottom: 50px;
+}
+
+/* Card Genérico: nos dois topicos de cima */
+.sim-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 14px;
+  padding: 28px 30px;
+}
+ 
+/* Card dos inputs q ocupa menos espaço */
+.sim-card-inputs {
+  flex: 0 0 340px; /* largura fixa de 340px */
+}
+ 
+/* Card do prejuízo q ocupa o espaço restante */
+.sim-card-resultado {
+  flex: 1;
+}
+
+/* CARD DE INPUT (esquerdo) */
+.sim-card-inputs h3 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 22px 0;
+}
+ 
+/* Cada campo de formulário (label + input juntos) */
+.sim-campo {
+  margin-bottom: 16px;
+}
+ 
+.sim-campo label {
+  display: block; /* label em cima do input */
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 6px;
+}
+ 
+.sim-campo input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #111;
+  background: #fafafa;
+  box-sizing: border-box;/* evita que o padding quebre a largura */
+  outline: none;
+  transition: border-color 0.2s;
+}
+ 
+/* Destaca a borda do input quando o usuário clica nele */
+.sim-campo input:focus {
+  border-color: #1565C0;
+  background: #fff;
+}
+ 
+/* Botão "Calcular Economia" */
+.sim-btn {
+  width: 100%;
+  padding: 13px;
+  margin-top: 8px;
+  background-color: #1565C0;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+ 
+.sim-btn:hover {
+  background-color: #0d47a1; /* tom mais escuro no hover */
+}
+ 
+.sim-btn:active {
+  transform: scale(0.98); /* leve "afundamento" ao clicar */
+}
+ 
+/* CARD DE PREJUÍZO ATUAL (direito) */
+.sim-card-resultado h3 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 20px 0;
+}
+
+/* Caixas internas com o valor mensal e anual */
+.sim-resultado-box {
+  background: #f0f4ff; /* azul bem clarinho */
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+ 
+.sim-resultado-box p {
+  font-size: 24px;
+  color: #555;
+  margin: 0 0 6px 0;
+}
+ 
+/* O valor monetário grande */
+.sim-valor-destaque {
+  font-size: 48px;
+  font-weight: 800;
+  color: #111;
+  letter-spacing: -0.5px;
+}
+ 
+.sim-nota {
+  font-size: 14px;
+  color: #888;
+  margin-top: 12px;
+}
+ 
+/* Seção de resultados */
+#resultados {
+  display: none; 
+}
+
+/* Título dos cenários */
+.sim-cenarios-titulo {
+  font-size: 48px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 24px;
+}
+
+/* O grid dos tres cards do cenario */
+.sim-cenarios-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 colunas iguais */
+  gap: 20px;
+}
+
+/*Card de Cenário */
+.sim-cenario-card {
+  border-radius: 14px;
+  padding: 24px;
+  color: #fff;
+}
+
+/* Título do card (base)*/
+.sim-cenario-card h4 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 18px 0;
+}
+ 
+/* Linha com label + valor dentro do card */
+.sim-cenario-linha {
+  display: flex;
+  justify-content: space-between; /* label à esquerda, valor à direita */
+  align-items: center;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+ 
+/* Separador horizontal entre as linhas */
+.sim-cenario-separador {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 12px 0;
+}
+ 
+/* Valor em negrito (o número em R$) */
+.sim-cenario-valor {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+ 
+/* Cor do resultado dos cenários */
+/* Conservador → vermelho/salmão */
+.sim-cenario-conservador {
+  background-color: #e05555;
+}
+ 
+/* Moderado → laranja/âmbar */
+.sim-cenario-moderado {
+  background-color: #e89c2f;
+}
+ 
+/* Otimista → azul/arroxeado */
+.sim-cenario-otimista {
+  background-color: #4a6fc4;
+}
+
+/* Responsividade das telas menores */
+@media (max-width: 900px) {
+ 
+  .simulador {
+    padding: 50px 24px;
+  }
+ 
+  /* Empilha os dois cards do topo verticalmente */
+  .simulador-painel {
+    flex-direction: column;
+  }
+ 
+  .sim-card-inputs {
+    flex: 1;
+    width: 100%;
+  }
+ 
+  /* Os 3 cenários ficam em coluna única em mobile */
+  .sim-cenarios-grid {
+    grid-template-columns: 1fr;
+  }
+}

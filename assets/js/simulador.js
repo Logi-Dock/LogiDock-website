@@ -1,8 +1,14 @@
 function calcular() {
     // Valores INPUTS
-    const docas = 10; // Quantidade de docas em operação
-    const caminhoesPorDoca = 5; // Média de caminhões atendidos por doca por dia
-    const toneladas = 14; // Peso médio do caminhão em toneladas
+    const docas =  parseInt(document.getElementById("docas").value, 10); // Quantidade de docas em operação
+    const caminhoesPorDoca = parseInt(document.getElementById("caminhoesPorDoca").value, 10); // Média de caminhões atendidos por doca por dia
+    const toneladas = parseFloat(document.getElementById("toneladas").value); // Peso médio do caminhão em 
+    
+    // Validação (se o usuário preencheu tudo) 
+    if (isNaN(docas) || isNaN(caminhoesPorDoca) || isNaN(toneladas)) {
+    alert("Por favor, preencha todos os campos antes de calcular.");
+    return; // Para a função aqui se algum campo estiver vazio
+  }
 
     // Valores MOCKADOS
     const horas = 3; // Horas excedidas na operação
@@ -19,45 +25,41 @@ function calcular() {
     const custoMes = custoDia * 30;
     const custoAno = custoDia * 365;
 
+    // Mostramdo o prejuízo atual na tela (encontra o elemento HTML pelo id e troca o texto dele)
+    document.getElementById("resultado-mes").textContent =
+    custoMes.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+ 
+    document.getElementById("resultado-ano").textContent =
+    custoAno.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
     // Nomes e percentuais de redução para cada cenário analisado
     const nomes = ["Conservador", "Moderado", "Otimista"];
     const reducoes = [0.3, 0.5, 0.7];
 
-    console.log("\n===== SIMULADOR FINANCEIRO =====");
-
-    // Exibe dados gerais da operação
-    console.log("\nDADOS DA OPERAÇÃO");
-    console.log("Operações por dia:", operacoes);
-    console.log("Ocorrências estimadas:", ocorrencias);
-
-    // Exibe o prejuízo atual sem o uso do sistema
-    console.log("\nPREJUÍZO ATUAL");
-    console.log("Dia:", custoDia.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
-    console.log("Mês:", custoMes.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
-    console.log("Ano:", custoAno.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
-
-    console.log("\n===== CENÁRIOS =====");
-
-    // Percorre os cenários para calcular economia e novo prejuízo
-    for (let i = 0; i < nomes.length; i++) {
-        const nomeCenario = nomes[i];
-        const reducao = reducoes[i];
-
-        // Calcula quanto seria economizado com o sistema
-        const economiaMes = custoMes * reducao;
-        const economiaAno = custoAno * reducao;
-
-        // Calcula o prejuízo restante após aplicar a redução
-        const novoCustoMes = custoMes - economiaMes;
-        const novoCustoAno = custoAno - economiaAno;
-
-        // Exibe os resultados de cada cenário
-        console.log(`\n${nomeCenario.toUpperCase()} (${reducao * 100}% de redução)`);
-        console.log("Economia por mês:", economiaMes.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
-        console.log("Economia por ano:", economiaAno.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
-        console.log("Novo prejuízo por mês:", novoCustoMes.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
-        console.log("Novo prejuízo por ano:", novoCustoAno.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
-    }
+  // Percorre os três cenários e preenche cada card na tela
+  for (let i = 0; i < nomes.length; i++) {
+ 
+    const reducao = reducoes[i];
+ 
+    // Quanto o sistema economiza por mês e por ano
+    const economiaMes = custoMes * reducao;
+    const economiaAno = custoAno * reducao;
+ 
+    // Quanto ainda sobra de prejuízo após a redução
+    const novoCustoMes = custoMes - economiaMes;
+    const novoCustoAno = custoAno - economiaAno;
+ 
+    // Formatação de moeda brasileira para exibição
+    const fmt = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+ 
+    // Preenche os elementos do card correspondente no HTML
+    // O id de cada elemento segue o padrão: "nome-do-campo-nomeCenario"
+    document.getElementById(`economia-mes-${nomes[i]}`).textContent = fmt(economiaMes);
+    document.getElementById(`economia-ano-${nomes[i]}`).textContent = fmt(economiaAno);
+    document.getElementById(`novo-custo-mes-${nomes[i]}`).textContent = fmt(novoCustoMes);
+    document.getElementById(`novo-custo-ano-${nomes[i]}`).textContent = fmt(novoCustoAno);
+  }
+ 
+    // Seção dos resultados
+  document.getElementById("resultados").style.display = "block";
 }
-
-calcular();
