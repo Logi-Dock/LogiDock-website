@@ -17,8 +17,7 @@
 }
 
 .simulador-header h2 span {
-  color: #1565C0;
-  text-decoration: underline;
+  color: #1720A1;
   text-underline-offset: 4px;
 }
  
@@ -40,17 +39,17 @@
 /* Card Genérico: nos dois topicos de cima */
 .sim-card {
   background: #fff;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #E0E1E3;
   border-radius: 14px;
   padding: 28px 30px;
 }
  
-/* Card dos inputs q ocupa menos espaço */
+/* Card dos inputs que ocupa menos espaço */
 .sim-card-inputs {
   flex: 0 0 340px; /* largura fixa de 340px */
 }
  
-/* Card do prejuízo q ocupa o espaço restante */
+/* Card do prejuízo que ocupa o espaço restante */
 .sim-card-resultado {
   flex: 1;
 }
@@ -127,7 +126,7 @@
 
 /* Caixas internas com o valor mensal e anual */
 .sim-resultado-box {
-  background: #f0f4ff; /* azul bem clarinho */
+  background: #E9EEF4; /* azul bem clarinho */
   border-radius: 10px;
   padding: 18px 22px;
   margin-bottom: 14px;
@@ -178,7 +177,8 @@
 .sim-cenario-card {
   border-radius: 14px;
   padding: 24px;
-  color: #fff;
+  color: #111;
+  border: 1px solid #111;
 }
 
 /* Título do card (base)*/
@@ -213,17 +213,17 @@
 /* Cor do resultado dos cenários */
 /* Conservador → vermelho/salmão */
 .sim-cenario-conservador {
-  background-color: #e05555;
+  background-color: #EF8C8A;
 }
  
 /* Moderado → laranja/âmbar */
 .sim-cenario-moderado {
-  background-color: #e89c2f;
+  background-color: #F9B460;
 }
  
 /* Otimista → azul/arroxeado */
 .sim-cenario-otimista {
-  background-color: #4a6fc4;
+  background-color: #7496F0;
 }
 
 /* Responsividade das telas menores */

@@ -33,7 +33,7 @@ function calcular() {
     custoAno.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
     // Nomes e percentuais de redução para cada cenário analisado
-    const nomes = ["Conservador", "Moderado", "Otimista"];
+    const nomes = ["conservador", "moderado", "otimista"];
     const reducoes = [0.3, 0.5, 0.7];
 
   // Percorre os três cenários e preenche cada card na tela
