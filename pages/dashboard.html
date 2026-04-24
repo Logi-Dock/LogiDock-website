@@ -71,100 +71,31 @@
     const GraficoDeGantt = document.getElementById('ipt_GraficoDeGantt');
     const GraficoDePizza = document.getElementById('ipt_GraficoPizza');
 
-    // Simulando registro dos sensores do banco de dados
-    const RegistroDeSensores = [
-        { Nome: 'Doca 1', HorarioEntrada: '2026-04-04T07:00:00', HorarioSaida: '2026-04-04T08:30:00' },
-        { Nome: 'Doca 2', HorarioEntrada: '2026-04-04T07:15:00', HorarioSaida: '2026-04-04T09:00:00' },
-        { Nome: 'Doca 3', HorarioEntrada: '2026-04-04T07:45:00', HorarioSaida: '2026-04-04T10:15:00' },
-        { Nome: 'Doca 4', HorarioEntrada: '2026-04-04T08:00:00', HorarioSaida: '2026-04-04T11:00:00' },
-        { Nome: 'Doca 5', HorarioEntrada: '2026-04-04T08:30:00', HorarioSaida: '2026-04-04T10:00:00' },
-        { Nome: 'Doca 6', HorarioEntrada: '2026-04-04T09:00:00', HorarioSaida: '2026-04-04T12:00:00' },
-        { Nome: 'Doca 7', HorarioEntrada: '2026-04-04T15:20:00', HorarioSaida: '2026-04-04T20:45:00' },
-        { Nome: 'Doca 8', HorarioEntrada: '2026-04-04T07:00:00', HorarioSaida: '2026-04-04T13:00:00' },
-        { Nome: 'Doca 1', HorarioEntrada: '2026-04-04T09:30:00', HorarioSaida: '2026-04-04T18:30:00' },
-        { Nome: 'Doca 2', HorarioEntrada: '2026-04-04T10:15:00', HorarioSaida: '2026-04-04T12:45:00' },
-        { Nome: 'Doca 3', HorarioEntrada: '2026-04-04T11:00:00', HorarioSaida: '2026-04-04T14:00:00' },
-        { Nome: 'Doca 4', HorarioEntrada: '2026-04-04T12:15:00', HorarioSaida: '2026-04-04T15:30:00' },
-        { Nome: 'Doca 5', HorarioEntrada: '2026-04-04T11:00:00', HorarioSaida: '2026-04-04T13:45:00' },
-        { Nome: 'Doca 6', HorarioEntrada: '2026-04-04T13:00:00', HorarioSaida: '2026-04-04T16:00:00' },
-        { Nome: 'Doca 7', HorarioEntrada: '2026-04-04T11:00:00', HorarioSaida: '2026-04-04T14:45:00' },
-        { Nome: 'Doca 8', HorarioEntrada: '2026-04-04T14:15:00', HorarioSaida: '2026-04-04T19:30:00' }
-    ]
+    // Labels (docas ordenadas por tempo médio)
+    const labels = ['Doca 8', 'Doca 1', 'Doca 7', 'Doca 4', 'Doca 6', 'Doca 3', 'Doca 2', 'Doca 5'];
 
-    // Função de reutilização para calcular o tempo de permanencia com base nos dados
-    function TempoPermanencia(Entrada, Saida) {
+    // Dados já separados
+    const LinhasDadosAzuis = [null, null, null, 3.13, 3.00, 2.75, 2.13, 2.13];
+    const LinhasDadosVermelhos = [5.63, 5.25, null, null, null, null, null, null];
+    const LinhasDadosLaranjas = [null, null, 4.58, null, null, null, null, null];
 
-        // Aqui transforma a data e hora que estavam em texto, em um formato de Data para calculo
-        let CalEntrada = new Date(Entrada);
-        let CalSaida = new Date(Saida);
+    // Linha limite
+    const limite = [];
 
-
-
-        // Aqui é um calculo que pega a diferença das datas (Vai dar em milissegundos)
-        // então é transformado em horas
-        let resultado = (CalSaida - CalEntrada) / (1000 * 60 * 60);
-        return resultado
+    for (let i = 0; i < labels.length; i++) {
+        limite.push(5);
     }
-
-    // Aqui ele retorna um objeto que contem o total de tempo que tem em cada doca e a contagem de registros de cada,
-    // para então posteriormente calcular a média, que é melhor para ler quantidades massivas de dados
-    const TratamentoDocas = RegistroDeSensores.reduce(function (ObjetoVazio, item) {
-        const tempo = TempoPermanencia(item.HorarioEntrada, item.HorarioSaida);
-
-        if (!ObjetoVazio[item.Nome]) {
-            ObjetoVazio[item.Nome] = { totalTempo: 0, contagem: 0 };
-        }
-
-        ObjetoVazio[item.Nome].totalTempo += tempo;
-        ObjetoVazio[item.Nome].contagem += 1;
-
-        return ObjetoVazio;
-    }, {});
-
-    // Object.key faz o objeto virar um array para ser lido pelo chart
-    const DadosPrimeiroGrafico = Object.keys(TratamentoDocas).map(function (nome) {
-        return {
-            Nome: nome,
-            TempoMedio: (TratamentoDocas[nome].totalTempo / TratamentoDocas[nome].contagem).toFixed(2)
-        };
-    });
-
-    // Ordenar por tempo médio (decrescente)
-    DadosPrimeiroGrafico.sort(function (a, b) {
-        return b.TempoMedio - a.TempoMedio;
-    });
-
-    // Aqui eu faço um array apenas contendo apenas os dados
-    // das docas que a média está dentro do prazo
-    const LinhasDadosAzuis = DadosPrimeiroGrafico
-        .map(function (row) {
-            return row.TempoMedio < 4.5 ? row.TempoMedio : null;
-        });
-
-    // Aqui eu faço um array apenas contendo apenas os dados
-    // das docas que a média está fora do prazo
-    const LinhasDadosVermelhos = DadosPrimeiroGrafico
-        .map(function (row) {
-            return row.TempoMedio >= 5 ? row.TempoMedio : null;
-        });
-
-    const LinhasDadosLaranjas = DadosPrimeiroGrafico
-        .map(function (row) {
-            return row.TempoMedio >= 4.5 && row.TempoMedio < 5 ? row.TempoMedio : null;
-        });
 
     new Chart(GraficoBarrasLinhas, {
         type: 'bar',
         data: {
-            labels: DadosPrimeiroGrafico.map(row => row.Nome),
+            labels: labels,
             datasets: [
-
                 {
                     label: 'Dentro do prazo',
                     data: LinhasDadosAzuis,
                     backgroundColor: 'blue',
                     borderColor: 'black',
-
                 },
                 {
                     label: 'Fora do prazo',
@@ -181,13 +112,13 @@
                 {
                     type: 'line',
                     label: 'Limite Invisivel',
-                    data: DadosPrimeiroGrafico.map(() => 5),
+                    data: limite,
                     borderColor: 'red',
                     borderWidth: 2,
                     pointRadius: 0,
                     fill: false,
                     borderDash: [5, 5],
-                    order: 1,
+                    order: 1
                 }
             ]
         },
@@ -219,43 +150,35 @@
                 },
                 legend: {
                     labels: {
-                        filter: (item) => item.text !== 'Limite Invisivel'
+                        filter: (item) => item.text !== 'Limite Invisivel' // Esconde a legenda da linha limite
                     }
                 }
             }
         }
     });
 
-    // Função que converte horas para decimal para moldar o eixo X do gráfico de gantt
-    function converterParaHoraDecimal(DadosHoras) {
-        const data = new Date(DadosHoras);
+    // Registros mockados para o gráfico de Gantt
+    const foraDoTempo = [
+        { duracao: 9, x: [9.5, 18.5], y: "Doca 1" },
+        { duracao: 6, x: [7, 13], y: "Doca 8" },
+        { duracao: 5.41, x: [15.34, 20.75], y: "Doca 7" },
+        { duracao: 5.25, x: [14.25, 19.5], y: "Doca 8" }
+    ];
 
-        return data.getHours() + (data.getMinutes() / 60);
-    }
-
-    // Aqui eu crio os objetivos
-    // Eu guardo o nome para exibir na coluna vertical
-    // E no eixo x eu guardo os horario em decimal para apontar o começo e o fim deles no gráfico
-    const dadosGanttSemAdaptador = RegistroDeSensores.map(function (item) {
-        const inicio = converterParaHoraDecimal(item.HorarioEntrada);
-        const fim = converterParaHoraDecimal(item.HorarioSaida);
-
-        const duracao = fim - inicio;
-
-        return {
-            y: item.Nome,
-            x: [inicio, fim],
-            duracao: duracao
-        };
-    });
-
-    // Aqui eu crio dois arrays, um para as operações que ficaram fora do tempo e outro para as que ficaram dentro do tempo
-    const foraDoTempo = dadosGanttSemAdaptador.filter(item => item.duracao >= 5);
-    const dentroDoTempo = dadosGanttSemAdaptador.filter(item => item.duracao < 4.5);
-
-    // Aqui eu ordeno os dois arrays para que as operações que ficaram mais tempo fora do prazo fiquem no topo do gráfico, para dar mais destaque
-    foraDoTempo.sort((a, b) => b.duracao - a.duracao);
-    dentroDoTempo.sort((a, b) => b.duracao - a.duracao);
+    const dentroDoTempo = [
+        { duracao: 3.75, x: [11, 14.75], y: "Doca 7" },
+        { duracao: 3.25, x: [12.25, 15.5], y: "Doca 4" },
+        { duracao: 3, x: [8, 11], y: "Doca 4" },
+        { duracao: 3, x: [9, 12], y: "Doca 6" },
+        { duracao: 3, x: [11, 14], y: "Doca 3" },
+        { duracao: 3, x: [13, 16], y: "Doca 6" },
+        { duracao: 2.75, x: [11, 13.75], y: "Doca 5" },
+        { duracao: 2.5, x: [7.75, 10.25], y: "Doca 3" },
+        { duracao: 2.5, x: [10.25, 12.75], y: "Doca 2" },
+        { duracao: 1.75, x: [7.25, 9], y: "Doca 2" },
+        { duracao: 1.5, x: [7, 8.5], y: "Doca 1" },
+        { duracao: 1.5, x: [8.5, 10], y: "Doca 5" }
+    ];
 
     new Chart(GraficoDeGantt, {
         type: 'bar',
@@ -306,11 +229,12 @@
                 }
             }
         }
-    })
+    });
 
-    const PizzaDadosAzuis = LinhasDadosAzuis.filter(item => item !== null);
-    const PizzaDadosLaranjas = LinhasDadosLaranjas.filter(item => item !== null);
-    const PizzaDadosVermelhos = LinhasDadosVermelhos.filter(item => item !== null);
+    // Registros mockados para o gráfico de pizza
+    const PizzaDadosAzuis = ['3.13', '3.00', '2.75', '2.13', '2.13'];
+    const PizzaDadosLaranjas = ['4.58'];
+    const PizzaDadosVermelhos = ['5.63', '5.25'];
 
     new Chart(GraficoDePizza, {
         type: 'pie',
@@ -348,50 +272,12 @@
         }
     });
 
-    // Aqui eu faço uma função para mostrar no indicador qual a média de tempo por doca
-    // Onde eu pego a soma da duracao de cada operacao e divido pelas quantidade de operacoes que teve
-    let TotalHorasOperacoes = 0;
-    let contador = 0;
-    const IndicadorTratamentoDocas = RegistroDeSensores.reduce((ObjetoVazio, item) => {
-        const duracao = TempoPermanencia(item.HorarioEntrada, item.HorarioSaida);
+    // Registros mockados para os KPIs
+    ipt_TempoMediaDocas.innerHTML = `${3}h ${34}min`;
+    ipt_DocasQueTiveramOcorrencia.innerHTML = `${37.5}%`;
+    ipt_TotalOcorrencias.innerHTML = `${4}`
+    ipt_TaxaDeOperacoesDentroDoPrazo.innerHTML = `${12}`
 
-        TotalHorasOperacoes += duracao;
-        contador++;
-
-    }, {});
-
-    let mediaGeral = (TotalHorasOperacoes / contador).toFixed(2);
-    let hora = parseInt(mediaGeral);
-    let minutos = Math.round((mediaGeral - hora) * 60);
-
-    ipt_TempoMediaDocas.innerHTML = `${hora}h ${minutos}min`;
-
-
-    // Verificando quantas docas tiveram ocorrencias
-    const TaxaDocasOcorrencias = dadosGanttSemAdaptador
-        // Filtrando todas as operação que tiveram duração maior que 5 horas
-        .filter(row => (row.x[1] - row.x[0]) > 5)
-        // Filtrando para aparecer apenas 1 doca caso ela tenha duas ou mais ocorrencias
-        .filter((row, posicao, arrayCompleto) =>
-            posicao === arrayCompleto.findIndex((r) => r.y === row.y)
-        ).length / Object.keys(TratamentoDocas).length * (100)
-
-    if (TaxaDocasOcorrencias > 40) {
-        ipt_DocasQueTiveramOcorrencia.innerHTML = `<span style='color: red;'>${TaxaDocasOcorrencias.toFixed(2)}%</span>`;
-    } else {
-        ipt_DocasQueTiveramOcorrencia.innerHTML = `${TaxaDocasOcorrencias.toFixed(2)}%`;
-    }
-
-
-    const TotalDeOcorrencias = dadosGanttSemAdaptador
-        .filter(row => (row.x[1] - row.x[0]) > 5).length;
-
-    ipt_TotalOcorrencias.innerHTML = `${TotalDeOcorrencias}`
-
-    const IndicadorOperacoesDentroDoPrazo = dadosGanttSemAdaptador.length - TotalDeOcorrencias;
-
-    ipt_TaxaDeOperacoesDentroDoPrazo.innerHTML = `${IndicadorOperacoesDentroDoPrazo}`
-    
 </script>
 
 </html>
