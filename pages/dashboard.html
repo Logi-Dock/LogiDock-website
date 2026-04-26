@@ -18,34 +18,34 @@
 
     <div class="kpi">
         <div class="kpi-item">
-            <h1 id="kpi-title">Tempo médio por Doca</h1>
+            <h1 id="kpi-title">Doca com Mais Atrasos</h1>
             <div class="kpi-item-content">
                 <img src="../assets/icons/icone_relogio.png" alt="Relógio">
-                <h1 id="ipt_TempoMediaDocas"></h1>
+                <p id="ipt_DocaMaisAtrasos"></p>
             </div>
         </div>
 
         <div class="kpi-item">
-            <h1 id="kpi-title">Taxa de docas que tiveram ocorrência</h1>
+            <h1 id="kpi-title">Último Atraso Mais Crítico</h1>
             <div class="kpi-item-content">
                 <img src="../assets/icons/icone_caminhao.png" alt="Caminhão">
-                <h1 id="ipt_DocasQueTiveramOcorrencia"></h1>
+                <p id="ipt_DocaAtrasoRecente"></p>
             </div>
         </div>
 
         <div class="kpi-item">
-            <h1 id="kpi-title">Total de ocorrências</h1>
+            <h1 id="kpi-title">Maior Taxa de Atrasos</h1>
             <div class="kpi-item-content">
                 <img src="../assets/icons/icone_alarme.png" alt="Alarme">
-                <h1 id="ipt_TotalOcorrencias"></h1>
+                <p id="ipt_DocaMaiorPercentual"></p>
             </div>
         </div>
 
         <div class="kpi-item">
-            <h1 id="kpi-title">Operações dentro do prazo</h1>
+            <h1 id="kpi-title">Maior Tempo de Atraso Acumulado</h1>
             <div class="kpi-item-content">
-                <img src="../assets/icons/icone_verificado.png" alt="Verificado">
-                <h1 id="ipt_TaxaDeOperacoesDentroDoPrazo"></h1>
+                <img src="../assets/icons/icone_relogio_acumulado.png" alt="Relógio Acumulado">
+                <p id="ipt_DocaMaiorTempo"></p>
             </div>
         </div>
     </div>
@@ -208,7 +208,7 @@
             plugins: {
                 title: {
                     display: true,
-                    text: 'VISÃO DETALHADA - TEMPO DE PERMANÊNCIA POR DOCA',
+                    text: 'VISÃO DIÁRIA – TEMPO DE PERMANÊNCIA POR DOCA (06h–22h)',
                     color: 'black',
                     font: {
                         size: 32
@@ -217,8 +217,8 @@
             },
             scales: {
                 x: {
-                    min: 0,
-                    max: 24,
+                    min: 6,
+                    max: 22,
                     ticks: {
                         stepSize: 1,
                         callback: (value) => value + ":00" // Coloca o ":00" no visual
@@ -231,38 +231,31 @@
         }
     });
 
-    // Registros mockados para o gráfico de pizza
-    const PizzaDadosAzuis = ['3.13', '3.00', '2.75', '2.13', '2.13'];
-    const PizzaDadosLaranjas = ['4.58'];
-    const PizzaDadosVermelhos = ['5.63', '5.25'];
+    const docas = ['Doca 8', 'Doca 1', 'Doca 7', 'Outros'];
+    const valores = [15, 10, 7, 5];
 
     new Chart(GraficoDePizza, {
         type: 'pie',
-        data:
-        {
-            labels: ['Dentro do prazo', 'Quase fora do prazo', 'Fora do prazo'],
-
-            datasets:
-                [
-                    {
-                        data: [PizzaDadosAzuis.length, PizzaDadosLaranjas.length, PizzaDadosVermelhos.length],
-                        borderWidth: 1,
-                        backgroundColor: ['blue', 'orange', 'red'],
-                    }
-                ]
+        data: {
+            labels: docas,
+            datasets: [
+                {
+                    data: valores,
+                    borderWidth: 1,
+                    backgroundColor: ['red', 'orange', 'blue', 'gray'],
+                }
+            ]
         },
-
-        options:
-        {
+        options: {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
                 title: {
                     display: true,
-                    text: 'STATUS DAS OPERAÇÕES',
+                    text: 'DOCAS COM MAIOR VOLUME DE ATRASOS',
                     color: 'black',
                     font: {
-                        size: 32
+                        size: 24
                     }
                 },
                 legend: {
@@ -272,11 +265,10 @@
         }
     });
 
-    // Registros mockados para os KPIs
-    ipt_TempoMediaDocas.innerHTML = `${3}h ${34}min`;
-    ipt_DocasQueTiveramOcorrencia.innerHTML = `${37.5}%`;
-    ipt_TotalOcorrencias.innerHTML = `${4}`
-    ipt_TaxaDeOperacoesDentroDoPrazo.innerHTML = `${12}`
+    ipt_DocaMaisAtrasos.innerHTML = "Doca 8 <p>(15 atrasos)</p>";
+    ipt_DocaAtrasoRecente.innerHTML = "Doca 7 <p>(14:25 - 19:50)</p>";
+    ipt_DocaMaiorPercentual.innerHTML = "Doca 1 <p>(50% - 10 de 20)</p>";
+    ipt_DocaMaiorTempo.innerHTML = "Doca 8 <p>(18h 30min)</p>";
 
 </script>
 

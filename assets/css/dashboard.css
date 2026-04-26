@@ -18,11 +18,11 @@ header {
     width: 300px;
 }
 
-
 .kpi {
     display: flex;
     gap: 1rem;
 }
+
 
 #kpi-title {
     font-size: 1.3rem;
@@ -47,6 +47,11 @@ header {
 
 .kpi-item-content h1 {
     font-size: 3rem;
+}
+
+.kpi-item-content p {
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 .kpi-item-content img {
