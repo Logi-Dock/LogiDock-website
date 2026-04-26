@@ -55,8 +55,8 @@ a {
 }
 
 #olho{
-    width: 25px;
-    height: 20px;
+    height: 30px;
+    width: auto;
     cursor: pointer;
 }
 

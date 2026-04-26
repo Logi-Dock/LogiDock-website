@@ -23,7 +23,7 @@
         <div class="campo">
             <img src="../assets/icons/icone_senha.png" alt="" class="icone">
             <input type="password" id="ipt_senha" placeholder="SENHA">
-            <button onclick="visualizar_senha()" class="botao_visualizar_senha"><img src="../assets/icons/icone_olho.png" alt="" class="icone" id="olho"></button>
+            <button onclick="visualizar_senha()" class="botao_visualizar_senha"><img src="../assets/icons/olho_aberto.png" alt="" class="icone" id="olho"></button>
         </div>
         <div class="campo">
             <img src="../assets/icons/icone_cnpj.png" alt="" class="icone">
@@ -50,7 +50,7 @@
         } else if (cnpj.length != 14) {
            alert("CNPJ deve ter 14 dígitos. Exemplo de formato: 12345678901234");
         } else{
-            usuarios.push({ usuario: usuario, email: email, senha: senha, cnpj: cnpj });
+            usuarios.push({usuario, email, senha, cnpj });
             console.log(usuarios[usuarios.length-1])
             alert("Cadastro realizado!");
             window.location.href = "login.html";
@@ -63,9 +63,11 @@
         if(!senha_visivel){
             ipt_senha.type = "text";
             senha_visivel = true;
+            olho.src = "../assets/icons/olho_fechado.png";
         } else if (senha_visivel){
             ipt_senha.type = "password"
             senha_visivel = false;
+            olho.src = "../assets/icons/olho_aberto.png";
         }
     }
 </script>

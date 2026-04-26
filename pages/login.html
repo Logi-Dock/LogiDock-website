@@ -19,7 +19,7 @@
         <div class="campo">
             <img src="../assets/icons/icone_senha.png" alt="" class="icone">
             <input type="password" id="ipt_senha" placeholder="SENHA">
-            <button onclick="visualizar_senha()" class="botao_visualizar_senha"><img src="../assets/icons/icone_olho.png" alt="" class="icone" id="olho"></button>
+            <button onclick="visualizar_senha()" class="botao_visualizar_senha"><img src="../assets/icons/olho_aberto.png" alt="" class="icone" id="olho"></button>
         </div>
         <button class="ButtonCadastroLogin" onclick="entrar()">ENTRAR</button>
         <span id="esqueci_senha">Esqueci a senha</span>
@@ -29,7 +29,7 @@
 <script>
     let usuarios = [
         { usuario: "admin",    senha: "123456" },
-        { usuario: "logidock", senha: "123456"  }
+        { usuario: "logidock", senha: "123456" }
     ];
 
     function entrar() {
@@ -61,9 +61,11 @@
         if(!senha_visivel){
             ipt_senha.type = "text";
             senha_visivel = true;
+            olho.src = "../assets/icons/olho_fechado.png";
         } else if (senha_visivel){
             ipt_senha.type = "password"
             senha_visivel = false;
+            olho.src = "../assets/icons/olho_aberto.png";
         }
     }
 </script>
