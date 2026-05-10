@@ -18,7 +18,7 @@
 
     <div class="kpi">
         <div class="kpi-item">
-            <h1 id="kpi-title">Doca com Mais Atrasos</h1>
+            <h1 id="kpi-title">Doca com mais atrasos nos ultimos 3 meses</h1>
             <div class="kpi-item-content">
                 <img src="../assets/icons/icone_relogio.png" alt="Relógio">
                 <p id="ipt_DocaMaisAtrasos"></p>
@@ -34,7 +34,7 @@
         </div>
 
         <div class="kpi-item">
-            <h1 id="kpi-title">Maior Taxa de Atrasos</h1>
+            <h1 id="kpi-title">Doca com Maior Taxa de Atrasos nos ultimos 3 meses</h1>
             <div class="kpi-item-content">
                 <img src="../assets/icons/icone_alarme.png" alt="Alarme">
                 <p id="ipt_DocaMaiorPercentual"></p>
@@ -42,7 +42,7 @@
         </div>
 
         <div class="kpi-item">
-            <h1 id="kpi-title">Maior Tempo de Atraso Acumulado</h1>
+            <h1 id="kpi-title">Doca com Maior Tempo de Atraso Acumulado nos ultimos 3 meses</h1>
             <div class="kpi-item-content">
                 <img src="../assets/icons/icone_relogio_acumulado.png" alt="Relógio Acumulado">
                 <p id="ipt_DocaMaiorTempo"></p>
@@ -142,7 +142,7 @@
             plugins: {
                 title: {
                     display: true,
-                    text: 'TEMPO MÉDIO POR DOCA',
+                    text: 'TEMPO MÉDIO POR DOCA NOS ÚLTIMOS 3 MESES',
                     color: 'black',
                     font: {
                         size: 32
@@ -208,7 +208,7 @@
             plugins: {
                 title: {
                     display: true,
-                    text: 'VISÃO DIÁRIA – TEMPO DE PERMANÊNCIA POR OPERAÇÃO (06h–22h)',
+                    text: 'TEMPO DE PERMANÊNCIA POR OPERAÇÃO DO DIA ANTERIOR (06h–22h)',
                     color: 'black',
                     font: {
                         size: 32
@@ -252,7 +252,7 @@
             plugins: {
                 title: {
                     display: true,
-                    text: 'DOCAS COM MAIOR VOLUME DE ATRASOS',
+                    text: 'DOCAS COM MAIOR VOLUME DE ATRASOS NOS ULTIMOS 3 MESES',
                     color: 'black',
                     font: {
                         size: 24
@@ -265,10 +265,10 @@
         }
     });
 
-    ipt_DocaMaisAtrasos.innerHTML = "Doca 8 <p>(15 atrasos)</p>";
-    ipt_DocaAtrasoRecente.innerHTML = "Doca 7 <p>(14:25 - 19:50)</p>";
-    ipt_DocaMaiorPercentual.innerHTML = "Doca 1 <p>(50% - 10 de 20)</p>";
-    ipt_DocaMaiorTempo.innerHTML = "Doca 8 <p>(18h 30min)</p>";
+    ipt_DocaMaisAtrasos.innerHTML = "Doca 8 <span class='detalhesKPI'>(15 atrasos)</span>";
+    ipt_DocaAtrasoRecente.innerHTML = "Doca 7 <span class='detalhesKPI'>(20/04 | 14:25 – 19:50)</span>";
+    ipt_DocaMaiorPercentual.innerHTML = "Doca 1 <span class='detalhesKPI'>(50% - 10 de 20)</span>";
+    ipt_DocaMaiorTempo.innerHTML = "Doca 8 <span class='detalhesKPI'>(18h 30min)</span/>";
 
 </script>
 

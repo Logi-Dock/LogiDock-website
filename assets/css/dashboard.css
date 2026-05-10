@@ -50,8 +50,14 @@ header {
 }
 
 .kpi-item-content p {
+    display: flex;
     font-size: 2rem;
+    flex-wrap: wrap;
     font-weight: bold;
+}
+
+.detalhesKPI {
+    font-size: 1rem;
 }
 
 .kpi-item-content img {
@@ -92,4 +98,5 @@ header {
     padding: 1rem;
     height: 50vh;
 }
+
 
