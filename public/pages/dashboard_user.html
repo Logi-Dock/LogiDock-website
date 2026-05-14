@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dashboard_user.css">
+</head>
+
+<body>
+    <div class="tela_graficos">
+        <div class="navegacao">
+            <div class="titulo">
+                <img src="../assets/images/logidock_logo.svg" alt="">
+                <span id="empresaUser">empresaUser</span>
+            </div>
+
+            <div class="divisor"></div>
+
+            <div class="navegadores">
+                <div class="navegador" id="navegador_agora">
+                    <img src="../assets/icons/icone_dashboard.png" alt="">
+                    <span>Dashboard</span>
+                </div>
+
+                <div class="navegador" onclick="window.location.href='../index.html';">
+                    <img src="../assets/icons/icone_docas.png" alt="">
+                    <span>Docas</span>
+                </div>
+
+                <div class="navegador" onclick="window.location.href='../index.html';">
+                    <img src="../assets/icons/icone_empresa.png" alt="">
+                    <span>Empresa</span>
+                </div>
+            </div>
+
+            <div class="info_perfil">
+                <div class="avatar_usuario">
+                    FB
+                </div>
+                <div id="nome_permissao">
+                    <span id="nome">Fernando Brandão</span>
+                    <span id="permissao">Administrador</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard">
+
+            <div class="cabecalho_perfil">
+                <h1>Meu perfil</h1>
+                <p>Atualize suas informações pessoais de acesso</p>
+            </div>
+
+            <div class="cartao_usuario">
+                <div class="avatar_usuario">
+                    FB
+                </div>
+
+                <div class="dados_usuario">
+                    <h2>Fernando Brandão</h2>
+
+                    <span>
+                        <span class="email_usuario">fernando.brandao@logbrasil.com</span>
+                        <span> · </span>
+                        <span class="empresa_usuario">Logística Brasil LTDA</span>
+                    </span>
+
+                    <span class="nivel_usuario">Administrador</span>
+                </div>
+            </div>
+
+            <div class="secao_perfil">
+                <h3>Dados pessoais</h3>
+
+                <div class="formulario_duas_colunas">
+                    <div class="grupo_campo">
+                        <label>Nome completo</label>
+                        <input type="text" value="Fernando Brandão">
+                    </div>
+
+                    <div class="grupo_campo">
+                        <label>E-mail</label>
+                        <input type="email" value="fernando.brandao@logbrasil.com">
+                    </div>
+                </div>
+
+                <div class="grupo_campo">
+                    <label>Nível de acesso</label>
+                    <select>
+                        <option>Administrador</option>
+                    </select>
+                    <small>O nível de acesso só pode ser alterado por outro administrador.</small>
+                </div>
+
+                <div class="acoes_formulario">
+                    <button class="botao_secundario">Cancelar</button>
+                    <button class="botao_primario">Salvar dados</button>
+                </div>
+            </div>
+
+            <div class="secao_perfil">
+                <h3>Alterar senha</h3>
+
+                <div class="formulario_duas_colunas">
+                    <div class="grupo_campo">
+                        <label>Senha atual</label>
+                        <input type="password" value="******">
+                    </div>
+
+                    <div class="grupo_campo">
+                        <label>Nova senha</label>
+                        <input type="password" value="******">
+                    </div>
+                </div>
+
+                <div class="grupo_campo">
+                    <label>Confirmar nova senha</label>
+                    <input type="password" value="******">
+                </div>
+
+                <div class="acoes_formulario">
+                    <button class="botao_secundario">Cancelar</button>
+                    <button class="botao_primario">Atualizar senha</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

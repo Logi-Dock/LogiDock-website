@@ -1,0 +1,281 @@
+.tela_graficos {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+
+.navegacao {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    border-right: 2px solid #E8E8E8;
+    background-color: white;
+    padding: 40px;
+}
+
+.titulo {
+    display: flex;
+    flex-direction: column;
+    padding: 40px 10px 20px 20px;
+}
+
+.titulo img {
+    width: 300px;
+    height: auto;
+    margin-bottom: 18px;
+}
+
+.titulo #empresaUser {
+    font-size: 20px;
+}
+
+.divisor {
+    width: 100%;
+    height: 2px;
+    background-color: #E8E8E8;
+}
+
+.navegadores {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 30px;
+    height: 450px;
+}
+
+.navegador {
+    display: flex;
+    font-size: 1.5rem;
+    color: #6B7280;
+    height: 80px;
+    align-items: center;
+    padding: 0 0 0 15px;
+    transition: 0.3s;
+    gap: 20px;
+}
+
+.navegador img {
+    height: 35px;
+    width: auto;
+}
+
+.navegadores #navegador_agora {
+    color: #1056A8;
+    background-color: #E2EAF4;
+    border-radius: 18px;
+    font-weight: 700;
+    box-shadow: 1px 5px 5px rgba(0, 0, 0, 0.4);
+}
+
+.navegador:hover {
+    color: #1056A8;
+    transform: translateY(-10px);
+    background-color: #E2EAF4;
+    border-radius: 18px;
+    font-weight: 700;
+    box-shadow: 1px 5px 5px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+.info_perfil {
+    margin-top: auto;
+    display: flex;
+    height: 100px;
+    align-items: center;
+}
+
+.info_perfil .avatar_usuario {
+    height: 70px;
+    width: 70px;
+    font-size: 25px;
+}
+
+#nome_permissao {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+#nome {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+#permissao {
+    font-size: 1rem;
+}
+
+.dashboard {
+    min-height: 100vh;
+    background-color: #F4F6FA;
+}
+
+.hello {
+    display: flex;
+    flex-direction: column;
+    padding: 40px 0px 0px 50px
+}
+
+#titulo_hello {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+#nome_funcionario {
+    color: #1056A8;
+}
+
+.informacoes_hello {
+    font-size: 20px;
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    background-color: #f5f7fb;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.cabecalho_perfil h1 {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.cabecalho_perfil p {
+    font-size: 24px;
+    color: #797777;
+}
+
+.cartao_usuario {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: white;
+    border: 1px solid #E1E1E1;
+    border-radius: 14px;
+    padding: 24px;
+}
+
+.avatar_usuario {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    background: #E2EAF4;
+    color: #09139D;
+    font-size: 40px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dados_usuario {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dados_usuario h2 {
+    font-size: 28px;
+}
+
+.email_usuario,
+.empresa_usuario {
+    font-size: 18px;
+    color: #797777;
+}
+
+.nivel_usuario {
+    width: fit-content;
+    background: #e8f0ff;
+    color: #09139D;
+    padding: 5px 14px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.secao_perfil {
+    background: white;
+    border: 1px solid #e6e6e6;
+    border-radius: 14px;
+    padding: 25px;
+}
+
+.secao_perfil h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.formulario_duas_colunas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.grupo_campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.grupo_campo label {
+    font-size: 18px;
+    font-weight: 500;
+    color: #797777;
+    margin-bottom: 8px;
+}
+
+.grupo_campo input,
+.grupo_campo select {
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid #d8d8d8;
+    border-radius: 8px;
+    font-size: 18px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.grupo_campo small {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #808080;
+}
+
+.acoes_formulario {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.botao_secundario,
+.botao_primario {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 22px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.botao_secundario {
+    background: white;
+    border: 1px solid #d8d8d8;
+    color: #797777;
+}
+
+.botao_primario {
+    background: #1056A8;
+    color: white;
+}
+
+.botao_primario:hover {
+    background: #244fc0;
+}
+
+.botao_secundario:hover {
+    background: #f8f8f8;
+}

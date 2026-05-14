@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="../assets/css/dashboard_grafico.css">
 </head>
-
 <body>
     <div class="tela_graficos">
         <div class="navegacao">
@@ -17,30 +15,30 @@
                 <img src="../assets/images/logidock_logo.svg" alt="">
                 <span id="empresaUser">empresaUser</span>
             </div>
-
+    
             <div class="divisor"></div>
-
+    
             <div class="navegadores">
                 <div class="navegador" id="navegador_agora">
                     <img src="../assets/icons/icone_dashboard.png" alt="">
                     <span>Dashboard</span>
                 </div>
-
+    
                 <div class="navegador" onclick="window.location.href='../index.html';">
                     <img src="../assets/icons/icone_docas.png" alt="">
                     <span>Docas</span>
                 </div>
-
+    
                 <div class="navegador" onclick="window.location.href='../index.html';">
                     <img src="../assets/icons/icone_empresa.png" alt="">
                     <span>Empresa</span>
                 </div>
             </div>
-
+    
+            <div class="divisor"></div>
+    
             <div class="info_perfil">
-                <div class="avatar_usuario">
-                    FB
-                </div>
+                <img src="../assets/icons/teste_ft_perfil.png" alt="">
                 <div id="nome_permissao">
                     <span id="nome">Fernando Brandão</span>
                     <span id="permissao">Administrador</span>
@@ -49,88 +47,281 @@
         </div>
 
         <div class="dashboard">
-
-            <div class="cabecalho_perfil">
-                <h1>Meu perfil</h1>
-                <p>Atualize suas informações pessoais de acesso</p>
-            </div>
-
-            <div class="cartao_usuario">
-                <div class="avatar_usuario">
-                    FB
-                </div>
-
-                <div class="dados_usuario">
-                    <h2>Fernando Brandão</h2>
-
-                    <span>
-                        <span class="email_usuario">fernando.brandao@logbrasil.com</span>
-                        <span> · </span>
-                        <span class="empresa_usuario">Logística Brasil LTDA</span>
-                    </span>
-
-                    <span class="nivel_usuario">Administrador</span>
+            <div class="hello">
+                <span id="titulo_hello">Olá, <span id="nome_funcionario">funcionárioUser!</span></span>
+                
+                <div class="informacoes_hello">
+                    <span id="empresa">empresa</span>
+                    <span id="divisor"> | </span>
+                    <span id="data">Sexta-feira, 08 de maio de 2026</span>
                 </div>
             </div>
 
-            <div class="secao_perfil">
-                <h3>Dados pessoais</h3>
+            <div class="graficos">
 
-                <div class="formulario_duas_colunas">
-                    <div class="grupo_campo">
-                        <label>Nome completo</label>
-                        <input type="text" value="Fernando Brandão">
+                <div class="kpi">
+                    <div class="kpi-item">
+                        <span id="kpi-title">Doca com mais atrasos</span>
+                        <span id="kpi_tempo">(3 Meses)</span>
+                        <div class="kpi-item-content">
+                            <img src="../assets/icons/icone_relogio.png" alt="Relógio">
+                            <p id="ipt_DocaMaisAtrasos"></p>
+                        </div>
                     </div>
-
-                    <div class="grupo_campo">
-                        <label>E-mail</label>
-                        <input type="email" value="fernando.brandao@logbrasil.com">
+                
+                    <div class="kpi-item">
+                        <span id="kpi-title">Doca com maior atraso</span>
+                        <span id="kpi_tempo">(Neste momento)</span>
+                        <div class="kpi-item-content">
+                            <img src="../assets/icons/icone_caminhao.png" alt="Caminhão">
+                            <p id="ipt_DocaAtrasoRecente"></p>
+                        </div>
+                    </div>
+                
+                    <div class="kpi-item">
+                        <span id="kpi-title">Doca com Maior Taxa de Atrasos</span>
+                        <span id="kpi_tempo">(3 Meses)</span>
+                        <div class="kpi-item-content">
+                            <img src="../assets/icons/icone_alarme.png" alt="Alarme">
+                            <p id="ipt_DocaMaiorPercentual"></p>
+                        </div>
+                    </div>
+                
+                    <div class="kpi-item">
+                        <span id="kpi-title">Doca com Maior Tempo de Atraso Acumulado</span>
+                        <span id="kpi_tempo">(3 Meses)</span>
+                        <div class="kpi-item-content">
+                            <img src="../assets/icons/icone_relogio_acumulado.png" alt="Relógio Acumulado">
+                            <p id="ipt_DocaMaiorTempo"></p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="grupo_campo">
-                    <label>Nível de acesso</label>
-                    <select>
-                        <option>Administrador</option>
-                    </select>
-                    <small>O nível de acesso só pode ser alterado por outro administrador.</small>
-                </div>
-
-                <div class="acoes_formulario">
-                    <button class="botao_secundario">Cancelar</button>
-                    <button class="botao_primario">Salvar dados</button>
+                <div class="container_charts">
+                    <div class="top-left">
+                        <canvas id="ipt_GraficoBarrasLinhas"></canvas>
+                    </div>
+    
+                    <div class="top-right">
+                        <canvas id="ipt_GraficoPizza"></canvas>
+                    </div>
+    
+                    <div class="bottom">
+                        <canvas id="ipt_GraficoDeGantt"></canvas>
+                    </div>
                 </div>
             </div>
 
-            <div class="secao_perfil">
-                <h3>Alterar senha</h3>
 
-                <div class="formulario_duas_colunas">
-                    <div class="grupo_campo">
-                        <label>Senha atual</label>
-                        <input type="password" value="******">
-                    </div>
-
-                    <div class="grupo_campo">
-                        <label>Nova senha</label>
-                        <input type="password" value="******">
-                    </div>
-                </div>
-
-                <div class="grupo_campo">
-                    <label>Confirmar nova senha</label>
-                    <input type="password" value="******">
-                </div>
-
-                <div class="acoes_formulario">
-                    <button class="botao_secundario">Cancelar</button>
-                    <button class="botao_primario">Atualizar senha</button>
-                </div>
-            </div>
 
         </div>
     </div>
-
 </body>
 
+<script>
+    // Aqui eu declaro as variaveis do canvas
+    const GraficoBarrasLinhas = document.getElementById('ipt_GraficoBarrasLinhas');
+    const GraficoDeGantt = document.getElementById('ipt_GraficoDeGantt');
+    const GraficoDePizza = document.getElementById('ipt_GraficoPizza');
+
+    // Labels (docas ordenadas por tempo médio)
+    const labels = ['Doca 8', 'Doca 1', 'Doca 7', 'Doca 4', 'Doca 6', 'Doca 3', 'Doca 2', 'Doca 5'];
+
+    // Dados já separados
+    const LinhasDadosAzuis = [null, null, null, 3.13, 3.00, 2.75, 2.13, 2.13];
+    const LinhasDadosVermelhos = [5.63, 5.25, null, null, null, null, null, null];
+    const LinhasDadosLaranjas = [null, null, 4.58, null, null, null, null, null];
+
+    // Linha limite
+    const limite = [];
+
+    for (let i = 0; i < labels.length; i++) {
+        limite.push(5);
+    }
+
+    new Chart(GraficoBarrasLinhas, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Dentro do prazo',
+                    data: LinhasDadosAzuis,
+                    backgroundColor: 'blue',
+                    borderColor: 'black',
+                },
+                {
+                    label: 'Fora do prazo',
+                    data: LinhasDadosVermelhos,
+                    backgroundColor: 'red',
+                    borderColor: 'black',
+                },
+                {
+                    label: 'Quase fora do prazo',
+                    data: LinhasDadosLaranjas,
+                    backgroundColor: 'orange',
+                    borderColor: 'black',
+                },
+                {
+                    type: 'line',
+                    label: 'Limite Invisivel',
+                    data: limite,
+                    borderColor: 'red',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    fill: false,
+                    borderDash: [5, 5],
+                    order: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Horas'
+                    },
+                    stacked: true
+                },
+                x: {
+                    offset: true,
+                    stacked: true
+                }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'TEMPO MÉDIO POR DOCA NOS ÚLTIMOS 3 MESES',
+                    color: 'black',
+                    font: {
+                        size: 24
+                    }
+                },
+                legend: {
+                    labels: {
+                        filter: (item) => item.text !== 'Limite Invisivel' // Esconde a legenda da linha limite
+                    }
+                }
+            }
+        }
+    });
+
+    // Registros mockados para o gráfico de Gantt
+    const foraDoTempo = [
+        { duracao: 9, x: [9.5, 18.5], y: "Doca 1" },
+        { duracao: 6, x: [7, 13], y: "Doca 8" },
+        { duracao: 5.41, x: [15.34, 20.75], y: "Doca 7" },
+        { duracao: 5.25, x: [14.25, 19.5], y: "Doca 8" }
+    ];
+
+    const dentroDoTempo = [
+        { duracao: 3.75, x: [11, 14.75], y: "Doca 7" },
+        { duracao: 3.25, x: [12.25, 15.5], y: "Doca 4" },
+        { duracao: 3, x: [8, 11], y: "Doca 4" },
+        { duracao: 3, x: [9, 12], y: "Doca 6" },
+        { duracao: 3, x: [11, 14], y: "Doca 3" },
+        { duracao: 3, x: [13, 16], y: "Doca 6" },
+        { duracao: 2.75, x: [11, 13.75], y: "Doca 5" },
+        { duracao: 2.5, x: [7.75, 10.25], y: "Doca 3" },
+        { duracao: 2.5, x: [10.25, 12.75], y: "Doca 2" },
+        { duracao: 1.75, x: [7.25, 9], y: "Doca 2" },
+        { duracao: 1.5, x: [7, 8.5], y: "Doca 1" },
+        { duracao: 1.5, x: [8.5, 10], y: "Doca 5" }
+    ];
+
+    new Chart(GraficoDeGantt, {
+        type: 'bar',
+        data: {
+            datasets: [
+                {
+                    label: 'Fora do Prazo',
+                    data: foraDoTempo,
+                    backgroundColor: 'red',
+                    borderColor: 'black',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Dentro do Prazo',
+                    data: dentroDoTempo,
+                    backgroundColor: 'blue',
+                    borderColor: 'black',
+                    borderWidth: 1
+                }
+
+            ]
+        },
+        options: {
+            indexAxis: 'y',  // Transforma em barras horizontais
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'TEMPO DE PERMANÊNCIA POR OPERAÇÃO DO DIA ANTERIOR (06h–22h)',
+                    color: 'black',
+                    font: {
+                        size: 32
+                    }
+                },
+            },
+            scales: {
+                x: {
+                    min: 6,
+                    max: 22,
+                    ticks: {
+                        stepSize: 1,
+                        callback: (value) => value + ":00" // Coloca o ":00" no visual
+                    },
+                },
+                y: {
+                    stacked: true
+                }
+            }
+        }
+    });
+
+    const docas = ['Doca 8', 'Doca 1', 'Doca 7', 'Outros'];
+    const valores = [15, 10, 7, 5];
+
+    new Chart(GraficoDePizza, {
+        type: 'doughnut',
+        data: {
+            labels: docas,
+            datasets: [
+                {
+                    data: valores,
+                    borderWidth: 1,
+                    backgroundColor: ['#FF0000', '#DC143C', '#800000', 'gray'],
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'DOCAS COM MAIS ATRASOS NOS ÚLTIMOS 3 MESES',
+                    color: 'black',
+                    font: {
+                        size: 24
+                    }
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+    ipt_DocaMaisAtrasos.innerHTML = "Doca 8 <span class='detalhesKPI'>(15 atrasos)</span>";
+    ipt_DocaAtrasoRecente.innerHTML = "Doca 7 <span class='detalhesKPI'>(20/04 | 14:25 – 19:50)</span>";
+    ipt_DocaMaiorPercentual.innerHTML = "Doca 1 <span class='detalhesKPI'>(50% - 10 de 20)</span>";
+    ipt_DocaMaiorTempo.innerHTML = "Doca 8 <span class='detalhesKPI'>(18h 30min)</span/>";
+
+</script>
 </html>
