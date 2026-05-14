@@ -27,7 +27,7 @@
         </div>
         <div class="campo">
             <img src="../assets/icons/icone_cnpj.png" alt="" class="icone">
-            <input type="text" id="ipt_cnpj" placeholder="CNPJ">
+            <input type="text" id="ipt_codigo" placeholder="CÓDIGO">
         </div>
         <button class="ButtonCadastroLogin" onclick="cadastrar()">CADASTRAR</button>
     </div>
@@ -35,27 +35,91 @@
 <script>
     let usuarios = [];
 
-    function cadastrar() {
+    async function cadastrar() {
         let usuario = ipt_usuario.value.trim();
         let email = ipt_email.value.trim();
         let senha = ipt_senha.value;
-        let cnpj = ipt_cnpj.value.trim();
+        let codigo = ipt_codigo.value.trim();
+        let id_usuario = 0;
+        let id_empresa = 0;
 
-        if (!usuario || !email || !senha || !cnpj) {
-            alert("Preencha todos os campos.");
+        if (!usuario || !email || !senha || !codigo) {
+            return alert("Preencha todos os campos.");
         } else if (!email.includes("@") || !email.includes(".")) {
-            alert("E-mail inválido.");
+            return alert("E-mail inválido.");
         } else if (senha.length < 6) {
-            alert("A senha deve ter no mínimo 6 caracteres.");
-        } else if (cnpj.length != 14) {
-           alert("CNPJ deve ter 14 dígitos. Exemplo de formato: 12345678901234");
-        } else{
-            usuarios.push({usuario, email, senha, cnpj });
-            console.log(usuarios[usuarios.length-1])
-            alert("Cadastro realizado!");
-            window.location.href = "login.html";
-        }
+            return alert("A senha deve ter no mínimo 6 caracteres.");
+        } else if (codigo.length != 8) {
+           return alert("CNPJ deve ter 14 dígitos. Exemplo de formato: 12345678901234");
+        } 
+
+        await fetch("/usuarios/CadastrarUsuario", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                nomeServer: usuario,
+                emailServer: email,
+                senhaServer: senha,
+            }),
+        })
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+                alert("Cadastro realizado com sucesso!");
+
+            } else {
+             throw "Houve um erro ao tentar realizar o cadastro!";
+            }
+        });
+
+
+        await fetch(`/usuarios/PegarIdUsuario/${email}`).then(async function (resposta) {
+            if(resposta.ok) {
+                
+                const dadosJson = await resposta.json();
+                id_usuario = dadosJson.id_usuario
+            }
+        })
+        
+        await fetch(`/empresas/PegarIdEmpresa/${codigo}`).then(async function (resposta) {
+            if(resposta.ok) {
+
+                const dadosJson = await resposta.json();
+                id_empresa = dadosJson.id_empresa;
+            }
+        })
+
+
+        await fetch("/empresas/IntegrarUsuarioNaEmpresa", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                fk_usuarioServer: id_usuario,
+                fk_empresaServer: id_empresa,
+            }),
+        })
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+                alert("Integração realizada com sucesso! Redirecionando para tela de Login...");
+
+            setTimeout(() => {
+                window.location = "login.html";
+            }, "2000");
+
+            } else {
+            throw "Houve um erro ao tentar realizar o cadastro!";
+            }
+        });
+
     }
+
 
     let senha_visivel = false
     function visualizar_senha(){
