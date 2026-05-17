@@ -22,7 +22,9 @@ function autenticar(req, res) {
                             id_usuario: resultadoAutenticar[0].id_usuario,
                             email_user: resultadoAutenticar[0].email_user,
                             nome_user: resultadoAutenticar[0].nome_user,
-                            senha_user: resultadoAutenticar[0].senha_user
+                            senha_user: resultadoAutenticar[0].senha_user,
+                            razao_social: resultadoAutenticar[0].razao_social,
+                            nome_nivel_acesso: resultadoAutenticar[0].nome_nivel_acesso
                         });
 
                     } else if (resultadoAutenticar.length == 0) {

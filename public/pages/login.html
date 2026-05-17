@@ -57,9 +57,11 @@ function entrar() {
                 sessionStorage.EMAIL_USUARIO = json.email_user;
                 sessionStorage.NOME_USUARIO = json.nome_user;
                 sessionStorage.ID_USUARIO = json.id_usuario;
+                sessionStorage.RAZAO_SOCIAL = json.razao_social;
+                sessionStorage.NOME_NIVEL_ACESSO = json.nome_nivel_acesso;
                                 
                 setTimeout(function () {
-                    window.location = "dashboard.html";
+                    window.location = "dashboard_graficos.html";
                 }, 1000);
 
             });
