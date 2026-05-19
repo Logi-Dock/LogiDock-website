@@ -43,10 +43,41 @@ function preencherNiveisAcesso(data) {
 
         console.log(options);
         options.innerHTML +=
-        `
+            `
             <option>${elemento.nome_nivel_acesso}</option>
         `
     }
+}
+
+const nome = document.getElementById("ipt_nome");
+const email = document.getElementById("ipt_email");
+const nivel = document.querySelector(".grupo_campo_niveis_acesso");
+
+const btnEditar = document.getElementById("btn_editar");
+const btnSalvar = document.getElementById("btn_salvar");
+const btnCancelar = document.getElementById("btn_cancelar");
+
+btnEditar.addEventListener("click", habilitarEdicao);
+btnCancelar.addEventListener("click", cancelarEdicao);
+
+function habilitarEdicao() {
+    nome.disabled = false;
+    email.disabled = false;
+    nivel.disabled = false;
+
+    btnEditar.classList.add("hide");
+    btnSalvar.classList.remove("hide");
+    btnCancelar.classList.remove("hide");
+}
+
+function cancelarEdicao() {
+    nome.disabled = true;
+    email.disabled = true;
+    nivel.disabled = true;
+
+    btnEditar.classList.remove("hide");
+    btnSalvar.classList.add("hide");
+    btnCancelar.classList.add("hide");
 }
 
 obterUsuario();

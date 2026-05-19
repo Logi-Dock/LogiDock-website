@@ -279,3 +279,7 @@
 .botao_secundario:hover {
     background: #f8f8f8;
 }
+
+.hide {
+    display: none;
+}

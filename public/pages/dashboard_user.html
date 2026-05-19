@@ -81,24 +81,25 @@
                 <div class="formulario_duas_colunas">
                     <div class="grupo_campo">
                         <label>Nome completo</label>
-                        <input type="text" id="ipt_nome" value="Fernando Brandão">
+                        <input type="text" id="ipt_nome" value="Fernando Brandão" disabled>
                     </div>
 
                     <div class="grupo_campo">
                         <label>E-mail</label>
-                        <input type="email" id="ipt_email" value="fernando.brandao@logbrasil.com">
+                        <input type="email" id="ipt_email" value="fernando.brandao@logbrasil.com" disabled>
                     </div>
                 </div>
 
                 <div class="grupo_campo">
                     <label>Nível de acesso</label>
-                    <select class="grupo_campo_niveis_acesso"></select>
+                    <select class="grupo_campo_niveis_acesso" disabled></select>
                     <small>O nível de acesso só pode ser alterado por outro administrador.</small>
                 </div>
 
                 <div class="acoes_formulario">
-                    <button class="botao_secundario">Cancelar</button>
-                    <button class="botao_primario">Salvar dados</button>
+                    <button id="btn_cancelar" class="botao_secundario hide">Cancelar</button>
+                    <button id="btn_salvar" class="botao_primario hide">Salvar dados</button>
+                    <button id="btn_editar" class="botao_primario">Editar dados</button>
                 </div>
             </div>
 
