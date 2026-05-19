@@ -1,5 +1,50 @@
 var usuarioModel = require("../models/usuarioModel");
 
+function autenticar(req, res) {
+    var email_user = req.body.emailServer;
+    var senha_user = req.body.senhaServer;
+
+    if (email_user == undefined) {
+        res.status(400).send("Seu email está undefined!");
+    } else if (senha_user == undefined) {
+        res.status(400).send("Sua senha está indefinida!");
+    } else {
+
+        usuarioModel.autenticar(email_user, senha_user)
+            .then(
+                function (resultadoAutenticar) {
+                    console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
+                    console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
+
+                    if (resultadoAutenticar.length == 1) {
+                        console.log(resultadoAutenticar);
+                        res.json({
+                            id_usuario: resultadoAutenticar[0].id_usuario,
+                            email_user: resultadoAutenticar[0].email_user,
+                            nome_user: resultadoAutenticar[0].nome_user,
+                            senha_user: resultadoAutenticar[0].senha_user,
+                            razao_social: resultadoAutenticar[0].razao_social,
+                            nome_nivel_acesso: resultadoAutenticar[0].nome_nivel_acesso
+                        });
+
+                    } else if (resultadoAutenticar.length == 0) {
+                        res.status(403).send("Email e/ou senha inválido(s)");
+                    } else {
+                        res.status(403).send("Mais de um usuário com o mesmo login e senha!");
+                    }
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+
+}
+
+
 function cadastrarUsuario(req, res) {
 
     var nome_user = req.body.nomeServer;
@@ -53,6 +98,7 @@ function PegarIdUsuario(req, res) {
 
 
 module.exports = {
+    autenticar,
     cadastrarUsuario,
     PegarIdUsuario
 };

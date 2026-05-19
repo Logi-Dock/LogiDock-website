@@ -14,7 +14,7 @@
         <span id="titulo">LOGIN</span>
         <div class="campo">
             <img src="../assets/icons/icone_usuario.png" alt="" class="icone">
-            <input type="text" id="ipt_usuario" placeholder="USUÁRIO">
+            <input type="text" id="ipt_email" placeholder="EMAIL">
         </div>
         <div class="campo">
             <img src="../assets/icons/icone_senha.png" alt="" class="icone">
@@ -27,46 +27,74 @@
     </div>
 </body>
 <script>
-    let usuarios = [
-        { usuario: "admin",    senha: "123456" },
-        { usuario: "logidock", senha: "123456" }
-    ];
 
-    function entrar() {
-        let usuario = ipt_usuario.value.trim();
-        let senha = ipt_senha.value;
+function entrar() {
+    let email = ipt_email.value.trim();
+    let senha = ipt_senha.value;
 
-        if (!usuario || !senha) {
-            alert("Preencha usuário e senha.");
-        } else{
-            let encontrou = false;
-            for (let i = 0; i < usuarios.length; i++) {
-                if (usuarios[i].usuario == usuario && usuarios[i].senha == senha) {
-                    encontrou = true;
-                    break;
-                }       
-            }
-            if (encontrou) {
-                alert("Login realizado com sucesso!");
-                window.location.href = "../pages/dashboard.html";
-            } else {
-                alert("Usuário ou senha incorretos.");
-            }
-        }
+    if (!email || !senha) {
+        return alert("Preencha usuário e senha.");
+    } else if (!email.includes('@') || !email.includes('.')) {
+        return alert("Preencha o email corretamente");
     }
     
-    let senha_visivel = false
-    function visualizar_senha(){
+    fetch("/usuarios/autenticar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            emailServer: email,
+            senhaServer: senha
+        })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+            console.log(resposta);
 
-        if(!senha_visivel){
-            ipt_senha.type = "text";
-            senha_visivel = true;
-            olho.src = "../assets/icons/olho_fechado.png";
-        } else if (senha_visivel){
-            ipt_senha.type = "password"
-            senha_visivel = false;
-            olho.src = "../assets/icons/olho_aberto.png";
+            resposta.json().then(json => {
+                console.log(json);
+                console.log(JSON.stringify(json));
+                sessionStorage.EMAIL_USUARIO = json.email_user;
+                sessionStorage.NOME_USUARIO = json.nome_user;
+                sessionStorage.ID_USUARIO = json.id_usuario;
+                sessionStorage.RAZAO_SOCIAL = json.razao_social;
+                sessionStorage.NOME_NIVEL_ACESSO = json.nome_nivel_acesso;
+                                
+                setTimeout(function () {
+                    window.location = "dashboard_graficos.html";
+                }, 1000);
+
+            });
+
+        } else {
+            console.log("Houve um erro ao tentar realizar o login!");
+
+            resposta.text().then(texto => {
+                console.error(texto);
+                console.log('E-mail ou senha incorretos.');
+                return false;
+            });
         }
+
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log('E-mail ou senha incorretos.');
+        return false
+    })
+}
+    
+let senha_visivel = false
+function visualizar_senha(){
+
+    if(!senha_visivel){
+        ipt_senha.type = "text";
+        senha_visivel = true;
+        olho.src = "../assets/icons/olho_fechado.png";
+    } else if (senha_visivel){
+        ipt_senha.type = "password"
+        senha_visivel = false;
+        olho.src = "../assets/icons/olho_aberto.png";
     }
+}
 </script>
 </html>

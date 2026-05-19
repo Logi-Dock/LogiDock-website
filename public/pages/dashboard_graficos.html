@@ -119,6 +119,13 @@
 </body>
 
 <script>
+    nome_funcionario.innerHTML = `${sessionStorage.NOME_USUARIO}`;
+    nome.innerHTML = `${sessionStorage.NOME_USUARIO}`;
+    empresa.innerHTML = `${sessionStorage.RAZAO_SOCIAL}`;
+    empresaUser.innerHTML = `${sessionStorage.RAZAO_SOCIAL}`;
+    permissao.innerHTML = `${sessionStorage.NOME_NIVEL_ACESSO}`;
+
+
     // Aqui eu declaro as variaveis do canvas
     const GraficoBarrasLinhas = document.getElementById('ipt_GraficoBarrasLinhas');
     const GraficoDeGantt = document.getElementById('ipt_GraficoDeGantt');
