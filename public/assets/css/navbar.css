@@ -4,6 +4,7 @@ header {
     align-items: center;
     justify-content: space-evenly;
     padding: 2% 0% 2% 0%;
+    border-bottom: 1px solid #09139D;
 }
 
 .logo {
@@ -28,7 +29,6 @@ header {
 
 .nav-botao{
     display: flex;
-    gap: 20px;
 }
 
 .nav-botao button {
@@ -38,10 +38,11 @@ header {
     padding: 6%;
     font-size: 0.9rem;
     font-weight: bold;
-    border-radius: 1rem;
+    border-radius: 10px;
     letter-spacing: 1.2px;
     border: 1px solid #105DDA;
     transition: 0.5s;
+    padding: 5px 10px;
 }
 
 .nav-botao button:hover {

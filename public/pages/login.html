@@ -5,25 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - LogiDock</title>
     <link rel="stylesheet" href="../assets/css/login_cadastro.css">
+    <link rel="stylesheet" href="../assets/css/navbar.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-    <div class="logo">
-        <a href="../index.html"><img src="../assets/images/logo.png" alt="" id="logo"></a>
-    </div>
-    <div class="container">
-        <span id="titulo">LOGIN</span>
-        <div class="campo">
-            <img src="../assets/icons/icone_usuario.png" alt="" class="icone">
-            <input type="text" id="ipt_email" placeholder="EMAIL">
+    <header>
+        <a href="../index.html"><img src="../assets/images/logidock_logo.svg" alt="Logo da LogiDock" class="logo"></a>
+
+        <ul class="nav-list">
+            <li><a href="../index.html">Início</a></li>
+            <li><a href="../index.html#arquitetura_de_solucao">Solução</a></li>
+            <li><a href="../pages/sobre-nos.html">Sobre nós</a></li>
+            <li><a href="../index.html#footer">Contato</a></li>
+        </ul>
+        <div class="nav-botao">
+            <button><a href="pages/login.html">LOGIN</a></button>
         </div>
-        <div class="campo">
-            <img src="../assets/icons/icone_senha.png" alt="" class="icone">
-            <input type="password" id="ipt_senha" placeholder="SENHA">
-            <button onclick="visualizar_senha()" class="botao_visualizar_senha"><img src="../assets/icons/olho_aberto.png" alt="" class="icone" id="olho"></button>
+    </header>
+
+    <div class="login">
+        <div class="container_login">
+            <span id="titulo">Login</span>
+            <div class="divisor"></div>
+
+            <div class="container_input">
+                <span class="titulo_input">E-mail</span>
+                <div class="input">
+                    <input type="text" id="ipt_email" placeholder="exemplo@email.com">
+                </div>
+            </div>
+
+            <div class="container_input">
+                <span class="titulo_input">Senha</span>
+                <div class="input">
+                    <input type="text" id="ipt_senha" placeholder="**************">
+                    <img id="olho" src="../assets/icons/olho_fechado.png" alt="" onclick="visualizar_senha()">
+                </div>
+            </div>
+
+            <div class="botoes">
+                <button id="botao_cancelar" onclick="">Cancelar</button>
+                <button id="botao_entrar" onclick="entrar()">Entrar</button>
+            </div>
         </div>
-        <button class="ButtonCadastroLogin" onclick="entrar()">ENTRAR</button>
-        <span id="esqueci_senha">Esqueci a senha</span>
-        <span id="sem_cadastro">NÃO POSSUI CONTA? <a href="../pages/cadastro.html">CADASTRE-SE</a></span>
     </div>
 </body>
 <script>
@@ -89,11 +113,11 @@ function visualizar_senha(){
     if(!senha_visivel){
         ipt_senha.type = "text";
         senha_visivel = true;
-        olho.src = "../assets/icons/olho_fechado.png";
+        olho.src = "../assets/icons/olho_aberto.png";
     } else if (senha_visivel){
         ipt_senha.type = "password"
         senha_visivel = false;
-        olho.src = "../assets/icons/olho_aberto.png";
+        olho.src = "../assets/icons/olho_fechado.png";
     }
 }
 </script>

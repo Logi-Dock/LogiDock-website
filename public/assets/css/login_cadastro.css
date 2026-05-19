@@ -1,127 +1,111 @@
-body{
-    background-image: url("../images/bg_login_cadastro.png");
-    background-color: #2A73EB;
-    background-repeat: no-repeat;
+.login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding-bottom: 80px;
+    background-image: url('../images/background_login.png');
     background-size: cover;
     background-position: center;
-    height: 100vh;
-    padding: 0 8% 0 8%;
-    
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
-a {
-    text-decoration: none;
-    color: #ffffff;
-}
-
-#logo{
-    max-width: 250px;
-    max-height: 117px;
-}
-
-.container{
+.container_login{
+    border: 2px solid #1056A8;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 10px 10px;
+    width: 45%;
+    gap: 10px;
 }
 
-.container #titulo{
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 48px;
-    margin-top: 0px;
-    margin-bottom: 20px;
+#titulo{
+    font-size: 36px;
+    font-weight: bold;
 }
 
-.campo{
-    border: 2px solid #ffffff;
-    border-radius: 4px;
-    display: flex;
-    flex-direction: row;
-    width: 430px;
-    height: 65px;
-    align-items: center;
-    padding: 0 25px 0 25px;
-    margin-bottom: 20px;
-}
-
-.campo .icone{
-    width: 25px;
-    height: 25px;
-    justify-items: center;
-}
-
-#olho{
-    height: 30px;
-    width: auto;
-    cursor: pointer;
-}
-
-#email{
-    width: 22px;
-    height: 18px;
-}
-
-input{
-    border: none;
-    background-color: transparent;
+.divisor{
     width: 100%;
-    height: 100%;
-    margin-left: 30px;
-    color: white;
-    outline: none;
-    font-size: 18px;
-}
-
-input::placeholder{
-    font-family: Arial, Helvetica, sans-serif;
-    color: white;
-    font-size: 18px;
-}
-
-button{
-    background-color: white;
-    color: #3B82F6;
-    width: 490px;
-    height: 65px;
-    border-radius: 15px;
-    border: none;
-    font-size: 24px;
-    font-weight: 500;
-    margin-bottom: 20px;
-    cursor: pointer;
-}
-
-.ButtonCadastroLogin {
-    transition: 0.5s;
-}
-
-.ButtonCadastroLogin:hover {
-    color: white;
-    background-color: #3B82F6;
-    border: 1px solid white;
-}
-
-.botao_visualizar_senha{
-    background-color: transparent;
-    width: 25px;
-    height: 20px;
-    margin-top: 15px;
-}
-
-#esqueci_senha{
-    font-size: 18px;
-    font-family: Arial, Helvetica, sans-serif;
-    color: rgba(255, 255, 255, 0.8);
+    height: 1px;
+    background-color: #E1E1E1;
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
-#sem_cadastro{
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 600;
-    color: #ffffff;
-    letter-spacing: 1px;
+.container_input{
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.titulo_input{
+    color: #6B7280;
+    font-size: 16px;
+
+}
+
+.input{
+    margin-top: 5px;
+    border: 1px solid #E1E1E1;
+    border-radius: 5px;
+    padding: 8px 5px;
+    display: flex;
+    align-content: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.input input{
+    border: none;
+    outline: none;
+    width: 100%;
+}
+
+.input img{
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.botoes{
+    margin-top: 24px;
+    display: flex;
+    gap: 10px;
+}
+
+.botoes button{
+    width: 80px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+}
+
+#botao_cancelar{
+    border: 2px solid #808080;
+    background: none;
+    transition: 0.3s;
+}
+
+#botao_cancelar:hover{
+    border: none;
+    background-color: #808080;
+    color: white;
+}
+
+#botao_entrar{
+    border: none;
+    background-color: #1056A8;
+    color: white;
+    transition: 0.3s;
+}
+
+#botao_entrar:hover{
+    background-color: white;
+    border: 2px solid #1056A8;
+    color: #1056A8;
 }
