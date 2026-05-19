@@ -195,11 +195,16 @@
             plugins: {
                 title: {
                     display: true,
-                    text: 'TEMPO MÉDIO POR DOCA NOS ÚLTIMOS 3 MESES',
+                    text: 'TEMPO MÉDIO POR DOCA',
                     color: 'black',
-                    font: {
-                        size: 24
-                    }
+                    font: {size: 24}
+                },
+                subtitle: {
+                    display: true,
+                    text: '(Últimos 3 meses)',
+                    color: 'gray',
+                    font: {size: 14},
+                    padding: {bottom: 0}
                 },
                 legend: {
                     labels: {
@@ -261,12 +266,17 @@
             plugins: {
                 title: {
                     display: true,
-                    text: 'TEMPO DE PERMANÊNCIA POR OPERAÇÃO DO DIA ANTERIOR (06h–22h)',
+                    text: 'TEMPO DE PERMANÊNCIA POR OPERAÇÃO',
                     color: 'black',
-                    font: {
-                        size: 32
-                    }
+                    font: {size: 24}
                 },
+                subtitle: {
+                    display: true,
+                    text: '(Últimas 24 horas)',
+                    color: 'gray',
+                    font: {size: 14},
+                    padding: {bottom: 10}
+                }
             },
             scales: {
                 x: {
@@ -305,11 +315,16 @@
             plugins: {
                 title: {
                     display: true,
-                    text: 'DOCAS COM MAIS ATRASOS NOS ÚLTIMOS 3 MESES',
+                    text: 'DOCAS COM MAIS ATRASOS',
                     color: 'black',
-                    font: {
-                        size: 24
-                    }
+                    font: {size: 20}
+                },
+                subtitle: {
+                    display: true,
+                    text: '(Últimos 3 meses)',
+                    color: 'gray',
+                    font: { size: 14 },
+                    padding: { bottom: 10 }
                 },
                 legend: {
                     position: 'bottom'
