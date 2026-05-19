@@ -8,6 +8,8 @@
 
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/dashboard_user.css">
+
+    <script src="../assets/js/dashboard_user.js" defer></script>
 </head>
 
 <body>
@@ -61,15 +63,15 @@
                 </div>
 
                 <div class="dados_usuario">
-                    <h2>Fernando Brandão</h2>
+                    <h2 id="dados_usuario_nome">Fernando Brandão</h2>
 
                     <span>
-                        <span class="email_usuario">fernando.brandao@logbrasil.com</span>
+                        <span id="email_usuario">fernando.brandao@logbrasil.com</span>
                         <span> · </span>
-                        <span class="empresa_usuario">Logística Brasil LTDA</span>
+                        <span id="empresa_usuario">Logística Brasil LTDA</span>
                     </span>
 
-                    <span class="nivel_usuario">Administrador</span>
+                    <span id="nivel_usuario">Administrador</span>
                 </div>
             </div>
 
@@ -79,12 +81,12 @@
                 <div class="formulario_duas_colunas">
                     <div class="grupo_campo">
                         <label>Nome completo</label>
-                        <input type="text" value="Fernando Brandão">
+                        <input type="text" id="ipt_nome" value="Fernando Brandão">
                     </div>
 
                     <div class="grupo_campo">
                         <label>E-mail</label>
-                        <input type="email" value="fernando.brandao@logbrasil.com">
+                        <input type="email" id="ipt_email" value="fernando.brandao@logbrasil.com">
                     </div>
                 </div>
 
@@ -108,18 +110,18 @@
                 <div class="formulario_duas_colunas">
                     <div class="grupo_campo">
                         <label>Senha atual</label>
-                        <input type="password" value="******">
+                        <input type="password" placeholder="******">
                     </div>
 
                     <div class="grupo_campo">
                         <label>Nova senha</label>
-                        <input type="password" value="******">
+                        <input type="password" placeholder="******">
                     </div>
                 </div>
 
                 <div class="grupo_campo">
                     <label>Confirmar nova senha</label>
-                    <input type="password" value="******">
+                    <input type="password" placeholder="******">
                 </div>
 
                 <div class="acoes_formulario">

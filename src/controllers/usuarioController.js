@@ -1,5 +1,17 @@
 var usuarioModel = require("../models/usuarioModel");
 
+function obterUsuario(req, res) {
+    var id_usuario = req.body.idUsuarioServer;
+
+    usuarioModel.obterUsuario(id_usuario)
+        .then(resultado => {
+            res.json(resultado);
+        }).catch(error => {
+            console.log(error);
+            res.status(500).json(error.message);
+        });
+}
+
 function autenticar(req, res) {
     var email_user = req.body.emailServer;
     var senha_user = req.body.senhaServer;
@@ -98,6 +110,7 @@ function PegarIdUsuario(req, res) {
 
 
 module.exports = {
+    obterUsuario,
     autenticar,
     cadastrarUsuario,
     PegarIdUsuario
