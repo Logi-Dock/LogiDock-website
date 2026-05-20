@@ -1,5 +1,70 @@
 var usuarioModel = require("../models/usuarioModel");
 
+function atualizarNome(req, res) {
+    var id_usuario = req.body.idUsuarioServer;
+    var nome_usuario = req.body.nomeServer;
+
+    usuarioModel.atualizarNome(id_usuario, nome_usuario)
+        .then(resultado => {
+            res.json(resultado);
+        }).catch(error => {
+            console.log(error);
+            res.status(500).json(error.message);
+        });
+}
+
+function atualizarEmail(req, res) {
+    var id_usuario = req.body.idUsuarioServer;
+    var email_usuario = req.body.emailServer;
+
+    usuarioModel.atualizarEmail(id_usuario, email_usuario)
+        .then(resultado => {
+            res.json(resultado);
+        }).catch(error => {
+            console.log(error);
+            res.status(500).json(error.message);
+        });
+}
+
+function atualizarNivelAcesso(req, res) {
+    var id_usuario = req.body.idUsuarioServer;
+    var nivel_acesso = req.body.nivelAcessoServer;
+
+    usuarioModel.atualizarNivelAcesso(id_usuario, nivel_acesso)
+        .then(resultado => {
+            res.json(resultado);
+        }).catch(error => {
+            console.log(error);
+            res.status(500).json(error.message);
+        });
+}
+
+function atualizarSenha(req, res) {
+    var id_usuario = req.body.idUsuarioServer;
+    var senha_usuario = req.body.senhaServer;
+
+    usuarioModel.atualizarSenha(id_usuario, senha_usuario)
+        .then(resultado => {
+            res.json(resultado);
+        }).catch(error => {
+            console.log(error);
+            res.status(500).json(error.message);
+        });
+}
+
+function verificarSenha(req, res) {
+    var id_usuario = req.body.idUsuarioServer;
+    var senha = req.body.senhaServer;
+
+    usuarioModel.verificarSenha(id_usuario, senha)
+        .then(resultado => {
+            res.json(resultado)
+        }).catch(error => {
+            console.log(error);
+            res.status(500).json(error.message);
+        });
+}
+
 function obterUsuario(req, res) {
     var id_usuario = req.body.idUsuarioServer;
 
@@ -113,5 +178,10 @@ module.exports = {
     obterUsuario,
     autenticar,
     cadastrarUsuario,
+    atualizarNome,
+    atualizarEmail,
+    atualizarNivelAcesso,
+    atualizarSenha,
+    verificarSenha,
     PegarIdUsuario
 };

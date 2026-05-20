@@ -44,8 +44,8 @@
                     FB
                 </div>
                 <div id="nome_permissao">
-                    <span id="nome">Fernando Brandão</span>
-                    <span id="permissao">Administrador</span>
+                    <span id="nome_user">Nome</span>
+                    <span id="permissao">Permissão</span>
                 </div>
             </div>
         </div>
@@ -97,9 +97,9 @@
                 </div>
 
                 <div class="acoes_formulario">
-                    <button id="btn_cancelar" class="botao_secundario hide">Cancelar</button>
-                    <button id="btn_salvar" class="botao_primario hide">Salvar dados</button>
-                    <button id="btn_editar" class="botao_primario">Editar dados</button>
+                    <button id="btn_cancelar" class="botao_secundario hide" onclick="cancelarEdicao()">Cancelar</button>
+                    <button id="btn_salvar" class="botao_primario hide" onclick="atualizarDados()">Salvar dados</button>
+                    <button id="btn_editar" class="botao_primario" onclick="habilitarEdicao()">Editar dados</button>
                 </div>
             </div>
 
@@ -109,23 +109,23 @@
                 <div class="formulario_duas_colunas">
                     <div class="grupo_campo">
                         <label>Senha atual</label>
-                        <input type="password" placeholder="******">
+                        <input id="senha_user" type="password" placeholder="******">
                     </div>
 
                     <div class="grupo_campo">
                         <label>Nova senha</label>
-                        <input type="password" placeholder="******">
+                        <input id="nova_senha" type="password" placeholder="******">
                     </div>
                 </div>
 
                 <div class="grupo_campo">
                     <label>Confirmar nova senha</label>
-                    <input type="password" placeholder="******">
+                    <input id="confirmar_senha" type="password" placeholder="******">
                 </div>
 
                 <div class="acoes_formulario">
-                    <button class="botao_secundario">Cancelar</button>
-                    <button class="botao_primario">Atualizar senha</button>
+                    <button class="botao_secundario" onclick="cancelarSenha()">Cancelar</button>
+                    <button class="botao_primario" id="btn_atualizar" onclick="atualizarSenha()">Atualizar senha</button>
                 </div>
             </div>
 

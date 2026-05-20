@@ -1,5 +1,57 @@
 var database = require("../database/config");
 
+function atualizarNome(id_usuario, nome) {
+    var instrucaoSql =
+        `
+        UPDATE usuario SET nome_user = '${nome}' WHERE id_usuario = ${id_usuario};
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function atualizarEmail(id_usuario, email) {
+    var instrucaoSql =
+        `
+        UPDATE usuario SET email_user = '${email}' WHERE id_usuario = ${id_usuario};
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function atualizarNivelAcesso(id_usuario, id_nivel_acesso) {
+    var instrucaoSql =
+        `
+        UPDATE usuario SET fk_nivel_acesso = ${id_nivel_acesso} WHERE id_usuario = ${id_usuario};
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function atualizarSenha(id_usuario, novaSenha) {
+    var instrucaoSql =
+        `
+        UPDATE usuario SET senha_user = '${novaSenha}' WHERE id_usuario = ${id_usuario};
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function verificarSenha(id_usuario, senha) {
+    var instrucaoSql =
+        `
+        SELECT senha_user
+        FROM usuario
+        WHERE senha_user = ${senha};
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 function obterUsuario(id_usuario) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente.")
     var instrucaoSql =
@@ -56,6 +108,11 @@ function PegarIdUsuario(email_user) {
 }
 
 module.exports = {
+    atualizarNome,
+    atualizarSenha,
+    atualizarEmail,
+    atualizarNivelAcesso,
+    verificarSenha,
     obterUsuario,
     autenticar,
     cadastrarUsuario,
