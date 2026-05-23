@@ -46,3 +46,84 @@
     margin-bottom: 14px;
 }
 
+.grupo{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.grupo label{
+    font-size: 12px;
+    color: #6b7280;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.grupo input,
+.grupo select{
+    height: 38px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 13px;
+    background-color: #f9fafb;
+    outline: none;
+}
+
+.grupo input:focus,
+.grupo select:focus {
+border-color: #2563eb;
+background-color: #fffF;
+}
+
+.select-seta{
+    position: relative;
+}
+
+.select-seta select{
+    width: 100%;
+    appearance: none;
+}
+
+.arrow {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #6b7280;
+    font-size: 12px;
+}
+
+.acao{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 10px;
+    padding-top: 10px;
+}
+
+.btn-cancelar{
+    height: 38px;
+    padding: 0 20px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: transparent;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.btn-salvar{
+    height: 38px;
+    padding: 0 20px;
+    border: 1px solid #d1d5db;
+    border-radius:8px;
+    background-color: #2563eb;
+    color: #fff;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-salvar:hover{
+    background-color: #d1d5db;
+}
