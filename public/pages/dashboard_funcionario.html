@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/side_bar.css">
 </head>
+
 <body>
     <div class="tela_graficos">
         <div class="navegacao">
@@ -16,20 +18,20 @@
                 <img src="../assets/images/logidock_logo.svg" alt="" onclick="window.location.href='../index.html';">
                 <span id="empresaUser">empresaUser</span>
             </div>
-    
+
             <div class="divisor"></div>
-    
+
             <div class="navegadores">
                 <div class="navegador" onclick="window.location.href='dashboard_graficos.html';">
                     <img src="../assets/icons/icone_dashboard.png" alt="">
                     <span>Dashboard</span>
                 </div>
-    
+
                 <div class="navegador" onclick="window.location.href='dashboard_alertas.html';">
                     <img src="../assets/icons/icone_alerta.png" alt="">
                     <span>Alertas</span>
                 </div>
-    
+
                 <div class="navegador" onclick="window.location.href='dashboard_docas.html';">
                     <img src="../assets/icons/icone_docas.png" alt="">
                     <span>Docas</span>
@@ -40,14 +42,15 @@
                     <span>Empresa</span>
                 </div>
 
-                <div class="navegador" onclick="window.location.href='dashboard_funcionario.html';" id="navegador_agora">
+                <div class="navegador" onclick="window.location.href='dashboard_funcionario.html';"
+                    id="navegador_agora">
                     <img src="../assets/icons/icone_funcionario.png" alt="">
                     <span>Funcionário</span>
                 </div>
             </div>
-    
+
             <div class="divisor"></div>
-    
+
             <div class="info_perfil" onclick="window.location.href='dashboard_user.html'">
                 <img src="../assets/icons/teste_ft_perfil.png" alt="">
                 <div id="nome_permissao">
@@ -58,15 +61,15 @@
         </div>
 
         <div class="conteudo">
-             <div class="hello">
+            <div class="hello">
                 <span id="titulo_hello">Cadastrar Funcionário</span></span>
-                
+
                 <div class="informacoes_hello">
                     <span id="empresa">Administrar o perfil dos usuários e suas respectivas permissõess</span>
                 </div>
 
                 <div class="nome-usuario-card">
-                   
+
 
                     <div class="cabecalho">
                         <img src="" alt="">
@@ -90,7 +93,7 @@
                                 <label for="senha">Senha Inicial</label>
                                 <input type="password" id="senha" placeholder="Mínimo 6 caracteres">
                             </div>
-                            
+
                             <div class="grupo">
                                 <label for="nivel">Nível acesso</label>
                                 <div class="select">
@@ -100,22 +103,66 @@
                                         <option>Gestor</option>
                                         <option>Funcionario</option>
                                     </select>
-                                    <span class="arrow">.</span>
+                                    <span class="arrow">↓</span>
                                 </div>
                             </div>
                         </div>
-                            
+
                     </div>
 
                     <div class="acao">
                         <button class="btn-cancelar">Cancelar</button>
                         <button class="btn-salvar">Salvar Cadastro</button>
                     </div>
+                </div>
+            </div>
 
+                <div class="tabela-usuarios">
+
+                    <div class="topo">
+                        <div class="contadores">
+                            <span>Total: <strong>4</strong></span>
+                            <span>Administradores: <strong>1</strong></span>
+                            <span>Gestores: <strong>2</strong></span>
+                            <span>Funcionários: <strong>1</strong></span>
+                        </div>
+                        <input type="text" class="busca" placeholder="Buscar por nome...">
+                    </div>
+
+                    <table class="tabela">
+                        <thead>
+                            <tr>
+                                <th>Usuário</th>
+                                <th>Nível de acesso</th>
+                                <th>Permissões</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Caique Silva</td>
+                                <td><span class="badge-admin">ADMINISTRADOR</span></td>
+                                <td>CRIAR_DOCA · EDITAR_DOCA · VISUALIZAR_DOCA</td>
+                                <td><button class="btn-editar">✎</button></td>
+                            </tr>
+                            <tr>
+                                <td>Nicole Miranda</td>
+                                <td><span class="badge-admin">GESTOR</span></td>
+                                <td>CRIAR_DOCA · EDITAR_DOCA · VISUALIZAR_DOCA</td>
+                                <td><button class="btn-editar">✎</button></td>
+                            </tr>
+                            <tr>
+                                <td>Fernando Brandão</td>
+                                <td><span class="badge-admin">ADMINISTRADOR</span></td>
+                                <td>CRIAR_DOCA · EDITAR_DOCA · VISUALIZAR_DOCA</td>
+                                <td><button class="btn-editar">✎</button></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
 
                 </div>
-
-        </div>
-    </div>
+            </div>
 </body>
+
 </html>
