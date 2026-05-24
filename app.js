@@ -20,18 +20,18 @@ var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var empresaRouter = require("./src/routes/empresas");
 var nivelAcessoRouter = require("./src/routes/nivelAcesso.js");
-var bobRouter = require("./src/routes/bob.js"); // BOBIA
+// var bobRouter = require("./src/routes/bob.js"); // BOBIA
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 // configurando CORS - BOBIA
-app.use((req, res, next) => { // BOBIA
+/*app.use((req, res, next) => { // BOBIA
     res.header('Access-Control-Allow-Origin', '*'); // BOBIA
     res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept'); // BOBIA
     next(); // BOBIA
-}); // BOBIA
+}); // BOBIA */
 
 
 app.use(cors());
@@ -40,7 +40,7 @@ app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/empresas", empresaRouter);
 app.use("/nivelAcesso", nivelAcessoRouter);
-app.use("/bob", bobRouter); // BOBIA
+// app.use("/bob", bobRouter); // BOBIA
 
 app.listen(PORTA_APP, function () {
     console.log(`

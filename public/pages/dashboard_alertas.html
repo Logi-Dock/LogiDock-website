@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,27 +10,28 @@
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/side_bar.css">
 </head>
-<body>
+
+<body onload="Inicializar()">
     <div class="tela_graficos">
         <div class="navegacao">
             <div class="titulo">
                 <img src="../assets/images/logidock_logo.svg" alt="" onclick="window.location.href='../index.html';">
                 <span id="empresaUser">empresaUser</span>
             </div>
-    
+
             <div class="divisor"></div>
-    
+
             <div class="navegadores">
                 <div class="navegador" onclick="window.location.href='dashboard_graficos.html';">
                     <img src="../assets/icons/icone_dashboard.png" alt="">
                     <span>Dashboard</span>
                 </div>
-    
+
                 <div class="navegador" onclick="window.location.href='dashboard_alertas.html';" id="navegador_agora">
                     <img src="../assets/icons/icone_alerta.png" alt="">
                     <span>Alertas</span>
                 </div>
-    
+
                 <div class="navegador" onclick="window.location.href='dashboard_docas.html';">
                     <img src="../assets/icons/icone_docas.png" alt="">
                     <span>Docas</span>
@@ -45,14 +47,15 @@
                     <span>Funcionário</span>
                 </div>
 
-                <div class="navegador" onclick="window.location.href = `https://logidock.atlassian.net/servicedesk/customer/portal/1`">
+                <div class="navegador"
+                    onclick="window.location.href = `https://logidock.atlassian.net/servicedesk/customer/portal/1`">
                     <img src="../assets/icons/icone_usuario_help.svg" alt="">
                     <span>Suporte</span>
                 </div>
             </div>
-    
+
             <div class="divisor"></div>
-    
+
             <div class="info_perfil" onclick="window.location.href='dashboard_user.html'">
                 <img src="../assets/icons/teste_ft_perfil.png" alt="">
                 <div id="nome_permissao">
@@ -61,11 +64,11 @@
                 </div>
             </div>
         </div>
-    
+
         <div class="conteudo">
             <div class="Titulo">
                 <h1>Histórico Alertas</h1>
-                <p>Última atualização: 20/05/2026 16:30</p>
+                <p id="UltimaAtualizacao">Última atualização: --/--/---- --:--</p>
             </div>
             <div class="TabelaHistorico">
                 <div class="AtributosHistorico">
@@ -74,25 +77,87 @@
                     <p class="inicio_estadia inicio_estadiaAtributo bolder">INÍCIO ESTADIA</p>
                     <p class="acumulado acumuladoAtributo bolder">ACUMULADO</p>
                 </div>
-                <div class="ConteudoHistorico">
-
-                    <!-- QUanto mais conteudo, mais pra baixo vai e depois de uns tantos ai ele coloca um scroll top né -->
-                    <!-- BoxExemplo de conteudo -->
-                    <div class="BoxHistorico">
-                        <div class="status bordaStatusVermelha"><img src="../assets/icons/alerta_vermelho.svg" alt=""></div>
-                        <p class="doca bolder">D01</p>
-                        <p class="inicio_estadia">20 de maio | 16:10</p>
-                        <p class="acumulado">4 hrs 39 min</p>
-                    </div>
-                    <div class="BoxHistorico">
-                        <div class="status bordaStatusAmarela"><img src="../assets/icons/alerta_amarelo.svg" alt=""></div>
-                        <p class="doca bolder">D01</p>
-                        <p class="inicio_estadia">20 de maio | 16:10</p>
-                        <p class="acumulado">4 hrs 39 min</p>
-                    </div>
-                </div>
+                <div class="ConteudoHistorico" id="ConteudoHistorico"></div>
             </div>
         </div>
     </div>
 </body>
+<script>
+    let fk_empresa = sessionStorage.FK_EMPRESA
+
+    nome.innerHTML = `${sessionStorage.NOME_USUARIO}`;
+    empresaUser.innerHTML = `${sessionStorage.RAZAO_SOCIAL}`;
+    permissao.innerHTML = `${sessionStorage.NOME_NIVEL_ACESSO}`;
+
+    function Inicializar() {
+        fk_empresa = sessionStorage.FK_EMPRESA;
+        setTimeout(PegarAvisos, 500);
+    }
+
+    function PegarAvisos() {
+        fetch(`/empresas/PegarAvisos/${fk_empresa}`)
+            .then((resposta) => resposta.json())
+            .then((dados) => {
+                console.log(dados)
+                RenderizarAvisos(dados)
+            })
+            .catch((erro) => {
+                console.error("Erro ao buscar avisos:", erro);
+            })
+
+        setTimeout(PegarAvisos, 10000)
+    }
+
+    function RenderizarAvisos(dados) {
+        ConteudoHistorico.innerHTML = "";
+        AtualizarHoraAtual()
+
+        if (dados.length === 0) {
+            ConteudoHistorico.innerHTML = "<p style='text-align:center;'>Nenhum alerta no momento.</p>";
+            return;
+        }
+
+        for (let i = 0; i < dados.length; i++) {
+            var horas = Math.floor(dados[i].tempo_acumulado_min / 60);
+            var minutos = dados[i].tempo_acumulado_min % 60;
+
+            var corBorda = dados[i].tempo_acumulado_min >= 300 ? "bordaStatusVermelha" : "bordaStatusAmarela";
+            var icone = dados[i].tempo_acumulado_min >= 300 ? "alerta_vermelho.svg" : "alerta_amarelo.svg";
+
+            ConteudoHistorico.innerHTML += `
+            <div class="BoxHistorico">
+                <div class="status ${corBorda}">
+                    <img src="../assets/icons/${icone}" alt="">
+                </div>
+                <p class="doca bolder">${dados[i].numero_doca}</p>
+                <p class="inicio_estadia">${FormatarData(dados[i].dt_registro)}</p>
+                <p class="acumulado">${horas} hrs ${minutos} min</p>
+            </div>
+        `;
+        }
+    }
+
+    function FormatarData(dtRegistro) {
+        var data = new Date(dtRegistro);
+        var dia = data.toLocaleDateString({ day: "numeric", month: "long" });
+        var hora = data.toLocaleTimeString({ hour: "2-digit", minute: "2-digit" });
+        return `${dia} | ${hora}`;
+    }
+
+    function AtualizarHoraAtual() {
+        var agora = new Date();
+
+        var data = agora.toLocaleString({
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            seconds: "2-digit"
+        });
+
+        UltimaAtualizacao.innerHTML = `Última atualização: ${data}`;
+    }
+</script>
+
 </html>
