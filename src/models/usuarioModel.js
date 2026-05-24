@@ -87,12 +87,13 @@ function autenticar(email_user, senha_user) {
 }
 
 
-function cadastrarUsuario(nome_user, email_user, senha_user) {
+function cadastrarUsuario(nome_user, email_user, senha_user, fk_empresa, fk_nivel_acesso) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", nome_user, email_user, senha_user);
 
     var instrucaoSql = `
-        INSERT INTO usuario (nome_user, email_user, senha_user) VALUES ('${nome_user}', '${email_user}', '${senha_user}');
-    `;
+    INSERT INTO usuario (nome_user, email_user, senha_user, fk_empresa, fk_nivel_acesso) VALUES
+    ('${nome_user}', '${email_user}', '${senha_user}',${fk_empresa},${fk_nivel_acesso});
+    `
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }

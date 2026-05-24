@@ -127,8 +127,10 @@ function cadastrarUsuario(req, res) {
     var nome_user = req.body.nomeServer;
     var email_user = req.body.emailServer;
     var senha_user = req.body.senhaServer;
+    var fk_empresa = req.body.fk_empresaServer;
+    var fk_nivel_acesso = req.body.fk_nivel_acessoServer;
 
-    usuarioModel.cadastrarUsuario(nome_user, email_user, senha_user)
+    usuarioModel.cadastrarUsuario(nome_user, email_user, senha_user, fk_empresa, fk_nivel_acesso)
         .then(
             function(resultado) {
                 res.json(resultado)

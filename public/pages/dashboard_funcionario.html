@@ -80,28 +80,28 @@
                         <div class="linha">
                             <div class="grupo">
                                 <label for="nome">Nome Completo</label>
-                                <input type="text" id="nome" placeholder="Ex:Nicole">
+                                <input type="text" id="nomeUser" placeholder="Ex:Nicole">
                             </div>
                             <div class="grupo">
                                 <label for="email">E-mail</label>
-                                <input type="email" id="email" placeholder="nicole@empresa.com">
+                                <input type="email" id="emailUser" placeholder="nicole@empresa.com">
                             </div>
                         </div>
 
                         <div class="linha">
                             <div class="grupo">
                                 <label for="senha">Senha Inicial</label>
-                                <input type="password" id="senha" placeholder="Mínimo 6 caracteres">
+                                <input type="password" id="senhaUser" placeholder="Mínimo 6 caracteres">
                             </div>
 
                             <div class="grupo">
                                 <label for="nivel">Nível acesso</label>
                                 <div class="select-seta">
-                                    <select id="nivel">
-                                        <option value="">Selecione um nível</option>
-                                        <option>Administrador</option>
-                                        <option>Gestor</option>
-                                        <option>Funcionario</option>
+                                    <select id="nivelUser">
+                                        <option>Selecione um nível</option>
+                                        <option value="1">Administrador</option>
+                                        <option value="3">Gestor</option>
+                                        <option value="2">Funcionario</option>
                                     </select>
                                     <span class="arrow">↓</span>
                                 </div>
@@ -112,7 +112,7 @@
 
                     <div class="acao">
                         <button class="btn-cancelar">Cancelar</button>
-                        <button class="btn-salvar">Salvar Cadastro</button>
+                        <button onclick="cadastrarUsuario()" class="btn-salvar">Salvar Cadastro</button>
                     </div>
                 </div>
             </div>
@@ -164,5 +164,20 @@
                 </div>
         </div>
 </body>
+<script>
+    function cadastrarUsuario(){
 
+        let nomeUsuario = nomeUser.value
+        let emailUser = emailUser.value
+        let senhaUsuario = senhaUser.value
+        let nivel = Number(nivelUser.value)
+
+        
+
+
+
+
+    }
+
+</script>
 </html>
