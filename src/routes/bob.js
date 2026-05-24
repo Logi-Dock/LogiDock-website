@@ -1,4 +1,4 @@
-// criando o objeto de rotas do Express
+/* // criando o objeto de rotas do Express
 var router = express.Router();
 
 // importando o controller responsável pela comunicação com a IA
@@ -25,4 +25,4 @@ router.post("/perguntar", async (req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = router; */

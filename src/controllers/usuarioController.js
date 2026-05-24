@@ -101,7 +101,8 @@ function autenticar(req, res) {
                             nome_user: resultadoAutenticar[0].nome_user,
                             senha_user: resultadoAutenticar[0].senha_user,
                             razao_social: resultadoAutenticar[0].razao_social,
-                            nome_nivel_acesso: resultadoAutenticar[0].nome_nivel_acesso
+                            nome_nivel_acesso: resultadoAutenticar[0].nome_nivel_acesso,
+                            fk_empresa: resultadoAutenticar[0].fk_empresa
                         });
 
                     } else if (resultadoAutenticar.length == 0) {
