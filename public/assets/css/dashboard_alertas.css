@@ -4,3 +4,113 @@
     min-height: 100vh;
     background-color: #F4F6FA;
 }
+
+
+.Titulo {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding-left: 100px;
+    justify-content: flex-end;
+    height: 150px;
+}
+
+.Titulo h1 {
+    font-size: 45px;
+}
+
+.Titulo p {
+    font-size: 25px;
+}
+
+.TabelaHistorico {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.AtributosHistorico {
+    display: flex;
+    width: 70%;
+    height: 50px;
+    background-color: #D9D9D9;
+    border-radius: 10px 10px 0 0;
+}
+
+.ConteudoHistorico {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    align-items: center;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.BoxHistorico {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    align-items: center;
+    border-bottom: 1px solid #D9D9D9;
+}
+
+
+
+
+.status {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 15px 0 15px 0;
+}
+
+.bordaStatusVermelha {
+    border-left: 10px solid red;
+}
+
+.bordaStatusAmarela {
+    border-left: 10px solid yellow;
+}
+
+.doca {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 15px 0 15px 0;
+}
+
+.inicio_estadia {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 15px 0 15px 0;
+}
+
+.inicio_estadiaAtributo {
+    width: 27%;
+}
+
+.acumulado {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 15px 0 15px 0;
+}
+
+.acumuladoAtributo {
+    width: 33%
+}
+
+.bolder {
+    font-weight: bolder;
+}
