@@ -168,15 +168,32 @@
     function cadastrarUsuario(){
 
         let nomeUsuario = nomeUser.value
-        let emailUser = emailUser.value
+        let emailUsuario = emailUser.value
         let senhaUsuario = senhaUser.value
         let nivel = Number(nivelUser.value)
 
-        
+        let id_empresa = sessionStorage.FK_EMPRESA  
 
+          fetch("/usuarios/CadastrarUsuario", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            nomeServer: nomeUsuario,
+            emailServer: emailUsuario,
+            senhaServer: senhaUsuario,
+            fk_empresaServer: id_empresa,
+            fk_nivel_acessoServer: nivel
+        })
+        }).then(function (resposta){
+            if(resposta.ok){
+                alert('Cadastrado com sucesso!!')
+            }else{
+                throw'Teve um erro!!!'
+            }
 
-
-
+        })
     }
 
 </script>
