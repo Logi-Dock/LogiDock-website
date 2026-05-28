@@ -35,8 +35,10 @@ function verificarSenhaAtual(idUsuario, senhaAtual) {
 }
 
 function preencherDadosUsuario(data) {
+    let nome = document.getElementById("nome");
+
     empresaUser.innerHTML = data[0].razao_social;
-    nome_user.innerHTML = data[0].nome_user;
+    nome.innerHTML = data[0].nome_user;
     permissao.innerHTML = data[0].nome_nivel_acesso;
     dados_usuario_nome.innerHTML = data[0].nome_user;
     email_usuario.innerHTML = data[0].email_user;

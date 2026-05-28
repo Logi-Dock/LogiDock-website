@@ -1,40 +1,77 @@
-.conteudo{
+.conteudo {
     justify-self: end;
     width: 77%;
     min-height: 100vh;
     background-color: #F4F6FA;
+    padding: 1.5rem 1.5rem 1.5rem;
 }
 
-.hello{
+.hello {
     display: flex;
-    flex-direction: column;
-    padding: 30px 0px 0px 50px;
+    justify-content: space-between;
+    align-items: center;
 }
 
-#titulo_hello{
+#titulo_hello {
     font-size: 36px;
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif
 }
 
-#nome_funcionario{
+#nome_funcionario {
     color: #1056A8;
 }
 
-.informacoes_hello{
+.informacoes_hello {
     font-size: 20px;
     font-family: Arial, Helvetica, sans-serif;
     margin-bottom: 1rem;
 }
 
-.graficos{
-    padding: 0 1.5rem 1.5rem;
+.botoes_hello {
+    display: flex;
+    gap: 1rem;
+}
+
+.botoes_hello button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 1rem;
+    border: 1px solid #E1E1E1;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    color: #6B7280;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.botoes_hello button:hover {
+    background-color: #E1E1E1;
+    transition: background-color 0.3s ease;
+}
+
+.filtro-periodo select {
+    padding: 0.7rem 1rem;
+    border: 1px solid #E1E1E1;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    color: #6B7280;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.filtro-periodo select:hover {
+    background-color: #E1E1E1;
+    transition: background-color 0.3s ease;
 }
 
 .kpi-item {
     display: grid;
     grid-template-rows: auto auto 1fr;
-    border-radius: 10px ;
+    border-radius: 10px;
     background-color: #1056A8;
     border-radius: 10px;
     padding: 14px 18px;
@@ -66,7 +103,7 @@
 
 #kpi_tempo {
     font-size: 0.78rem;
-    color:rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.7);
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -95,7 +132,7 @@
 .detalhesKPI {
     font-size: 0.8rem;
     font-weight: normal;
-    background-color:  rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.2);
     border-radius: 20px;
     padding: 2px 10px;
     color: #fff;
@@ -103,7 +140,7 @@
 }
 
 .kpi-item-content img {
-   display: none;
+    display: none;
 }
 
 .container_charts {
@@ -115,7 +152,7 @@
     gap: 1rem;
 
     width: 100%;
-    
+
 }
 
 .top-left {
@@ -133,7 +170,9 @@
     grid-row: 2;
 }
 
-.top-left, .top-right, .bottom {
+.top-left,
+.top-right,
+.bottom {
     background: #fff;
     border-radius: 10px;
     padding: 1rem;
