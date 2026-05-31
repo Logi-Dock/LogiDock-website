@@ -1,8 +1,6 @@
 var database = require("../database/config")
 
 function kpiDocaMaisAtrasos(fk_empresa, periodo) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente.")
-
     var instrucaoSql = ` 
     SELECT
     \`Número da Doca\` as doca,
@@ -21,8 +19,6 @@ function kpiDocaMaisAtrasos(fk_empresa, periodo) {
 }
 
 function kpiDocaMaiorAtraso(fk_empresa, periodo) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente.")
-
     var instrucaoSql = ` 
     SELECT
     \`Número da Doca\` AS doca,
@@ -55,8 +51,6 @@ function kpiDocaMaiorAtraso(fk_empresa, periodo) {
 }
 
 function kpiDocaMaiorTaxaDeAtrasos(fk_empresa, periodo) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente.")
-
     var instrucaoSql = ` 
     SELECT
     \`Número da Doca\` AS doca,
@@ -86,8 +80,6 @@ function kpiDocaMaiorTaxaDeAtrasos(fk_empresa, periodo) {
 }
 
 function kpiDocaMaiorTempoDeAtrasoAcumulado(fk_empresa, periodo) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente.")
-
     var instrucaoSql = ` 
     SELECT
     \`Número da Doca\` AS doca,
@@ -112,10 +104,32 @@ function kpiDocaMaiorTempoDeAtrasoAcumulado(fk_empresa, periodo) {
 }
 
 function graficoTempoMedioPorDoca(fk_empresa, limite_linhas) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente.")
+    var instrucaoSql = `
+        SELECT
+            \`Número da Doca\` AS doca,
 
-    var instrucaoSql = ` 
-    
+            ROUND(
+                AVG(
+                    TIMESTAMPDIFF(
+                        MINUTE,
+                        \`Data de Entrada\`,
+                        CASE
+                            WHEN \`Data da Saída\` IS NULL
+                            THEN NOW()
+                            ELSE \`Data da Saída\`
+                        END
+                    )
+                ),
+                0
+            ) AS tempo_medio_minutos
+
+        FROM ocorrencias_docas
+
+        WHERE \`ID da Empresa\` = ${fk_empresa}
+        AND \`Data de Entrada\` >= NOW() - INTERVAL ${periodo}
+
+        GROUP BY \`Número da Doca\`
+        ORDER BY doca;
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -123,28 +137,50 @@ function graficoTempoMedioPorDoca(fk_empresa, limite_linhas) {
 }
 
 function graficoDocasComMaisAtrasos(fk_empresa) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente.")
+    var instrucaoSql = `
+        SELECT
+            \`Tipo de Ocorrência\` AS status,
+            COUNT(*) AS quantidade
 
-    var instrucaoSql = ` 
-    
+        FROM ocorrencias_docas
+
+        WHERE \`ID da Empresa\` = ${fk_empresa}
+        AND \`Data de Entrada\` >= NOW() - INTERVAL ${periodo}
+
+        GROUP BY \`Tipo de Ocorrência\`;
     `;
+
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
 function graficoTempoDePermanenciaPorOperacao(fk_empresa, limite_linhas) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente.")
+    var instrucaoSql = `
+        SELECT
+            \`Número da Doca\` AS doca,
 
-    var instrucaoSql = ` 
-    
+            \`Data de Entrada\` AS inicio,
+
+            CASE
+                WHEN \`Data da Saída\` IS NULL
+                THEN NOW()
+                ELSE \`Data da Saída\`
+            END AS fim,
+
+            \`Tipo de Ocorrência\` AS status
+
+        FROM ocorrencias_docas
+
+        WHERE \`ID da Empresa\` = ${fk_empresa}
+        AND \`Data de Entrada\` >= NOW() - INTERVAL ${periodo}
+
+        ORDER BY inicio;
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
-
-
 
 module.exports = {
     kpiDocaMaisAtrasos,

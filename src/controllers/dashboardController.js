@@ -86,7 +86,7 @@ function kpiDocaMaiorTempoDeAtrasoAcumulado(req, res) {
 
 function graficoTempoMedioPorDoca(req, res) {
     var fk_empresa = req.params.fk_empresa;
-    const limite_linhas = 10; // numero de docas que vai aparecer no gráfico
+    const limite_linhas = 10;
     
     dashboardModel.graficoTempoMedioPorDoca(fk_empresa, limite_linhas)
     .then(
