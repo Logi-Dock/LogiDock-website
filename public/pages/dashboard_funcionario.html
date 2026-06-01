@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogiDock - Funcionário</title>
+
+    <link rel="stylesheet" href="../assets/css/dashboard_funcionario.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/side_bar.css">
+
+    <script src="../assets/js/dashboard_user.js" defer></script>
+</head>
+
+<body>
+    <div class="tela_graficos">
+        <div class="navegacao">
+            <div class="titulo">
+                <img src="../assets/images/logidock_logo.svg" alt="" onclick="window.location.href='../index.html';">
+                <span id="empresaUser">empresaUser</span>
+            </div>
+
+            <div class="divisor"></div>
+
+            <div class="navegadores">
+                <div class="navegador" onclick="window.location.href='dashboard_graficos.html';">
+                    <img src="../assets/icons/icone_dashboard.png" alt="">
+                    <span>Dashboard</span>
+                </div>
+
+                <div class="navegador" onclick="window.location.href='dashboard_alertas.html';">
+                    <img src="../assets/icons/icone_alerta.png" alt="">
+                    <span>Alertas</span>
+                </div>
+
+                <div class="navegador" onclick="window.location.href='dashboard_docas.html';">
+                    <img src="../assets/icons/icone_docas.png" alt="">
+                    <span>Docas</span>
+                </div>
+
+                <div class="navegador" onclick="window.location.href='dashboard_empresa.html';">
+                    <img src="../assets/icons/icone_empresa.png" alt="">
+                    <span>Empresa</span>
+                </div>
+
+                <div class="navegador" onclick="window.location.href='dashboard_funcionario.html';"
+                    id="navegador_agora">
+                    <img src="../assets/icons/icone_funcionario.png" alt="">
+                    <span>Funcionário</span>
+                </div>
+            </div>
+
+            <div class="divisor"></div>
+
+            <div class="info_perfil" onclick="window.location.href='dashboard_user.html'">
+                <img src="../assets/icons/teste_ft_perfil.png" alt="">
+                <div id="nome_permissao">
+                    <span id="nome">Fernando Brandão</span>
+                    <span id="permissao">Administrador</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="conteudo">
+            <div class="hello">
+                <span id="titulo_hello">Cadastrar Funcionário</span></span>
+
+                <div class="informacoes_hello">
+                    <span id="empresa">Administrar o perfil dos usuários e suas respectivas permissões</span>
+                </div>
+
+                <div class="nome-usuario-card">
+
+
+                    <div class="cabecalho">
+                        <img src="" alt="">
+                        <span>Novo Usuário</span>
+                    </div>
+
+                    <div class="campos">
+                        <div class="linha">
+                            <div class="grupo">
+                                <label for="nome">Nome Completo</label>
+                                <input type="text" id="nomeUser" placeholder="Ex:Nicole">
+                            </div>
+                            <div class="grupo">
+                                <label for="email">E-mail</label>
+                                <input type="email" id="emailUser" placeholder="nicole@empresa.com">
+                            </div>
+                        </div>
+
+                        <div class="linha">
+                            <div class="grupo">
+                                <label for="senha">Senha Inicial</label>
+                                <input type="password" id="senhaUser" placeholder="Mínimo 6 caracteres">
+                            </div>
+
+                            <div class="grupo">
+                                <label for="nivel">Nível acesso</label>
+                                <div class="select-seta">
+                                    <select id="nivelUser">
+                                        <option>Selecione um nível</option>
+                                        <option value="1">Administrador</option>
+                                        <option value="3">Gestor</option>
+                                        <option value="2">Funcionario</option>
+                                    </select>
+                                    <span class="arrow">↓</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="acao">
+                        <button class="btn-cancelar">Cancelar</button>
+                        <button onclick="cadastrarUsuario()" class="btn-salvar">Salvar Cadastro</button>
+                    </div>
+                </div>
+            </div>
+
+                <div class="tabela-usuarios">
+
+                    <div class="topo">
+                        <div class="contadores">
+                            <span>Total: <strong>4</strong></span>
+                            <span>Administradores: <strong>1</strong></span>
+                            <span>Gestores: <strong>2</strong></span>
+                            <span>Funcionários: <strong>1</strong></span>
+                        </div>
+                        <input type="text" class="busca" placeholder="Buscar por nome...">
+                    </div>
+
+                    <table class="tabela">
+                        <thead>
+                            <tr>
+                                <th>Usuário</th>
+                                <th>Nível de acesso</th>
+                                <th>Permissões</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Caique Silva</td>
+                                <td><span class="badge-admin">ADMINISTRADOR</span></td>
+                                <td>CRIAR_DOCA · EDITAR_DOCA · VISUALIZAR_DOCA</td>
+                                <td><button class="btn-editar">✎</button></td>
+                            </tr>
+                            <tr>
+                                <td>Nicole Miranda</td>
+                                <td><span class="badge-admin">GESTOR</span></td>
+                                <td>CRIAR_DOCA · EDITAR_DOCA · VISUALIZAR_DOCA</td>
+                                <td><button class="btn-editar">✎</button></td>
+                            </tr>
+                            <tr>
+                                <td>Fernando Brandão</td>
+                                <td><span class="badge-admin">ADMINISTRADOR</span></td>
+                                <td>CRIAR_DOCA · EDITAR_DOCA · VISUALIZAR_DOCA</td>
+                                <td><button class="btn-editar">✎</button></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+
+                </div>
+        </div>
+</body>
+<script>
+    function cadastrarUsuario(){
+
+        let nomeUsuario = nomeUser.value
+        let emailUsuario = emailUser.value
+        let senhaUsuario = senhaUser.value
+        let nivel = Number(nivelUser.value)
+
+        let id_empresa = sessionStorage.FK_EMPRESA  
+
+          fetch("/usuarios/CadastrarUsuario", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            nomeServer: nomeUsuario,
+            emailServer: emailUsuario,
+            senhaServer: senhaUsuario,
+            fk_empresaServer: id_empresa,
+            fk_nivel_acessoServer: nivel
+        })
+        }).then(function (resposta){
+            if(resposta.ok){
+                alert('Cadastrado com sucesso!!')
+            }else{
+                throw'Teve um erro!!!'
+            }
+
+        })
+    }
+
+</script>
+</html>

@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>LogiDock - Usuário</title>
 
-    <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/dashboard_user.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/side_bar.css">
 
     <script src="../assets/js/dashboard_user.js" defer></script>
 </head>
@@ -16,33 +17,43 @@
     <div class="tela_graficos">
         <div class="navegacao">
             <div class="titulo">
-                <img src="../assets/images/logidock_logo.svg" alt="">
+                <img src="../assets/images/logidock_logo.svg" alt="" onclick="window.location.href='../index.html';">
                 <span id="empresaUser">empresaUser</span>
             </div>
-
+    
             <div class="divisor"></div>
-
+    
             <div class="navegadores">
-                <div class="navegador" id="navegador_agora">
+                <div class="navegador" onclick="window.location.href='dashboard_graficos.html';">
                     <img src="../assets/icons/icone_dashboard.png" alt="">
                     <span>Dashboard</span>
                 </div>
-
-                <div class="navegador" onclick="window.location.href='../index.html';">
+    
+                <div class="navegador" onclick="window.location.href='dashboard_alertas.html';">
+                    <img src="../assets/icons/icone_alerta.png" alt="">
+                    <span>Alertas</span>
+                </div>
+    
+                <div class="navegador" onclick="window.location.href='dashboard_docas.html';">
                     <img src="../assets/icons/icone_docas.png" alt="">
                     <span>Docas</span>
                 </div>
 
-                <div class="navegador" onclick="window.location.href='../index.html';">
+                <div class="navegador" onclick="window.location.href='dashboard_empresa.html';">
                     <img src="../assets/icons/icone_empresa.png" alt="">
                     <span>Empresa</span>
                 </div>
-            </div>
 
-            <div class="info_perfil">
-                <div class="avatar_usuario">
-                    FB
+                <div class="navegador" onclick="window.location.href='dashboard_funcionario.html';">
+                    <img src="../assets/icons/icone_funcionario.png" alt="">
+                    <span>Funcionário</span>
                 </div>
+            </div>
+    
+            <div class="divisor"></div>
+    
+            <div class="info_perfil" onclick="window.location.href='dashboard_user.html'">
+                <img src="../assets/icons/teste_ft_perfil.png" alt="">
                 <div id="nome_permissao">
                     <span id="nome">Fernando Brandão</span>
                     <span id="permissao">Administrador</span>
@@ -50,7 +61,7 @@
             </div>
         </div>
 
-        <div class="dashboard">
+        <div class="conteudo">
 
             <div class="cabecalho_perfil">
                 <h1>Meu perfil</h1>
@@ -97,9 +108,9 @@
                 </div>
 
                 <div class="acoes_formulario">
-                    <button id="btn_cancelar" class="botao_secundario hide">Cancelar</button>
-                    <button id="btn_salvar" class="botao_primario hide">Salvar dados</button>
-                    <button id="btn_editar" class="botao_primario">Editar dados</button>
+                    <button id="btn_cancelar" class="botao_secundario hide" onclick="cancelarEdicao()">Cancelar</button>
+                    <button id="btn_salvar" class="botao_primario hide" onclick="atualizarDados()">Salvar dados</button>
+                    <button id="btn_editar" class="botao_primario" onclick="habilitarEdicao()">Editar dados</button>
                 </div>
             </div>
 
@@ -109,23 +120,23 @@
                 <div class="formulario_duas_colunas">
                     <div class="grupo_campo">
                         <label>Senha atual</label>
-                        <input type="password" placeholder="******">
+                        <input id="senha_user" type="password" placeholder="******">
                     </div>
 
                     <div class="grupo_campo">
                         <label>Nova senha</label>
-                        <input type="password" placeholder="******">
+                        <input id="nova_senha" type="password" placeholder="******">
                     </div>
                 </div>
 
                 <div class="grupo_campo">
                     <label>Confirmar nova senha</label>
-                    <input type="password" placeholder="******">
+                    <input id="confirmar_senha" type="password" placeholder="******">
                 </div>
 
                 <div class="acoes_formulario">
-                    <button class="botao_secundario">Cancelar</button>
-                    <button class="botao_primario">Atualizar senha</button>
+                    <button class="botao_secundario" onclick="cancelarSenha()">Cancelar</button>
+                    <button class="botao_primario" id="btn_atualizar" onclick="atualizarSenha()">Atualizar senha</button>
                 </div>
             </div>
 

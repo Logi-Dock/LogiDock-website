@@ -1,22 +1,43 @@
+// importando a SDK oficial do Gemini para comunicação com a IA
+const { GoogleGenAI } = require("@google/genai");
+
+// criando a instância da IA utilizando a chave salva no arquivo .env
+const chatIA = new GoogleGenAI({ apiKey: process.env.MINHA_CHAVE });
+
 // função para gerar respostas usando o gemini
-async function gerarResposta(mensagem) {
-
-    try {
+async function gerarResposta(mensagem)
+{
+    try
+    {
         // gerando conteúdo com base na pergunta
-        const modeloIA = chatIA.models.generateContent({
+        const modeloIA = chatIA.models.generateContent(
+        {
             model: "gemini-2.5-flash",
-            contents: `Em um paragráfo responda: ${mensagem}`
 
+            // prompt enviado para a IA
+            contents: `Em um paragráfo responda: ${mensagem}`
         });
-        const resposta = (await modeloIA).text;
-        const tokens = (await modeloIA).usageMetadata;
+
+        // aguardando a resposta da API
+        const resposta = (await modeloIA).text; // .text pra receber somente texto
+
+        const tokens = (await modeloIA).usageMetadata; // consumo de tokens a cada prompt
 
         console.log(resposta);
         console.log("Uso de Tokens:", tokens);
 
         return resposta;
-    } catch (error) {
+    }
+    
+    // Tratamento de erro
+    catch (error)
+    {
         console.error(error);
         throw error;
     }
 }
+
+module.exports =
+{
+    gerarResposta
+};

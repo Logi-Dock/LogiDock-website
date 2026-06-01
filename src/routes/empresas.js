@@ -11,4 +11,8 @@ router.get("/PegarIdEmpresa/:codigo", function (req, res) {
     empresaController.PegarIdEmpresa(req, res);
 });
 
+router.get("/PegarAvisos/:fk_empresa", function (req,res) {
+    empresaController.PegarAvisos(req, res);
+})
+
 module.exports = router;

@@ -10,6 +10,7 @@ require("dotenv").config({ path: caminho_env });
 var express = require("express");
 var cors = require("cors");
 var path = require("path");
+
 var PORTA_APP = process.env.APP_PORT;
 var HOST_APP = process.env.APP_HOST;
 
@@ -19,11 +20,18 @@ var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var empresaRouter = require("./src/routes/empresas");
 var nivelAcessoRouter = require("./src/routes/nivelAcesso.js");
-// var bobRouter = require("./src/routes/bob.js");
+// var bobRouter = require("./src/routes/bob.js"); // BOBIA
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
+
+// configurando CORS - BOBIA
+/*app.use((req, res, next) => { // BOBIA
+    res.header('Access-Control-Allow-Origin', '*'); // BOBIA
+    res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept'); // BOBIA
+    next(); // BOBIA
+}); // BOBIA */
 
 
 app.use(cors());
@@ -32,34 +40,7 @@ app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/empresas", empresaRouter);
 app.use("/nivelAcesso", nivelAcessoRouter);
-// app.use("/bob", bobRouter);
-
-
-
-// importando os bibliotecas necessárias
-// const { GoogleGenAI } = require("@google/genai");
-//const express = require("express");
-//const path = require("path");
-
-// carregando as variáveis de ambiente do projeto do arquivo .env
-// require("dotenv").config();
-
-// configurando o servidor express
-
-//const PORTA_SERVIDOR = process.env.PORTA;
-
-// configurando o gemini (IA)
-// const chatIA = new GoogleGenAI({ apiKey: process.env.MINHA_CHAVE });
-
-// configurando CORS
-// app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', '*');
-//     res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
-//     next();
-// });
-
-
-
+// app.use("/bob", bobRouter); // BOBIA
 
 app.listen(PORTA_APP, function () {
     console.log(`
