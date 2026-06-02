@@ -9,6 +9,11 @@
     background-position: center;
 }
 
+html {
+  scroll-behavior: smooth; /* rola a tela suavemente */
+}
+
+
 .hero-content {
     max-width: 750px;
     color: #fff;
