@@ -39,4 +39,5 @@ router.get("/PegarIdUsuario/:email", function (req, res) {
     usuarioController.PegarIdUsuario(req, res);
 });
 
+
 module.exports = router;
