@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogiDock | Cadastrar Doca</title>
+    <link rel="stylesheet" href="../assets/css/cadastrar_docas.css">
+</head>
+<body>
+    <section>
+
+    </section>
+
+    <!-- Cadastrar nova doca -->
+     <section class="dados-da-doca">
+        <h1>Cadastrar nova doca</h1>
+        <h3>O sensor é vinculado automaticamente ao salvar</h3>
+
+        <div class="cadastrar-doca-painel">
+            <h3>Dados da doca</h3>
+            <img src="icone_caminhao.svg">
+
+            <hr class="dados-da-doca-separador">
+
+            <div class="doca-campo">
+                <label>Número/Identificador</label>
+                <input type="text" placeholder="Ex: D03, A02, Doca Sul">
+            </div>
+
+            <div class="doca-campo">
+                <label>Status inicial</label>
+                <input type="text" list="status-da-doca" placeholder="ATIVO">
+                <datalist id="status-da-doca">
+                    <option value="ATIVO">
+                    <option value="INATIVO">
+                </datalist>
+            </div>
+            <!-- painel azul -->
+            <div class="sensor-associado-painel">
+                <h3>Sensor associado — configuração automática</h3>
+                <img src="icone_sensor.svg">
+
+                <div class="sensor-campo">
+                    <label>Modelo do sensor</label>
+                    <input type="text" placeholder="HC-SR04" readonly>
+                </div>
+
+                <div class="sensor-campo">
+                    <label>Status do sensor</label>
+                    <input type="text" list="status-do-sensor" placeholder="ATIVO">
+                    <datalist id="status-do-sensor">
+                        <option value="ATIVO">
+                        <option value="INATIVO">
+                    </datalist>
+                </div>
+
+                <h5>Um sensor HC-SR04 será criado e vinculado automaticamente a esta doca ao salvar.</h5>
+                <img src="icone_alerta.png">
+            </div>
+
+            <!-- Botões -->
+             <div>
+                <button class="btn-cancelar" type="button" onclick="cancelarCadastrarDoca">Cancelar</button>
+                <button class="btn-editar" type="button" onclick="editarCadastrarDoca">Editar</button>
+                <button class="btn-cadastrar" type="button" onclick="cadastrarDoca">Cadastrar doca + sensor</button>
+             </div>
+            
+        </div>
+
+         <!-- Tabela de docas já cadastradas -->
+        <section class="docas-ja-cadastradas">
+            <h2>Docas já cadastradas</h2>
+
+            <div class="cadastradas-painel">
+                <table class="docas-table">
+                    <thead>
+                        <tr>
+                            <th>IDENTIFICADOR</th>
+                            <th>STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>D01</td>
+                            <td>D02</td>
+                            <td>D03</td>
+                            <dt>D04</dt>
+                            <dt>D05</dt>
+                            <dt>D06</dt>
+                            <dt>D07</dt>
+                        </tr>
+                    </tbody>
+            </div>
+        </section>
+
+    
+</body>
+</html>
