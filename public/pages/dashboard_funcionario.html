@@ -13,7 +13,7 @@
     <script src="../assets/js/dashboard_user.js" defer></script>
 </head>
 
-<body>
+<body onload="pesquisarUsuario()">
     <div class="tela_graficos container">
         <div class="navegacao">
             <div class="titulo">
@@ -124,72 +124,39 @@
                 </div>
             </div>
 
-                <div class="tabela-usuarios">
+            <div class="tabela-usuarios">
 
-                    <div class="topo">
-                        <div class="contadores">
-                            <span>Total: <strong>5</strong></span>
-                            <span>Administradores: <strong>1</strong></span>
-                            <span>Gestores: <strong>3</strong></span>
-                            <span>Funcionários: <strong>1</strong></span>
-                        </div>
-                        <input type="text" class="busca" placeholder="Buscar por nome...">
-                        <button class="pesquisarUsuario" onclick="pesquisarUsuario()">Buscar 🔍</button>
+                <div class="topo">
+                    <div class="contadores">
+                        <span>Total: <strong>5</strong></span>
+                        <span>Administradores: <strong>1</strong></span>
+                        <span>Gestores: <strong>3</strong></span>
+                        <span>Funcionários: <strong>1</strong></span>
                     </div>
-
-                    <table class="tabela">
-                        <thead>
-                            <tr>
-                                <th>Usuário</th>
-                                <th>Nível de acesso</th>
-                                <th>Permissões</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Carlos Silva</td>
-                                <td><span class="badge-admin">ADMINISTRADOR</span></td>
-                                <td>CRIAR_DOCA · EDITAR_DOCA · VISUALIZAR_DOCA</td>
-                                <td><button class="btn-editar">✎</button></td>
-                            </tr>
-                            <tr>
-                                <td>Nicole</td>
-                                <td><span class="badge-admin">GESTOR</span></td>
-                                <td>CRIAR_DOCA · EDITAR_DOCA · VISUALIZAR_DOCA</td>
-                                <td><button class="btn-editar">✎</button></td>
-                            </tr>
-                            <tr>
-                                <td>Fernando Costa</td>
-                                <td><span class="badge-admin">FUNCIONÁRIO</span></td>
-                                <td>CRIAR_DOCA · EDITAR_DOCA · VISUALIZAR_DOCA</td>
-                                <td><button class="btn-editar">✎</button></td>
-                            </tr>
-
-                            <tr>
-                                <td>Marcos Lima</td>
-                                <td><span class="badge-admin">GESTOR</span></td>
-                                <td>CRIAR_DOCA · EDITAR_DOCA · VISUALIZAR_DOCA</td>
-                                <td><button class="btn-editar">✎</button></td>
-                            </tr>
-
-                              <tr>
-                                <td>Ana Souza</td>
-                                <td><span class="badge-admin">GESTOR</span></td>
-                                <td>CRIAR_DOCA · EDITAR_DOCA · VISUALIZAR_DOCA</td>
-                                <td><button class="btn-editar">✎</button></td>
-                            </tr>
-                            
-                        </tbody>
-                    </table>
-
+                    <input type="text" class="busca" placeholder="Buscar por nome...">
+                    <button class="pesquisarUsuario" onclick="pesquisarUsuario()">Buscar 🔍</button>
                 </div>
-            
+
+                <table class="tabela">
+                    <thead>
+                        <tr>
+                            <th>Usuário</th>
+                            <th>Nível de acesso</th>
+                            <th>Permissões</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaUsuarios">
+                    </tbody>
+                </table>
+
+            </div>
+
         </div>
 </body>
 <script>
     let usuariosCadastrados = []
-    function cadastrarUsuario(){
+    function cadastrarUsuario() {
 
 
         let nomeUsuario = nomeUser.value
@@ -197,40 +164,65 @@
         let senhaUsuario = senhaUser.value
         let nivel = Number(nivelUser.value)
 
-        if(nomeUsuario == '' || emailUsuario == '' || senhaUsuario == ''){
+        if (nomeUsuario == '' || emailUsuario == '' || senhaUsuario == '') {
             alert('Preenchimento obrigatório: os campos não podem estar vazios!')
             return
         }
 
 
-        let id_empresa = sessionStorage.FK_EMPRESA  
+        let id_empresa = sessionStorage.FK_EMPRESA
 
-          fetch("/usuarios/CadastrarUsuario", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            nomeServer: nomeUsuario,
-            emailServer: emailUsuario,
-            senhaServer: senhaUsuario,
-            fk_empresaServer: id_empresa,
-            fk_nivel_acessoServer: nivel
-        })
-        }).then(function (resposta){
-            if(resposta.ok){
+        fetch("/usuarios/CadastrarUsuario", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nomeServer: nomeUsuario,
+                emailServer: emailUsuario,
+                senhaServer: senhaUsuario,
+                fk_empresaServer: id_empresa,
+                fk_nivel_acessoServer: nivel
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
                 alert('Cadastrado com sucesso!!')
-            }else{
-                throw'Teve um erro!!!'
+            } else {
+                throw 'Teve um erro!!!'
             }
 
         })
     }
 
-    function pesquisarUsuario(){
+    function pesquisarUsuario() {
+        console.log()
+        fetch(`/usuarios/listarUsuarios`)
+            .then((resposta) => resposta.json())
+            .then((usuarios) => {
+                console.log(usuarios)
+                for (let i = 0; i < usuarios.length; i++) {
+                    usuariosCadastrados.push(usuarios[i])
+                }
+            })
+            .then(() => {
 
-        
+                for (let j = 0; j < usuariosCadastrados.length; j++) {
+                    listaUsuarios.innerHTML += `
+                    <tr>
+                        <td>${usuariosCadastrados[j].nome_user}</td>
+                        <td><span class="badge-admin">${usuariosCadastrados[j].nome_nivel_acesso}</span></td>
+                        <td>${usuariosCadastrados[j].permissoes}</td>
+                        <td><button class="btn-editar">✎</button></td>
+                    </tr>
+                    `
+                }
+            })
+            .catch((erro) => {
+
+            })
+
     }
 
 </script>
+
 </html>

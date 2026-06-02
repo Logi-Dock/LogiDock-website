@@ -177,10 +177,14 @@ function PegarIdUsuario(req, res) {
 }
 
 function listarUsuarios(req,res){
-    usuarioModel.listarUsuarios(nome_user, nome_nivel_acesso)
+
+    var fk_empresa = req.body.fk_empresa;
+    usuarioModel.listarUsuarios(fk_empresa)
     .then(
         function (resultado){
             res.json(resultado)
+            console.log(resultado);
+            console.log("tesstes")
         }
     ).catch(
         function(erro){

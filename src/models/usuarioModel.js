@@ -108,11 +108,23 @@ function PegarIdUsuario(email_user) {
     return database.executar(instrucaoSql);
 }
 
-function listarUsuarios (nome_user, nome_nivel_acesso,fk_empresa){
-  console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", nome_user, fk_nivel_acesso);
-    var instrucaoSql=`
-   SELECT u.nome_user,n.nome_nivel_acesso  FROM usuario u JOIN nivel_acesso n ON n.id_nivel_acesso = u.fk_nivel_acesso WHERE fk_empresa = '${fk_empresa}';
+function listarUsuarios(fk_empresa) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():",fk_empresa);
+    var instrucaoSql = `
+   SELECT 
+    u.nome_user,
+    n.nome_nivel_acesso, 
+    GROUP_CONCAT(p.nome_permissao) AS permissoes
+FROM usuario u   
+JOIN nivel_acesso n ON n.id_nivel_acesso = u.fk_nivel_acesso   
+JOIN permissoes_compartilhadas pc ON pc.fk_nivel_acesso = n.id_nivel_acesso     
+JOIN permissao p ON pc.fk_permissao = p.id_permissao     
+WHERE u.fk_empresa = 3   
+GROUP BY 
+    u.nome_user, 
+    n.nome_nivel_acesso;
     `
+    return database.executar(instrucaoSql);
 }
 
 module.exports = {
