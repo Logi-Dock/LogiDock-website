@@ -107,9 +107,15 @@ background-color: #fffF;
     padding: 0 20px;
     border: 1px solid #d1d5db;
     border-radius: 8px;
-    background: transparent;
+    background-color:#2563eb;
+    color: #fff;
     font-size: 13px;
+    font-weight: bold;
     cursor: pointer;
+}
+
+.btn-cancelar:hover{
+background-color: #d1d5db;
 }
 
 .btn-salvar{
