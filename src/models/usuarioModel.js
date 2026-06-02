@@ -108,6 +108,13 @@ function PegarIdUsuario(email_user) {
     return database.executar(instrucaoSql);
 }
 
+function listarUsuarios (nome_user, nome_nivel_acesso,fk_empresa){
+  console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", nome_user, fk_nivel_acesso);
+    var instrucaoSql=`
+   SELECT u.nome_user,n.nome_nivel_acesso  FROM usuario u JOIN nivel_acesso n ON n.id_nivel_acesso = u.fk_nivel_acesso WHERE fk_empresa = '${fk_empresa}';
+    `
+}
+
 module.exports = {
     atualizarNome,
     atualizarSenha,
@@ -117,6 +124,7 @@ module.exports = {
     obterUsuario,
     autenticar,
     cadastrarUsuario,
-    PegarIdUsuario
+    PegarIdUsuario,
+    listarUsuarios
 }
 

@@ -39,5 +39,9 @@ router.get("/PegarIdUsuario/:email", function (req, res) {
     usuarioController.PegarIdUsuario(req, res);
 });
 
+router.get("/listarUsuarios", function(req,res){
+usuarioController.listarUsuarios(req,res);
+});
+
 
 module.exports = router;

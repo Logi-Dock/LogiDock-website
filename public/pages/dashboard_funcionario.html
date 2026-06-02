@@ -79,7 +79,7 @@
 
 
                     <div class="cabecalho">
-                        <img src="" alt="">
+                        <img src="../assets/icons/Icone_pessoa+.png" alt="pessoa">
                         <span>Novo Usuário</span>
                     </div>
 
@@ -134,6 +134,7 @@
                             <span>Funcionários: <strong>1</strong></span>
                         </div>
                         <input type="text" class="busca" placeholder="Buscar por nome...">
+                        <button class="pesquisarUsuario" onclick="pesquisarUsuario()">Buscar 🔍</button>
                     </div>
 
                     <table class="tabela">
@@ -183,15 +184,24 @@
                     </table>
 
                 </div>
+            
         </div>
 </body>
 <script>
+    let usuariosCadastrados = []
     function cadastrarUsuario(){
+
 
         let nomeUsuario = nomeUser.value
         let emailUsuario = emailUser.value
         let senhaUsuario = senhaUser.value
         let nivel = Number(nivelUser.value)
+
+        if(nomeUsuario == '' || emailUsuario == '' || senhaUsuario == ''){
+            alert('Preenchimento obrigatório: os campos não podem estar vazios!')
+            return
+        }
+
 
         let id_empresa = sessionStorage.FK_EMPRESA  
 
@@ -215,6 +225,11 @@
             }
 
         })
+    }
+
+    function pesquisarUsuario(){
+
+        
     }
 
 </script>
