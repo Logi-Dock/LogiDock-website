@@ -14,8 +14,6 @@ body {
 .container {
     display: grid;
     grid-template-columns: 0.5fr 2fr;
-    justify-content: center;
-    align-items: center;
 }
 
 a {

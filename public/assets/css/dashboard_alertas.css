@@ -1,6 +1,5 @@
 .conteudo{
-    justify-self: end;
-    width: 77%;
+    grid-column: 2;
     min-height: 100vh;
     background-color: #F4F6FA;
 }
