@@ -18,13 +18,14 @@
 
 
 
-.novo-usuario-card{
-    display: grid;
+.nome-usuario-card{
+    display:grid;
     grid-template-rows: auto auto 1fr;
     border-radius: 10px ;
     background-color: #fff;
     padding: 20px;
     margin-top: 20px;
+    margin-right: 27px;
     flex: 1;
 }
 
