@@ -133,7 +133,7 @@
                         <span>Gestores: <strong>3</strong></span>
                         <span>Funcionários: <strong>1</strong></span>
                     </div>
-                    <input type="text" class="busca" placeholder="Buscar por nome...">
+                    <input type="text" class="busca" placeholder="Buscar por nome..." oninput="filtrarUsuarios(this)">
                     <button class="pesquisarUsuario" onclick="pesquisarUsuario()">Buscar 🔍</button>
                 </div>
 
@@ -156,6 +156,66 @@
 </body>
 <script>
     let usuariosCadastrados = []
+    function pesquisarUsuario() {
+        console.log()
+        fetch(`/usuarios/listarUsuarios`)
+            .then((resposta) => resposta.json())
+            .then((usuarios) => {
+                usuariosCadastrados = usuarios
+                renderizarTabela(usuariosCadastrados)
+                //console.log(usuarios)
+                //for (let i = 0; i < usuarios.length; i++) {
+                //  usuariosCadastrados.push(usuarios[i])
+                //}
+            })
+            .catch((erro) => {
+                console.error('Erro ao buscar usuários', erro)
+            })
+        //.then(() => {
+
+        //  for (let j = 0; j < usuariosCadastrados.length; j++) {
+        //    listaUsuarios.innerHTML += `
+        //  <tr>
+        //    <td>${usuariosCadastrados[j].nome_user}</td>
+        //  <td><span class="badge-admin">${usuariosCadastrados[j].nome_nivel_acesso}</span></td>
+        //<td>${usuariosCadastrados[j].permissoes}</td>
+        //<td><button class="btn-editar">✎</button></td>
+        // </tr>
+        //  `
+        //}
+        //})
+        //.catch((erro) => {
+
+        //})
+
+    }
+
+    function renderizarTabela(lista) {
+        const listaUsuarios = document.getElementById('listaUsuarios')
+        listaUsuarios.innerHTML = ''
+        for (let i = 0; i < lista.length; i++) {
+            listaUsuarios.innerHTML += `
+            <tr>
+                <td>${lista[i].nome_user}</td>
+                <td><span class="badge-admin">${lista[i].nome_nivel_acesso}</span></td>
+                <td>${lista[i].permissoes}</td>
+                <td><button class="btn-editar">✎</button></td>
+            </tr>
+            `
+        }
+        if (lista.length == 0) {
+            listaUsuarios.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#888">Nenhum usuário encontrado.</td></tr>'
+        }
+    }
+
+    function filtrarUsuarios(campo) {
+    const termo = campo.value.toLowerCase().trim()
+    const filtrados = usuariosCadastrados.filter(u =>
+        u.nome_user.toLowerCase().includes(termo)
+    )
+    renderizarTabela(filtrados)
+}
+
     function cadastrarUsuario() {
 
 
@@ -187,6 +247,7 @@
         }).then(function (resposta) {
             if (resposta.ok) {
                 alert('Cadastrado com sucesso!!')
+                pesquisarUsuario()
             } else {
                 throw 'Teve um erro!!!'
             }
@@ -194,34 +255,6 @@
         })
     }
 
-    function pesquisarUsuario() {
-        console.log()
-        fetch(`/usuarios/listarUsuarios`)
-            .then((resposta) => resposta.json())
-            .then((usuarios) => {
-                console.log(usuarios)
-                for (let i = 0; i < usuarios.length; i++) {
-                    usuariosCadastrados.push(usuarios[i])
-                }
-            })
-            .then(() => {
-
-                for (let j = 0; j < usuariosCadastrados.length; j++) {
-                    listaUsuarios.innerHTML += `
-                    <tr>
-                        <td>${usuariosCadastrados[j].nome_user}</td>
-                        <td><span class="badge-admin">${usuariosCadastrados[j].nome_nivel_acesso}</span></td>
-                        <td>${usuariosCadastrados[j].permissoes}</td>
-                        <td><button class="btn-editar">✎</button></td>
-                    </tr>
-                    `
-                }
-            })
-            .catch((erro) => {
-
-            })
-
-    }
 
 </script>
 
