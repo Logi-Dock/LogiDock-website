@@ -103,7 +103,7 @@ function kpiDocaMaiorTempoDeAtrasoAcumulado(fk_empresa, periodo) {
     return database.executar(instrucaoSql);
 }
 
-function graficoTempoMedioPorDoca(fk_empresa, limite_linhas) {
+function graficoTempoMedioPorDoca(fk_empresa, periodo, limite_linhas) {
     var instrucaoSql = `
         SELECT
             \`Número da Doca\` AS doca,
@@ -136,7 +136,7 @@ function graficoTempoMedioPorDoca(fk_empresa, limite_linhas) {
     return database.executar(instrucaoSql);
 }
 
-function graficoDocasComMaisAtrasos(fk_empresa) {
+function graficoDocasComMaisAtrasos(fk_empresa, periodo) {
     var instrucaoSql = `
         SELECT
             \`Tipo de Ocorrência\` AS status,
@@ -155,7 +155,7 @@ function graficoDocasComMaisAtrasos(fk_empresa) {
     return database.executar(instrucaoSql);
 }
 
-function graficoTempoDePermanenciaPorOperacao(fk_empresa, limite_linhas) {
+function graficoTempoDePermanenciaPorOperacao(fk_empresa, periodo, limite_linhas) {
     var instrucaoSql = `
         SELECT
             \`Número da Doca\` AS doca,

@@ -23,17 +23,17 @@ router.get("/kpiDocaMaiorTempoDeAtrasoAcumulado/:fk_empresa/:periodo", function 
     dashboardController.kpiDocaMaiorTempoDeAtrasoAcumulado(req, res);
 })
 
-router.get("/graficoTempoMedioPorDoca/:fk_empresa", function (req, res)
+router.get("/graficoTempoMedioPorDoca/:fk_empresa/:periodo", function (req, res)
 {
     dashboardController.graficoTempoMedioPorDoca(req, res);
 })
 
-router.get("/graficoDocasComMaisAtrasos/:fk_empresa", function (req, res)
+router.get("/graficoDocasComMaisAtrasos/:fk_empresa/:periodo", function (req, res)
 {
     dashboardController.graficoDocasComMaisAtrasos(req, res);
 })
 
-router.get("/graficoTempoDePermanenciaPorOperacao/:fk_empresa", function (req, res)
+router.get("/graficoTempoDePermanenciaPorOperacao/:fk_empresa/:periodo", function (req, res)
 {
     dashboardController.graficoTempoDePermanenciaPorOperacao(req, res);
 })
