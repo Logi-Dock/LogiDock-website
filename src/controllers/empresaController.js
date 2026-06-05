@@ -70,9 +70,30 @@ function PegarAvisos(req, res) {
     );
 }
 
+function vizualizarDadosEmpresa(req, res) {
+    var fk_empresa = req.params.fk_empresa;
+    
+    empresaModel.vizualizarDadosEmpresa(fk_empresa)
+    .then(
+        function(resultado) {
+            res.json(resultado)
+        }
+    ).catch (
+            function (erro) {
+            console.log(erro);
+            console.log(
+                "\nHouve um erro ao realizar o cadastro! Erro: ",
+                erro.sqlMessage
+            );
+            res.status(500).json(erro.sqlMessage);
+        }
+    );
+}
+
 
 module.exports = {
     IntegrarUsuarioNaEmpresa,
     PegarIdEmpresa,
-    PegarAvisos
+    PegarAvisos,
+    vizualizarDadosEmpresa
 };

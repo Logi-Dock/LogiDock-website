@@ -1,5 +1,307 @@
+* {
+    font-family: 'Inter', sans-serif;
+}
+
 .conteudo{
     grid-column: 2;
     min-height: 100vh;
     background-color: #F4F6FA;
+    padding: 40px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
 }
+
+.div-aviso{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    margin-left: 4px;
+}
+
+.img-aviso
+{
+    width: 16px;
+    height: 16px;
+}
+
+.aviso
+{
+    color: #808080;
+    font-size: 12px;
+}
+ 
+
+.conteudo-header h1 {
+    font-size: 25px;        
+    font-weight: 700;
+    color: #1A1D23;           
+}
+ 
+.conteudo-header h3 {
+    font-size: 12px;     
+    font-weight: 400;
+    color: #6B7280;           
+    margin: 0;
+}
+ 
+.cadastrar-doca-painel {
+    background-color: #FFFFFF;
+    border: 1px solid #E5E7EB;   
+    border-radius: 12px;         
+    padding: 28px 32px;          
+    display: flex;
+    flex-direction: column;
+    gap: 20px;                   
+    box-shadow: 0 1px 4px #0000000f;
+}
+ 
+.painel-titulo {
+    display: flex;
+    align-items: center;
+    gap: 10px;                
+}
+ 
+.painel-titulo img {
+    width: 22px;
+    height: 22px;
+}
+ 
+.painel-titulo h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1A1D23;
+    margin: 0;
+}
+ 
+.dados-da-doca-separador {
+    border: none;
+    border-top: 1px solid #E5E7EB; 
+    margin: 0;                     
+}
+ 
+.doca-campos-linha {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px;                     
+}
+ 
+ 
+.doca-campo,
+.sensor-campo {
+    display: flex;
+    flex-direction: column;  
+    gap: 6px;
+}
+ 
+.doca-campo label,
+.sensor-campo label {
+    font-size: 12px; 
+    font-weight: 500;
+    color: #374151;        
+}
+ 
+.doca-campo input,
+.doca-campo select,
+.sensor-campo input,
+.sensor-campo select {
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #1A1D23;
+    background-color: #FFFFFF;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+ 
+.doca-campo input:focus,
+.doca-campo select:focus,
+.sensor-campo input:focus,
+.sensor-campo select:focus {
+    border-color: #2563EB;       
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12); 
+}
+ 
+.sensor-campo input[readonly] {
+    background-color: #F9FAFB;
+    color: #6B7280;
+    cursor: not-allowed;
+}
+ 
+.sensor-associado-painel {
+    background-color: #EFF6FF;   
+    border: 1px solid #BFDBFE;  
+    border-radius: 10px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+ 
+.sensor-painel-titulo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+ 
+.sensor-painel-titulo img {
+    width: 18px;
+    height: 18px;
+    opacity: 0.8;
+}
+ 
+.sensor-painel-titulo h3 {
+    font-size: 14;    
+    font-weight: 600;
+    color: #1D4ED8;         
+    margin: 0;
+}
+ 
+.sensor-aviso {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+ 
+.sensor-aviso img {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;        
+    opacity: 0.6;
+}
+ 
+.sensor-aviso h5 {
+    font-size: 12px;   
+    font-weight: 400;
+    color: #1E40AF;        
+    margin: 0;
+    line-height: 1.5;
+}
+ 
+.doca-botoes {
+    display: flex;
+    justify-content: flex-end; 
+    gap: 12px;
+    margin-top: 4px;
+}
+ 
+.doca-botoes button {
+    height: 40px;
+    padding: 0 20px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+ 
+.btn-cancelar {
+    background-color: transparent;
+    border: 1px solid #D1D5DB;
+    color: #374151;
+}
+ 
+.btn-cancelar:hover {
+    background-color: #F3F4F6;
+    border-color: #9CA3AF;
+}
+ 
+.btn-editar {
+    background-color: transparent;
+    border: 1px solid #2563EB;
+    color: #2563EB;
+}
+ 
+.btn-editar:hover {
+    background-color: #EFF6FF;
+}
+ 
+.btn-cadastrar {
+    background-color: #2563EB;
+    border: 1px solid #2563EB;
+    color: #FFFFFF;
+}
+ 
+.btn-cadastrar:hover {
+    background-color: #1D4ED8;  
+    border-color: #1D4ED8;
+}
+ 
+.docas-ja-cadastradas h2 {
+    font-size: 19px;
+    font-weight: 600;
+    color: #1A1D23;
+    margin: 0 0 16px 0;
+}
+ 
+.cadastrar-painel {
+    background-color: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    overflow: hidden;           
+    box-shadow: 0 1px 4px #0000000f;
+}
+ 
+.docas-table {
+    width: 100%;
+    border-collapse: collapse;   
+    font-size: 0.875rem;
+}
+ 
+/* Cabeçalho da tabela */
+.docas-table thead tr {
+    background-color: #F9FAFB;  
+    border-bottom: 1px solid #E5E7EB;
+}
+ 
+.docas-table thead th {
+    padding: 12px 20px;
+    text-align: left;
+    font-size: 12px;         
+    font-weight: 600;
+    color: #6B7280;              
+    text-transform: uppercase;
+}
+ 
+.docas-table tbody tr {
+    border-bottom: 1px solid #F3F4F6;
+    transition: background-color 0.15s ease;
+}
+ 
+.docas-table tbody tr:last-child {
+    border-bottom: none;       
+}
+ 
+.docas-table tbody tr:hover {
+    background-color: #F9FAFB;   
+}
+ 
+.docas-table tbody td {
+    padding: 14px 20px;
+    color: #374151;
+    font-weight: 500;
+}
+ 
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 999px;       
+    font-size: 12px;
+    font-weight: 600;
+}
+ 
+.badge.ativo {
+    background-color: #D1FAE5;   
+    color: #065F46;             
+}
+ 
+.badge.desativo {
+    background-color: #FEE2E2;   
+    color: #991B1B;              
+}
+
+

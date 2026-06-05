@@ -15,4 +15,8 @@ router.get("/PegarAvisos/:fk_empresa", function (req,res) {
     empresaController.PegarAvisos(req, res);
 })
 
+router.get("/vizualizar-dados-empresa/:fk_empresa", function (req,res) {
+    empresaController.vizualizarDadosEmpresa(req, res);
+})
+
 module.exports = router;

@@ -48,9 +48,30 @@ function PegarAvisos(fk_empresa) {
     return database.executar(instrucaoSql);
 }
 
+function vizualizarDadosEmpresa(fk_empresa) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function PegarAvisos():")
+
+    var instrucaoSql = `
+        SELECT
+        e.razao_social,
+        e.cnpj,
+        l.logradouro,
+        l.numero_endereco,
+        l.cidade,
+        l.estado
+        FROM endereco l
+        JOIN empresa e ON l.id_endereco - e.fk_endereco
+        WHERE e.id_empresa = ${fk_empresa};
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports = {
     IntegrarUsuarioNaEmpresa,
     PegarIdEmpresa,
-    PegarAvisos
+    PegarAvisos,
+    vizualizarDadosEmpresa
 }
