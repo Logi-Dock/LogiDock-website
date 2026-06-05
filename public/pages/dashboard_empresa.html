@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/side_bar.css">
 </head>
-<body>
+<body onload="vizualizarDadosEmpresa()">
     <div class="tela_graficos container">
         <div class="navegacao">
             <div class="titulo">
@@ -62,16 +62,242 @@
             </div>
         </div>
     
+        <!-- Cadastrar nova doca -->
         <div class="conteudo">
 
+            <div class="conteudo-header">
+                <h1>Dados da empresa</h1>
+                <h3>Informações cadastrais e operacionais da empresa.</h3>
+            </div>
+            
+            <!-- painel principal -->
+            <div class="cadastrar-doca-painel">
 
+                <div class="painel-titulo">
+                
+                <h3>Identificação</h3>
+                </div>
 
+                <hr class="dados-da-doca-separador">
 
+                <div class="doca-campos-linha">
 
+                    <div class="doca-campo">
+                        <label>Razão social</label>
+                        <input id="id_razao_social" type="text" placeholder="LogiDock Brasil LTDA">
+                    </div>
 
+                    <div>
+                        <div class="doca-campo">
+                            <label>CNPJ</label>
+                            <input class="inalteravel" id="id_cnpj" type="number" placeholder="0589632489624" readonly>
+                        </div>
 
+                        <div class="div-aviso">
+                            <img class="img-aviso" src="../assets/icons/atencao.png" alt="">
+                            <label class="aviso" for="">CNPJ não pode ser alterado após o cadastro.</label>
+                        </div>
+                        
+                    </div>
 
+                    
+                </div>
+
+                <!-- Botões -->
+                <div class="doca-botoes">
+                    <button class="btn-cancelar" type="button" onclick="cancelarAlterarDadosEmpresa()">Cancelar</button>
+                    <button class="btn-cadastrar" type="button" onclick="alterarDadosEmpresa()">Salvar identificação</button>
+                </div>
+
+            </div>
+
+            <div class="cadastrar-doca-painel">
+
+                <div class="painel-titulo">
+                
+                <h3>Endereço</h3>
+                </div>
+
+                <hr class="dados-da-doca-separador">
+
+                <div class="doca-campo">
+                    <label>Logradouro</label>
+                    <input id="id_logradouro" type="text" placeholder="Av. Paulista">
+                </div>
+
+                <div class="doca-campos-linha">
+
+                    <div class="doca-campo">
+                        <label>Número</label>
+                        <input id="id_numero" type="number" placeholder="67">
+                    </div>
+
+                    <div class="doca-campo">
+                        <label>Cidade</label>
+                        <input id="id_cidade" type="text" placeholder="São Paulo">
+                    </div>
+
+                    <div class="doca-campo">
+                        <label>Estado</label>
+                        <select name="" id="id_estados">
+                            <option value="">Selecione...</option>
+                            <option value="ac">Acre</option>
+                            <option value="al">Alagoas</option>
+                            <option value="ap">Amapá</option>
+                            <option value="am">Amazonas</option>
+                            <option value="ba">Bahia</option>
+                            <option value="ce">Ceará</option>
+                            <option value="df">Distrito Federal</option>
+                            <option value="es">Espírito Santo</option>
+                            <option value="go">Goiás</option>
+                            <option value="ma">Maranhão</option>
+                            <option value="mt">Mato Grosso</option>
+                            <option value="ms">Mato Grosso do Sul</option>
+                            <option value="mg">Minas Gerais</option>
+                            <option value="pa">Pará</option>
+                            <option value="pb">Paraíba</option>
+                            <option value="pr">Paraná</option>
+                            <option value="pe">Pernambuco</option>
+                            <option value="pi">Piauí</option>
+                            <option value="rj">Rio de Janeiro</option>
+                            <option value="rn">Rio Grande do Norte</option>
+                            <option value="rs">Rio Grande do Sul</option>
+                            <option value="ro">Rondônia</option>
+                            <option value="rr">Roraima</option>
+                            <option value="sc">Santa Catarina</option>
+                            <option value="sp">São Paulo</option>
+                            <option value="se">Sergipe</option>
+                            <option value="to">Tocantins</option>
+                        </select>
+                    </div>
+                    
+                </div>
+
+                <!-- Botões -->
+                <div class="doca-botoes">
+                    <button class="btn-cancelar" type="button" onclick="cancelarAlterarEnderecoEmpresa()">Cancelar</button>
+                    <button class="btn-cadastrar" type="button" onclick="alterarEnderecoEmpresa()">Salvar identificação</button>
+                </div>
+
+            </div>
         </div>
     </div>
 </body>
 </html>
+
+<script>
+
+    let fk_empresa = sessionStorage.FK_EMPRESA;
+
+    function cancelarAlterarDadosEmpresa()
+    {
+        vizualizarDadosEmpresa();
+    }
+
+    function cancelarAlterarEnderecoEmpresa()
+    {
+        vizualizarDadosEmpresa();
+    }
+
+    function vizualizarDadosEmpresa()
+    {
+        fetch(`/empresas/vizualizarDadosEmpresa/${fk_empresa}`)
+        .then((resposta) => resposta.json())
+        .then((dados) => {
+            console.log(dados);
+            
+            document.getElementById('id_razao_social').value = dados[0].razao_social;
+            document.getElementById('id_cnpj').value = dados[0].cnpj;
+            document.getElementById('id_logradouro').value = dados[0].logradouro;
+            document.getElementById('id_numero').value = dados[0].numero_endereco;
+            document.getElementById('id_cidade').value = dados[0].cidade
+            document.getElementById('id_estados').value = dados[0].estado.toLowerCase();
+        })                                                        
+        .catch((erro) => {
+            console.error("Erro ao buscar vizualizarDadosEmpresa:", erro);
+        })
+    }
+
+    function alterarDadosEmpresa()
+    {
+        let razao_social = id_razao_social.value;
+
+        if (razao_social == '')
+        {
+            alert('Preencha os campos antes de enviar!')
+        }
+
+        else if (razao_social.length < 3)
+        {
+            alert('Nome muito pequeno para ser alterado!')
+        }
+
+        else
+        {
+            fetch("/empresas/alterarDadosEmpresa", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    razao_social_server: razao_social,
+                    fk_empresa_server: fk_empresa,
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    alert('Alterado com sucesso!!')
+                    vizualizarDadosEmpresa();
+                } else {
+                    throw 'Teve um erro!!!'
+                }
+
+            })
+        }
+    }
+
+    function alterarEnderecoEmpresa()
+    {
+        let logradouro = id_logradouro.value;
+        let numero = Number(id_numero.value);
+        let cidade = id_cidade.value;
+        let estado = id_estados.value;
+
+        estado = estado.toUpperCase();
+
+        if (logradouro == '' ||
+            id_numero.value == '' ||
+            cidade == '' ||
+            estado == ''
+        )
+        {
+            alert('Preencha os campos antes de enviar!')
+        }
+
+        else
+        {
+            fetch("/empresas/alterarEnderecoEmpresa", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    logradouro_server: logradouro,
+                    numero_server: numero,
+                    cidade_server: cidade,
+                    estado_server: estado,
+
+                    fk_empresa_server: fk_empresa,
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    alert('Alterado com sucesso!!')
+                    vizualizarDadosEmpresa();
+                } else {
+                    throw 'Teve um erro!!!'
+                }
+
+            })
+        }
+    }
+
+</script>
