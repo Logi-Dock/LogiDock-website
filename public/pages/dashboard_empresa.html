@@ -191,18 +191,20 @@
 
     function vizualizarDadosEmpresa()
     {
-        fetch(`/empresas/vizualizar-dados-empresa/${fk_empresa}`)
+        fetch(`/empresas/vizualizarDadosEmpresa/${fk_empresa}`)
         .then((resposta) => resposta.json())
         .then((dados) => {
             console.log(dados);
             
             document.getElementById('id_razao_social').value = dados[0].razao_social;
             document.getElementById('id_cnpj').value = dados[0].cnpj;
-            document.getElementById('id_cnpj').value = dados[0].logradouro;
-            document.getElementById('id_cnpj').value = dados[0].numero_endereco;
+            document.getElementById('id_logradouro').value = dados[0].logradouro;
+            document.getElementById('id_numero').value = dados[0].numero_endereco;
+            document.getElementById('id_cidade').value = dados[0].cidade
+            document.getElementById('id_estados').value = dados[0].estado.toLowerCase();
         })                                                        
         .catch((erro) => {
-            console.error("Erro ao buscar kpiDocaMaiorAtraso:", erro);
+            console.error("Erro ao buscar vizualizarDadosEmpresa:", erro);
         })
     }
 
