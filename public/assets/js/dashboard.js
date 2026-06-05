@@ -10,6 +10,10 @@ let proximaAtualizacao;
 let intervalo_selecionado = periodo.value;
 let filtro_periodo = "24 HOUR";
 
+let graficoGantt = null;
+let graficoPizza = null;
+let graficoTempoMedio = null;
+
 function obterPeriodoSelecionado() {
     const valor = periodo.value;
 
@@ -129,6 +133,10 @@ function plotarGraficoTempoMedioPorDoca(dadosApi) {
     const labels = [];
     const valores = [];
 
+    if (graficoPizza) {
+        graficoPizza.destroy();
+    }
+
     for (let i = 0; i < dadosApi.length; i++) {
         const dado = dadosApi[i];
 
@@ -136,7 +144,7 @@ function plotarGraficoTempoMedioPorDoca(dadosApi) {
         valores.push(dado.tempo_medio_minutos / 60);
     }
 
-    new Chart(
+    graficoPizza = new Chart(
         document.getElementById("ipt_GraficoBarrasLinhas"),
         {
             type: "bar",
@@ -224,6 +232,11 @@ function plotarGraficoDocasComMaisAtrasos(dadosApi) {
     const labels = [];
     const valores = [];
 
+    if (graficoTempoMedio) {
+        graficoTempoMedio.destroy();
+    }
+
+
     for (let i = 0; i < dadosApi.length; i++) {
         const dado = dadosApi[i];
 
@@ -231,7 +244,7 @@ function plotarGraficoDocasComMaisAtrasos(dadosApi) {
         valores.push(dado.quantidade);
     }
 
-    new Chart(
+    graficoTempoMedio = new Chart(
         document.getElementById("ipt_GraficoPizza"),
         {
             type: "doughnut",
@@ -311,6 +324,10 @@ function plotarGraficoTempoDePermanenciaPorOperacao(dadosApi) {
     const foraDoTempo = [];
     const dentroDoTempo = [];
 
+    if (graficoGantt) {
+        graficoGantt.destroy();
+    }
+
     for (let i = 0; i < dadosApi.length; i++) {
 
         const registro = dadosApi[i];
@@ -341,7 +358,7 @@ function plotarGraficoTempoDePermanenciaPorOperacao(dadosApi) {
         }
     }
 
-    new Chart(document.getElementById('ipt_GraficoDeGantt'), {
+    graficoGantt = new Chart(document.getElementById('ipt_GraficoDeGantt'), {
         type: 'bar',
         data: {
             datasets: [
