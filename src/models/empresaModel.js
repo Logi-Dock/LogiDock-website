@@ -60,8 +60,41 @@ function vizualizarDadosEmpresa(fk_empresa) {
         l.cidade,
         l.estado
         FROM endereco l
-        JOIN empresa e ON l.id_endereco - e.fk_endereco
+        JOIN empresa e ON l.id_endereco = e.fk_endereco
         WHERE e.id_empresa = ${fk_empresa};
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function alterarDadosEmpresa(razao_social, fk_empresa) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function PegarAvisos():")
+
+    var instrucaoSql = `
+        UPDATE empresa SET
+        razao_social = '${razao_social}'
+        WHERE id_empresa = ${fk_empresa};
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function alterarEnderecoEmpresa(logradouro, numero, cidade, estado, fk_empresa) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function PegarAvisos():")
+
+    var instrucaoSql = `
+        UPDATE endereco SET
+        logradouro = '${logradouro}',
+        numero_endereco = ${numero},
+        cidade = '${cidade}',
+        estado = '${estado}'
+        WHERE id_endereco = (
+            SELECT fk_endereco
+            FROM empresa
+            WHERE id_empresa = ${fk_empresa}
+        );
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -73,5 +106,7 @@ module.exports = {
     IntegrarUsuarioNaEmpresa,
     PegarIdEmpresa,
     PegarAvisos,
-    vizualizarDadosEmpresa
+    vizualizarDadosEmpresa,
+    alterarDadosEmpresa,
+    alterarEnderecoEmpresa
 }

@@ -90,10 +90,60 @@ function vizualizarDadosEmpresa(req, res) {
     );
 }
 
+function alterarDadosEmpresa(req, res) {
+
+    var razao_social = req.body.razao_social_server;
+    var fk_empresa = req.body.fk_empresa_server;
+
+    empresaModel.alterarDadosEmpresa(razao_social, fk_empresa)
+        .then(
+            function(resultado) {
+                res.json(resultado)
+            }
+        ).catch (
+            function (erro) {
+            console.log(erro);
+            console.log(
+                "\nHouve um erro ao realizar a alteração! Erro: ",
+                erro.sqlMessage
+            );
+            res.status(500).json(erro.sqlMessage);
+        }
+    );
+}
+
+function alterarEnderecoEmpresa(req, res)
+{
+    var logradouro = req.body.logradouro_server;
+    var numero = req.body.numero_server;
+    var cidade = req.body.cidade_server;
+    var estado = req.body.estado_server;
+
+    var fk_empresa = req.body.fk_empresa_server;
+
+    empresaModel.alterarEnderecoEmpresa(logradouro, numero, cidade, estado, fk_empresa)
+        .then(
+            function(resultado) {
+                res.json(resultado)
+            }
+        ).catch (
+            function (erro) {
+            console.log(erro);
+            console.log(
+                "\nHouve um erro ao realizar a alteração! Erro: ",
+                erro.sqlMessage
+            );
+            res.status(500).json(erro.sqlMessage);
+        }
+    );
+}
+
 
 module.exports = {
     IntegrarUsuarioNaEmpresa,
     PegarIdEmpresa,
     PegarAvisos,
-    vizualizarDadosEmpresa
+    vizualizarDadosEmpresa,
+    alterarDadosEmpresa,
+    alterarEnderecoEmpresa
 };

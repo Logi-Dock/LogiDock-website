@@ -31,6 +31,13 @@
     color: #808080;
     font-size: 12px;
 }
+
+
+.inalteravel{
+    background-color: #F4F6FA;
+    color: #6B7280;
+    cursor: not-allowed;
+}
  
 
 .conteudo-header h1 {
@@ -47,7 +54,6 @@
 }
  
 .cadastrar-doca-painel {
-    background-color: #FFFFFF;
     border: 1px solid #E5E7EB;   
     border-radius: 12px;         
     padding: 28px 32px;          
@@ -112,7 +118,6 @@
     border-radius: 8px;
     font-size: 12px;
     color: #1A1D23;
-    background-color: #FFFFFF;
     outline: none;
     transition: border-color 0.2s ease;
 }

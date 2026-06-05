@@ -90,7 +90,7 @@
                     <div>
                         <div class="doca-campo">
                             <label>CNPJ</label>
-                            <input id="id_cnpj" type="number" placeholder="0589632489624">
+                            <input class="inalteravel" id="id_cnpj" type="number" placeholder="0589632489624" readonly>
                         </div>
 
                         <div class="div-aviso">
@@ -189,6 +189,16 @@
 
     let fk_empresa = sessionStorage.FK_EMPRESA;
 
+    function cancelarAlterarDadosEmpresa()
+    {
+        vizualizarDadosEmpresa();
+    }
+
+    function cancelarAlterarEnderecoEmpresa()
+    {
+        vizualizarDadosEmpresa();
+    }
+
     function vizualizarDadosEmpresa()
     {
         fetch(`/empresas/vizualizarDadosEmpresa/${fk_empresa}`)
@@ -206,6 +216,88 @@
         .catch((erro) => {
             console.error("Erro ao buscar vizualizarDadosEmpresa:", erro);
         })
+    }
+
+    function alterarDadosEmpresa()
+    {
+        let razao_social = id_razao_social.value;
+
+        if (razao_social == '')
+        {
+            alert('Preencha os campos antes de enviar!')
+        }
+
+        else if (razao_social.length < 3)
+        {
+            alert('Nome muito pequeno para ser alterado!')
+        }
+
+        else
+        {
+            fetch("/empresas/alterarDadosEmpresa", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    razao_social_server: razao_social,
+                    fk_empresa_server: fk_empresa,
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    alert('Alterado com sucesso!!')
+                    vizualizarDadosEmpresa();
+                } else {
+                    throw 'Teve um erro!!!'
+                }
+
+            })
+        }
+    }
+
+    function alterarEnderecoEmpresa()
+    {
+        let logradouro = id_logradouro.value;
+        let numero = Number(id_numero.value);
+        let cidade = id_cidade.value;
+        let estado = id_estados.value;
+
+        estado = estado.toUpperCase();
+
+        if (logradouro == '' ||
+            id_numero.value == '' ||
+            cidade == '' ||
+            estado == ''
+        )
+        {
+            alert('Preencha os campos antes de enviar!')
+        }
+
+        else
+        {
+            fetch("/empresas/alterarEnderecoEmpresa", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    logradouro_server: logradouro,
+                    numero_server: numero,
+                    cidade_server: cidade,
+                    estado_server: estado,
+
+                    fk_empresa_server: fk_empresa,
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    alert('Alterado com sucesso!!')
+                    vizualizarDadosEmpresa();
+                } else {
+                    throw 'Teve um erro!!!'
+                }
+
+            })
+        }
     }
 
 </script>
