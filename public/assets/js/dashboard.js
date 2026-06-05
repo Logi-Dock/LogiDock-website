@@ -14,22 +14,6 @@ let graficoGantt = null;
 let graficoPizza = null;
 let graficoTempoMedio = null;
 
-function obterPeriodoSelecionado() {
-    const valor = periodo.value;
-
-    if (valor == "24horas") {
-        return "24 HOUR";
-    } else if (valor == "7dias") {
-        return "7 DAY";
-    } else if (valor == "1mes") {
-        return "1 MONTH";
-    } else if (valor == "3meses") {
-        return "3 MONTH";
-    } else {
-        return "6 MONTH";
-    }
-}
-
 function inicializarDashboard() {
     kpiDocaMaisAtrasos(fk_empresa);
     kpiDocaMaiorAtraso(fk_empresa);
@@ -115,7 +99,7 @@ function kpiDocaMaiorTempoDeAtrasoAcumulado(fk_empresa) {
 // GRÁFICO 1
 function obterDadosGraficoTempoMedioPorDoca(fk_empresa) {
     const filtro_periodo = obterPeriodoSelecionado();
-    
+
     if (proximaAtualizacao != undefined) {
         clearTimeout(proximaAtualizacao);
     }
@@ -130,33 +114,127 @@ function obterDadosGraficoTempoMedioPorDoca(fk_empresa) {
 }
 
 function plotarGraficoTempoMedioPorDoca(dadosApi) {
-    const labels = [];
-    const valores = [];
 
-    if (graficoPizza) {
-        graficoPizza.destroy();
+    if (graficoTempoMedio) {
+        graficoTempoMedio.destroy();
     }
+
+    const labels = [];
+    const dentroPrazo = [];
+    const foraPrazo = [];
+    const quasePrazo = [];
+    const limite = [];
 
     for (let i = 0; i < dadosApi.length; i++) {
+
         const dado = dadosApi[i];
 
-        labels.push(dado.doca);
-        valores.push(dado.tempo_medio_minutos / 60);
+        labels.push(`Doca ${dado.doca}`);
+
+        const horas = dado.tempo_medio_minutos / 60;
+
+        dentroPrazo.push(0);
+        foraPrazo.push(0);
+        quasePrazo.push(0);
+
+        if (horas <= 3) {
+            dentroPrazo[i] = horas;
+        } else if (horas <= 4) {
+            quasePrazo[i] = horas;
+        } else {
+            foraPrazo[i] = horas;
+        }
+
+        limite.push(4);
     }
 
-    graficoPizza = new Chart(
+    graficoTempoMedio = new Chart(
         document.getElementById("ipt_GraficoBarrasLinhas"),
         {
             type: "bar",
             data: {
                 labels,
-                datasets: [{
-                    label: "Tempo Médio (horas)",
-                    data: valores
-                }]
+                datasets: [
+                    {
+                        label: 'Dentro do prazo',
+                        data: dentroPrazo,
+                        backgroundColor: 'blue'
+                    },
+                    {
+                        label: 'Fora do prazo',
+                        data: foraPrazo,
+                        backgroundColor: 'red'
+                    },
+                    {
+                        label: 'Quase fora do prazo',
+                        data: quasePrazo,
+                        backgroundColor: 'orange'
+                    },
+                    {
+                        type: 'line',
+                        label: 'Limite Invisivel',
+                        data: limite,
+                        borderColor: 'red',
+                        borderWidth: 2,
+                        pointRadius: 0,
+                        fill: false,
+                        borderDash: [5, 5]
+                    }
+                ]
             },
             options: {
-                responsive: true
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        stacked: true,
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Horas'
+                        },
+                        ticks: {
+                            callback: function (value) {
+                                return value + 'h';
+                            }
+                        }
+                    },
+                    x: {
+                        stacked: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'TEMPO MÉDIO POR DOCA',
+                        color: 'black',
+                        font: {
+                            size: 32
+                        }
+                    },
+                    legend: {
+                        labels: {
+                            filter: item => item.text !== 'Limite Invisivel'
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+
+                                if (context.dataset.label === 'Limite Invisivel') {
+                                    return null;
+                                }
+
+                                const horasDecimais = context.parsed.y;
+
+                                const horas = Math.floor(horasDecimais);
+                                const minutos = Math.round((horasDecimais - horas) * 60);
+
+                                return `${context.dataset.label}: ${horas}h ${minutos}min`;
+                            }
+                        }
+                    }
+                }
             }
         }
     );
@@ -232,27 +310,44 @@ function plotarGraficoDocasComMaisAtrasos(dadosApi) {
     const labels = [];
     const valores = [];
 
-    if (graficoTempoMedio) {
-        graficoTempoMedio.destroy();
+    if (graficoPizza) {
+        graficoPizza.destroy();
     }
-
 
     for (let i = 0; i < dadosApi.length; i++) {
         const dado = dadosApi[i];
 
-        labels.push(dado.status);
+        labels.push(dado.doca);
         valores.push(dado.quantidade);
     }
 
-    graficoTempoMedio = new Chart(
+    graficoPizza = new Chart(
         document.getElementById("ipt_GraficoPizza"),
         {
-            type: "doughnut",
+            type: "pie",
             data: {
                 labels,
                 datasets: [{
-                    data: valores
+                    data: valores,
+                    backgroundColor: ['#FF0000', '#dc1414', '#800000', 'gray']
                 }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'DOCAS COM MAIOR VOLUME DE ATRASOS',
+                        color: 'black',
+                        font: {
+                            size: 24
+                        }
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
             }
         }
     );
@@ -343,10 +438,10 @@ function plotarGraficoTempoDePermanenciaPorOperacao(dadosApi) {
             fim.getHours() +
             (fim.getMinutes() / 60);
 
-        const duracao = horaFim - horaInicio;
+        const duracaoMinutos = Math.floor((fim - inicio) / (1000 * 60));
 
         const item = {
-            duracao: Number(duracao.toFixed(2)),
+            duracaoMinutos,
             x: [horaInicio, horaFim],
             y: `Doca ${registro.doca}`
         };
@@ -382,10 +477,40 @@ function plotarGraficoTempoDePermanenciaPorOperacao(dadosApi) {
             indexAxis: 'y',
             responsive: true,
             maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'VISÃO DIÁRIA – TEMPO DE PERMANÊNCIA POR OPERAÇÃO (06h–22h)',
+                    color: 'black',
+                    font: {
+                        size: 32
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+
+                            const inicio = context.raw.x[0];
+                            const fim = context.raw.x[1];
+                            const duracaoMinutos = context.raw.duracaoMinutos;
+
+                            const horas = Math.floor(duracaoMinutos / 60);
+                            const minutos = duracaoMinutos % 60;
+
+                            return [
+                                `${context.raw.y}`,
+                                `Início: ${formatarHora(inicio)}`,
+                                `Fim: ${formatarHora(fim)}`,
+                                `Duração: ${horas}h ${minutos}min`
+                            ];
+                        }
+                    }
+                }
+            },
             scales: {
                 x: {
-                    min: 0,
-                    max: 24,
+                    min: 6,
+                    max: 22,
                     ticks: {
                         stepSize: 1,
                         callback: value => value + ":00"
@@ -397,4 +522,27 @@ function plotarGraficoTempoDePermanenciaPorOperacao(dadosApi) {
             }
         }
     });
+}
+
+function obterPeriodoSelecionado() {
+    const valor = periodo.value;
+
+    if (valor == "24horas") {
+        return "24 HOUR";
+    } else if (valor == "7dias") {
+        return "7 DAY";
+    } else if (valor == "1mes") {
+        return "1 MONTH";
+    } else if (valor == "3meses") {
+        return "3 MONTH";
+    } else {
+        return "6 MONTH";
+    }
+}
+
+function formatarHora(horaDecimal) {
+    const horas = Math.floor(horaDecimal);
+    const minutos = Math.round((horaDecimal - horas) * 60);
+
+    return `${horas}:${minutos < 10 ? '0' + minutos : minutos}`;
 }

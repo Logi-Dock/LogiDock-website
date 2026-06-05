@@ -129,7 +129,7 @@ function graficoTempoMedioPorDoca(fk_empresa, periodo, limite_linhas) {
         AND \`Data de Entrada\` >= NOW() - INTERVAL ${periodo}
 
         GROUP BY \`Número da Doca\`
-        ORDER BY doca;
+        ORDER BY tempo_medio_minutos DESC;
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -139,15 +139,15 @@ function graficoTempoMedioPorDoca(fk_empresa, periodo, limite_linhas) {
 function graficoDocasComMaisAtrasos(fk_empresa, periodo) {
     var instrucaoSql = `
         SELECT
-            \`Tipo de Ocorrência\` AS status,
+            \`Número da Doca\` AS doca,
             COUNT(*) AS quantidade
-
         FROM ocorrencias_docas
-
-        WHERE \`ID da Empresa\` = ${fk_empresa}
+        WHERE \`Tipo de Ocorrência\` COLLATE utf8mb4_0900_ai_ci LIKE 'Em Atraso'
+        AND \`ID da Empresa\` = ${fk_empresa}
         AND \`Data de Entrada\` >= NOW() - INTERVAL ${periodo}
-
-        GROUP BY \`Tipo de Ocorrência\`;
+        GROUP BY \`Número da Doca\`
+        ORDER BY quantidade DESC
+        LIMIT 4;
     `;
 
 
@@ -175,7 +175,21 @@ function graficoTempoDePermanenciaPorOperacao(fk_empresa, periodo, limite_linhas
         WHERE \`ID da Empresa\` = ${fk_empresa}
         AND \`Data de Entrada\` >= NOW() - INTERVAL ${periodo}
 
-        ORDER BY inicio;
+        ORDER BY
+        CASE
+            WHEN \`Tipo de Ocorrência\` COLLATE utf8mb4_0900_ai_ci LIKE 'Em Atraso%' THEN 1
+            WHEN \`Tipo de Ocorrência\` COLLATE utf8mb4_0900_ai_ci LIKE 'Quase%' THEN 2
+            ELSE 3
+        END,
+        TIMESTAMPDIFF(
+            MINUTE,
+            \`Data de Entrada\`,
+            CASE
+                WHEN \`Data da Saída\` IS NULL
+                THEN NOW()
+                ELSE \`Data da Saída\`
+            END
+        ) DESC;
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
