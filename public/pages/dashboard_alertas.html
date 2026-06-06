@@ -9,9 +9,11 @@
     <link rel="stylesheet" href="../assets/css/dashboard_alertas.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/side_bar.css">
+
+    <script src="../assets/js/permissoes.js"></script>
 </head>
 
-<body onload="Inicializar()">
+<body onload="Inicializar(), verificarNivel()">
     <div class="tela_graficos container">
         <div class="navegacao">
             <div class="titulo">
@@ -37,12 +39,12 @@
                     <span>Docas</span>
                 </div>
 
-                <div class="navegador" onclick="window.location.href='dashboard_empresa.html';">
+                <div id="empresa" class="navegador" onclick="window.location.href='dashboard_empresa.html';">
                     <img src="../assets/icons/icone_empresa.png" alt="">
                     <span>Empresa</span>
                 </div>
 
-                <div class="navegador" onclick="window.location.href='dashboard_funcionario.html';">
+                <div id="funcionario" class="navegador" onclick="window.location.href='dashboard_funcionario.html';">
                     <img src="../assets/icons/icone_funcionario.png" alt="">
                     <span>Funcionário</span>
                 </div>

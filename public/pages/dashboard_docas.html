@@ -9,9 +9,12 @@
     <link rel="stylesheet" href="../assets/css/dashboard_docas.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/side_bar.css">
+
+    <script src="../assets/js/permissoes.js"></script>
+    <script src="../assets/js/permissoes.js"></script>
 </head>
 
-<body>
+<body onload="verificarNivel()">
     <!-- Side Bar -->
     <div class="tela-graficos container">
         <div class="navegacao">
@@ -38,12 +41,12 @@
                     <span>Docas</span>
                 </div>
 
-                <div class="navegador" onclick="window.location.href='dashboard_empresa.html';">
+                <div id="empresa" class="navegador" onclick="window.location.href='dashboard_empresa.html';">
                     <img src="../assets/icons/icone_empresa.png" alt="">
                     <span>Empresa</span>
                 </div>
 
-                <div class="navegador" onclick="window.location.href='dashboard_funcionario.html';">
+                <div id="funcionario" class="navegador" onclick="window.location.href='dashboard_funcionario.html';">
                     <img src="../assets/icons/icone_funcionario.png" alt="">
                     <span>Funcionário</span>
                 </div>
@@ -68,13 +71,13 @@
         <!-- Cadastrar nova doca -->
         <div class="conteudo">
 
-            <div class="conteudo-header">
+            <div id="doca-1" class="conteudo-header">
                 <h1>Cadastrar nova doca</h1>
                 <h3>O sensor é vinculado automaticamente ao salvar</h3>
             </div>
             
             <!-- painel principal -->
-            <div class="cadastrar-doca-painel">
+            <div id="doca-2" class="cadastrar-doca-painel">
 
                 <div class="painel-titulo">
                 <img src="../assets/icons/icone_caminhao.svg">
