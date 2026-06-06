@@ -1,4 +1,3 @@
-const { listarDoca } = require("../database/models/docaModel");
 var docaModel = require("../models/docaModel");
 
 function cadastrarDocaESensor(req, res){

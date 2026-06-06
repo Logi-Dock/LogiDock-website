@@ -1,28 +1,49 @@
-nome_funcionario.innerHTML = `${sessionStorage.NOME_USUARIO}`;
-nome.innerHTML = `${sessionStorage.NOME_USUARIO}`;
-empresa.innerHTML = `${sessionStorage.RAZAO_SOCIAL}`;
-empresaUser.innerHTML = `${sessionStorage.RAZAO_SOCIAL}`;
-permissao.innerHTML = `${sessionStorage.NOME_NIVEL_ACESSO}`;
+nome_usuario.innerHTML = `${sessionStorage.NOME_USUARIO}`;
+empresaNome.innerHTML = `${sessionStorage.RAZAO_SOCIAL}`;
 
-let fk_empresa = sessionStorage.FK_EMPRESA;
-let proximaAtualizacao;
+const fk_empresa = sessionStorage.FK_EMPRESA;
 
-let intervalo_selecionado = periodo.value;
-let filtro_periodo = "24 HOUR";
+let intervaloKpis;
+let intervaloGraficos;
 
 let graficoGantt = null;
 let graficoPizza = null;
 let graficoTempoMedio = null;
 
 function inicializarDashboard() {
+    atualizarTudo();
+    iniciarAutoRefresh();
+}
+
+function atualizarTudo() {
+    atualizarKpis(fk_empresa);
+    atualizarGraficos(fk_empresa);
+}
+
+function atualizarKpis(fk_empresa) {
     kpiDocaMaisAtrasos(fk_empresa);
     kpiDocaMaiorAtraso(fk_empresa);
     kpiDocaMaiorTaxaDeAtrasos(fk_empresa);
     kpiDocaMaiorTempoDeAtrasoAcumulado(fk_empresa);
+}
 
+function atualizarGraficos(fk_empresa) {
     obterDadosGraficoTempoMedioPorDoca(fk_empresa);
     obterDadosGraficoDocasComMaisAtrasos(fk_empresa);
     obterDadosGraficoTempoDePermanenciaPorOperacao(fk_empresa);
+}
+
+function iniciarAutoRefresh() {
+    if (intervaloKpis) clearInterval(intervaloKpis);
+    if (intervaloGraficos) clearInterval(intervaloGraficos);
+
+    intervaloKpis = setInterval(() => {
+        atualizarKpis(fk_empresa);
+    }, 5000); // 5s
+
+    intervaloGraficos = setInterval(() => {
+        atualizarGraficos(fk_empresa);
+    }, 15000); // 15s
 }
 
 // KPIS
@@ -32,6 +53,10 @@ function kpiDocaMaisAtrasos(fk_empresa) {
     fetch(`/dashboard/kpiDocaMaisAtrasos/${fk_empresa}/${filtro_periodo}/`)
         .then((resposta) => resposta.json())
         .then((dados) => {
+            dados = validarLista(dados);
+
+            if (dados.length == 0) return;
+
             console.log(dados);
 
             document.getElementById('ipt_DocaMaisAtrasos').innerHTML = dados[0].doca;
@@ -48,6 +73,10 @@ function kpiDocaMaiorAtraso(fk_empresa) {
     fetch(`/dashboard/kpiDocaMaiorAtraso/${fk_empresa}/${filtro_periodo}/`)
         .then((resposta) => resposta.json())
         .then((dados) => {
+            dados = validarLista(dados);
+
+            if (dados.length == 0) return;
+
             console.log(dados);
 
             document.getElementById('ipt_DocaAtrasoRecente').innerHTML = dados[0].doca;
@@ -64,6 +93,10 @@ function kpiDocaMaiorTaxaDeAtrasos(fk_empresa) {
     fetch(`/dashboard/kpiDocaMaiorTaxaDeAtrasos/${fk_empresa}/${filtro_periodo}/`)
         .then((resposta) => resposta.json())
         .then((dados) => {
+            dados = validarLista(dados);
+
+            if (dados.length == 0) return;
+
             console.log(dados);
 
             document.getElementById('ipt_DocaMaiorPercentual').innerHTML = dados[0].doca;
@@ -80,6 +113,10 @@ function kpiDocaMaiorTempoDeAtrasoAcumulado(fk_empresa) {
     fetch(`/dashboard/kpiDocaMaiorTempoDeAtrasoAcumulado/${fk_empresa}/${filtro_periodo}/`)
         .then((resposta) => resposta.json())
         .then((dados) => {
+            dados = validarLista(dados);
+
+            if (dados.length == 0) return;
+
             console.log(dados);
 
             document.getElementById('ipt_DocaMaiorTempo').innerHTML = dados[0].doca;
@@ -100,10 +137,6 @@ function kpiDocaMaiorTempoDeAtrasoAcumulado(fk_empresa) {
 function obterDadosGraficoTempoMedioPorDoca(fk_empresa) {
     const filtro_periodo = obterPeriodoSelecionado();
 
-    if (proximaAtualizacao != undefined) {
-        clearTimeout(proximaAtualizacao);
-    }
-
     fetch(`/dashboard/graficoTempoMedioPorDoca/${fk_empresa}/${filtro_periodo}`)
         .then(res => res.json())
         .then(dados => {
@@ -114,10 +147,7 @@ function obterDadosGraficoTempoMedioPorDoca(fk_empresa) {
 }
 
 function plotarGraficoTempoMedioPorDoca(dadosApi) {
-
-    if (graficoTempoMedio) {
-        graficoTempoMedio.destroy();
-    }
+    dadosApi = validarLista(dadosApi);
 
     const labels = [];
     const dentroPrazo = [];
@@ -146,6 +176,17 @@ function plotarGraficoTempoMedioPorDoca(dadosApi) {
         }
 
         limite.push(4);
+    }
+
+    // Evita bug visual
+    if (graficoTempoMedio) {
+        graficoTempoMedio.data.labels = labels;
+        graficoTempoMedio.data.datasets[0].data = dentroPrazo;
+        graficoTempoMedio.data.datasets[1].data = foraPrazo;
+        graficoTempoMedio.data.datasets[2].data = quasePrazo;
+        graficoTempoMedio.data.datasets[3].data = limite;
+        graficoTempoMedio.update();
+        return;
     }
 
     graficoTempoMedio = new Chart(
@@ -240,62 +281,9 @@ function plotarGraficoTempoMedioPorDoca(dadosApi) {
     );
 }
 
-function atualizarGraficoTempoMedioPorDoca(fk_empresa, dados, myChart) {
-    fetch(`/dashboard/graficoTempoMedioPorDoca/${fk_empresa}`, { cache: 'no-store' }).then(function (response) {
-        if (response.ok) {
-            response.json().then(function (novoRegistro) {
-
-                obterDadosGraficoTempoMedioPorDoca(fk_empresa);
-                // alertar(novoRegistro, fk_empresa);
-                console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
-                console.log(`Dados atuais do gráfico:`);
-                console.log(dados);
-
-                if (novoRegistro[0].momento_grafico == dados.labels[dados.labels.length - 1]) {
-                    console.log("---------------------------------------------------------------")
-                    console.log("Como não há dados novos para captura, o gráfico não atualizará.")
-
-                    console.log("Horário do novo dado capturado:")
-                    console.log(novoRegistro[0].momento_grafico)
-                    console.log("Horário do último dado capturado:")
-                    console.log(dados.labels[dados.labels.length - 1])
-                    console.log("---------------------------------------------------------------")
-                } else {
-                    // tirando e colocando valores no gráfico
-                    dados.labels.shift(); // apagar o primeiro
-                    dados.labels.push(novoRegistro[0].momento_grafico); // incluir um novo momento
-
-                    dados.datasets[0].data.shift();  // apagar o primeiro de umidade
-                    dados.datasets[0].data.push(novoRegistro[0].umidade); // incluir uma nova medida de umidade
-
-                    dados.datasets[1].data.shift();  // apagar o primeiro de temperatura
-                    dados.datasets[1].data.push(novoRegistro[0].temperatura); // incluir uma nova medida de temperatura
-
-                    myChart.update();
-                }
-
-                // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-                proximaAtualizacao = setTimeout(() => atualizarGraficoTempoMedioPorDoca(fk_empresa, dados, myChart), 2000);
-            });
-        } else {
-            console.error('Nenhum dado encontrado ou erro na API');
-            // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-            proximaAtualizacao = setTimeout(() => atualizarGraficoTempoMedioPorDoca(fk_empresa, dados, myChart), 2000);
-        }
-    })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-        });
-
-}
-
 // GRÁFICO 2 PIZZA
 function obterDadosGraficoDocasComMaisAtrasos(fk_empresa) {
     const filtro_periodo = obterPeriodoSelecionado();
-
-    if (proximaAtualizacao != undefined) {
-        clearTimeout(proximaAtualizacao);
-    }
 
     fetch(`/dashboard/graficoDocasComMaisAtrasos/${fk_empresa}/${filtro_periodo}`)
         .then(res => res.json())
@@ -307,18 +295,35 @@ function obterDadosGraficoDocasComMaisAtrasos(fk_empresa) {
 }
 
 function plotarGraficoDocasComMaisAtrasos(dadosApi) {
+    dadosApi = validarLista(dadosApi);
+
     const labels = [];
     const valores = [];
 
-    if (graficoPizza) {
-        graficoPizza.destroy();
-    }
+    let outros = 0;
 
     for (let i = 0; i < dadosApi.length; i++) {
-        const dado = dadosApi[i];
+        const dado = dadosApi[i]
 
-        labels.push(dado.doca);
-        valores.push(dado.quantidade);
+        if (i < 3) {
+            labels.push(dado.doca);
+            valores.push(dado.quantidade);
+        } else {
+            outros += dado.quantidade;
+        }
+    }
+
+    if (outros > 0) {
+        labels.push("Outros");
+        valores.push(outros);
+    }
+
+    //Evita bug visual
+    if (graficoPizza) {
+        graficoPizza.data.labels = labels;
+        graficoPizza.data.datasets[0].data = valores;
+        graficoPizza.update();
+        return;
     }
 
     graficoPizza = new Chart(
@@ -353,60 +358,9 @@ function plotarGraficoDocasComMaisAtrasos(dadosApi) {
     );
 }
 
-function atualizarGraficoDocasComMaisAtrasos(fk_empresa, dados, myChart) {
-    fetch(`/dashboard/graficoDocasComMaisAtrasos/${fk_empresa}`, { cache: 'no-store' }).then(function (response) {
-        if (response.ok) {
-            response.json().then(function (novoRegistro) {
-
-                obterDadosGraficoDocasComMaisAtrasos(fk_empresa);
-                // alertar(novoRegistro, fk_empresa);
-                console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
-                console.log(`Dados atuais do gráfico:`);
-                console.log(dados);
-
-                if (novoRegistro[0].momento_grafico == dados.labels[dados.labels.length - 1]) {
-                    console.log("---------------------------------------------------------------")
-                    console.log("Como não há dados novos para captura, o gráfico não atualizará.")
-
-                    console.log("Horário do novo dado capturado:")
-                    console.log(novoRegistro[0].momento_grafico)
-                    console.log("Horário do último dado capturado:")
-                    console.log(dados.labels[dados.labels.length - 1])
-                    console.log("---------------------------------------------------------------")
-                } else {
-                    // tirando e colocando valores no gráfico
-                    dados.labels.shift(); // apagar o primeiro
-                    dados.labels.push(novoRegistro[0].momento_grafico); // incluir um novo momento
-
-                    dados.datasets[0].data.shift();  // apagar o primeiro de umidade
-                    dados.datasets[0].data.push(novoRegistro[0].umidade); // incluir uma nova medida de umidade
-
-                    dados.datasets[1].data.shift();  // apagar o primeiro de temperatura
-                    dados.datasets[1].data.push(novoRegistro[0].temperatura); // incluir uma nova medida de temperatura
-
-                    myChart.update();
-                }
-
-                // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-                proximaAtualizacao = setTimeout(() => atualizarGraficoDocasComMaisAtrasos(fk_empresa, dados, myChart), 2000);
-            });
-        } else {
-            console.error('Nenhum dado encontrado ou erro na API');
-            // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-            proximaAtualizacao = setTimeout(() => atualizarGraficoDocasComMaisAtrasos(fk_empresa, dados, myChart), 2000);
-        }
-    })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-        });
-
-}
-
 //GRÁFICO 3
 function obterDadosGraficoTempoDePermanenciaPorOperacao(fk_empresa) {
-    const filtro_periodo = obterPeriodoSelecionado();
-
-    fetch(`/dashboard/graficoTempoDePermanenciaPorOperacao/${fk_empresa}/${filtro_periodo}`)
+    fetch(`/dashboard/graficoTempoDePermanenciaPorOperacao/${fk_empresa}`)
         .then(res => res.json())
         .then(dados => {
             console.log("Gantt:", dados);
@@ -416,15 +370,12 @@ function obterDadosGraficoTempoDePermanenciaPorOperacao(fk_empresa) {
 }
 
 function plotarGraficoTempoDePermanenciaPorOperacao(dadosApi) {
+    dadosApi = validarLista(dadosApi);
+
     const foraDoTempo = [];
     const dentroDoTempo = [];
 
-    if (graficoGantt) {
-        graficoGantt.destroy();
-    }
-
     for (let i = 0; i < dadosApi.length; i++) {
-
         const registro = dadosApi[i];
 
         const inicio = new Date(registro.inicio);
@@ -443,14 +394,22 @@ function plotarGraficoTempoDePermanenciaPorOperacao(dadosApi) {
         const item = {
             duracaoMinutos,
             x: [horaInicio, horaFim],
-            y: `Doca ${registro.doca}`
+            y: `Doca ${registro.doca} - ${Math.floor(duracaoMinutos / 60)}h ${duracaoMinutos % 60}min`
         };
 
-        if (registro.status == "Em Atraso") {
+        if (registro.status.includes("Em Atraso") || registro.status.includes("Quase fora do prazo")) {
             foraDoTempo.push(item);
         } else {
             dentroDoTempo.push(item);
         }
+    }
+
+    //Evita bug visual
+    if (graficoGantt) {
+        graficoGantt.data.datasets[0].data = foraDoTempo;
+        graficoGantt.data.datasets[1].data = dentroDoTempo;
+        graficoGantt.update();
+        return;
     }
 
     graficoGantt = new Chart(document.getElementById('ipt_GraficoDeGantt'), {
@@ -477,6 +436,10 @@ function plotarGraficoTempoDePermanenciaPorOperacao(dadosApi) {
             indexAxis: 'y',
             responsive: true,
             maintainAspectRatio: false,
+            interaction: {
+                mode: 'nearest',
+                intersect: true
+            },
             plugins: {
                 title: {
                     display: true,
@@ -527,17 +490,11 @@ function plotarGraficoTempoDePermanenciaPorOperacao(dadosApi) {
 function obterPeriodoSelecionado() {
     const valor = periodo.value;
 
-    if (valor == "24horas") {
-        return "24 HOUR";
-    } else if (valor == "7dias") {
-        return "7 DAY";
-    } else if (valor == "1mes") {
-        return "1 MONTH";
-    } else if (valor == "3meses") {
-        return "3 MONTH";
-    } else {
-        return "6 MONTH";
-    }
+    if (valor == "24horas") return "24 HOUR";
+    else if (valor == "7dias") return "7 DAY";
+    else if (valor == "1mes") return "1 MONTH";
+    else if (valor == "3meses") return "3 MONTH";
+    else return "6 MONTH";
 }
 
 function formatarHora(horaDecimal) {
@@ -545,4 +502,11 @@ function formatarHora(horaDecimal) {
     const minutos = Math.round((horaDecimal - horas) * 60);
 
     return `${horas}:${minutos < 10 ? '0' + minutos : minutos}`;
+}
+
+function validarLista(lista) {
+    if (!lista || lista.length === undefined) {
+        return [];
+    }
+    return lista;
 }

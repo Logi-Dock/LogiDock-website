@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,10 @@
     <link rel="stylesheet" href="../assets/css/dashboard_empresa.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/side_bar.css">
+
+    <script src="../assets/js/sidebar.js" defer></script>
 </head>
+
 <body onload="vizualizarDadosEmpresa()">
     <div class="tela_graficos container">
         <div class="navegacao">
@@ -16,20 +20,20 @@
                 <img src="../assets/images/logidock_logo.svg" alt="" onclick="window.location.href='../index.html';">
                 <span id="empresaUser">empresaUser</span>
             </div>
-    
+
             <div class="divisor"></div>
-    
+
             <div class="navegadores">
                 <div class="navegador" onclick="window.location.href='dashboard_graficos.html';">
                     <img src="../assets/icons/icone_dashboard.png" alt="">
                     <span>Dashboard</span>
                 </div>
-    
+
                 <div class="navegador" onclick="window.location.href='dashboard_alertas.html';">
                     <img src="../assets/icons/icone_alerta.png" alt="">
                     <span>Alertas</span>
                 </div>
-    
+
                 <div class="navegador" onclick="window.location.href='dashboard_docas.html';">
                     <img src="../assets/icons/icone_docas.png" alt="">
                     <span>Docas</span>
@@ -50,9 +54,9 @@
                     <span>Suporte</span>
                 </div>
             </div>
-    
+
             <div class="divisor"></div>
-    
+
             <div class="info_perfil" onclick="window.location.href='dashboard_user.html'">
                 <img src="../assets/icons/teste_ft_perfil.png" alt="">
                 <div id="nome_permissao">
@@ -61,7 +65,7 @@
                 </div>
             </div>
         </div>
-    
+
         <!-- Cadastrar nova doca -->
         <div class="conteudo">
 
@@ -69,13 +73,13 @@
                 <h1>Dados da empresa</h1>
                 <h3>Informações cadastrais e operacionais da empresa.</h3>
             </div>
-            
+
             <!-- painel principal -->
             <div class="cadastrar-doca-painel">
 
                 <div class="painel-titulo">
-                
-                <h3>Identificação</h3>
+
+                    <h3>Identificação</h3>
                 </div>
 
                 <hr class="dados-da-doca-separador">
@@ -97,16 +101,17 @@
                             <img class="img-aviso" src="../assets/icons/atencao.png" alt="">
                             <label class="aviso" for="">CNPJ não pode ser alterado após o cadastro.</label>
                         </div>
-                        
+
                     </div>
 
-                    
+
                 </div>
 
                 <!-- Botões -->
                 <div class="doca-botoes">
                     <button class="btn-cancelar" type="button" onclick="cancelarAlterarDadosEmpresa()">Cancelar</button>
-                    <button class="btn-cadastrar" type="button" onclick="alterarDadosEmpresa()">Salvar identificação</button>
+                    <button class="btn-cadastrar" type="button" onclick="alterarDadosEmpresa()">Salvar
+                        identificação</button>
                 </div>
 
             </div>
@@ -114,8 +119,8 @@
             <div class="cadastrar-doca-painel">
 
                 <div class="painel-titulo">
-                
-                <h3>Endereço</h3>
+
+                    <h3>Endereço</h3>
                 </div>
 
                 <hr class="dados-da-doca-separador">
@@ -170,70 +175,66 @@
                             <option value="to">Tocantins</option>
                         </select>
                     </div>
-                    
+
                 </div>
 
                 <!-- Botões -->
                 <div class="doca-botoes">
-                    <button class="btn-cancelar" type="button" onclick="cancelarAlterarEnderecoEmpresa()">Cancelar</button>
-                    <button class="btn-cadastrar" type="button" onclick="alterarEnderecoEmpresa()">Salvar identificação</button>
+                    <button class="btn-cancelar" type="button"
+                        onclick="cancelarAlterarEnderecoEmpresa()">Cancelar</button>
+                    <button class="btn-cadastrar" type="button" onclick="alterarEnderecoEmpresa()">Salvar
+                        identificação</button>
                 </div>
 
             </div>
         </div>
     </div>
 </body>
+
 </html>
 
 <script>
 
     let fk_empresa = sessionStorage.FK_EMPRESA;
 
-    function cancelarAlterarDadosEmpresa()
-    {
+    function cancelarAlterarDadosEmpresa() {
         vizualizarDadosEmpresa();
     }
 
-    function cancelarAlterarEnderecoEmpresa()
-    {
+    function cancelarAlterarEnderecoEmpresa() {
         vizualizarDadosEmpresa();
     }
 
-    function vizualizarDadosEmpresa()
-    {
+    function vizualizarDadosEmpresa() {
         fetch(`/empresas/vizualizarDadosEmpresa/${fk_empresa}`)
-        .then((resposta) => resposta.json())
-        .then((dados) => {
-            console.log(dados);
-            
-            document.getElementById('id_razao_social').value = dados[0].razao_social;
-            document.getElementById('id_cnpj').value = dados[0].cnpj;
-            document.getElementById('id_logradouro').value = dados[0].logradouro;
-            document.getElementById('id_numero').value = dados[0].numero_endereco;
-            document.getElementById('id_cidade').value = dados[0].cidade
-            document.getElementById('id_estados').value = dados[0].estado.toLowerCase();
-        })                                                        
-        .catch((erro) => {
-            console.error("Erro ao buscar vizualizarDadosEmpresa:", erro);
-        })
+            .then((resposta) => resposta.json())
+            .then((dados) => {
+                console.log(dados);
+
+                document.getElementById('id_razao_social').value = dados[0].razao_social;
+                document.getElementById('id_cnpj').value = dados[0].cnpj;
+                document.getElementById('id_logradouro').value = dados[0].logradouro;
+                document.getElementById('id_numero').value = dados[0].numero_endereco;
+                document.getElementById('id_cidade').value = dados[0].cidade
+                document.getElementById('id_estados').value = dados[0].estado.toLowerCase();
+            })
+            .catch((erro) => {
+                console.error("Erro ao buscar vizualizarDadosEmpresa:", erro);
+            })
     }
 
-    function alterarDadosEmpresa()
-    {
+    function alterarDadosEmpresa() {
         let razao_social = id_razao_social.value;
 
-        if (razao_social == '')
-        {
+        if (razao_social == '') {
             alert('Preencha os campos antes de enviar!')
         }
 
-        else if (razao_social.length < 3)
-        {
+        else if (razao_social.length < 3) {
             alert('Nome muito pequeno para ser alterado!')
         }
 
-        else
-        {
+        else {
             fetch("/empresas/alterarDadosEmpresa", {
                 method: "POST",
                 headers: {
@@ -255,8 +256,7 @@
         }
     }
 
-    function alterarEnderecoEmpresa()
-    {
+    function alterarEnderecoEmpresa() {
         let logradouro = id_logradouro.value;
         let numero = Number(id_numero.value);
         let cidade = id_cidade.value;
@@ -268,13 +268,11 @@
             id_numero.value == '' ||
             cidade == '' ||
             estado == ''
-        )
-        {
+        ) {
             alert('Preencha os campos antes de enviar!')
         }
 
-        else
-        {
+        else {
             fetch("/empresas/alterarEnderecoEmpresa", {
                 method: "POST",
                 headers: {
