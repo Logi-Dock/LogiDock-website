@@ -86,12 +86,12 @@
                 <div class="doca-campo-linha">
                     <div>
                         <label>Número/Identificador</label>
-                        <input type="text" placeholder="Ex: D03, A02, Doca Sul">
+                        <input type="text" id="numero_doca" placeholder="Ex: D03, A02, Doca Sul">
                     </div>
 
                     <div class="doca-campo">
                         <label>Status inicial</label>
-                        <select>
+                        <select id="status_doca">
                             <option value="ATIVO">ATIVO</option>
                             <option value="INATIVO">INATIVO</option>
                         </select>
@@ -115,7 +115,7 @@
 
                         <div class="sensor-campo">
                             <label>Status do sensor</label>
-                            <select>
+                            <select id="status_sensor">
                                 <option value="ATIVO">ATIVO</option>
                                 <option value="INATIVO">INATIVO</option>
                                 </select>
@@ -131,8 +131,8 @@
                 <!-- Botões -->
                 <div class="doca-botoes">
                     <button class="btn-cancelar" type="button" onclick="cancelarCadastrarDoca()">Cancelar</button>
-                    <button class="btn-editar" type="button" onclick="editarCadastrarDoca()">Editar</button>
-                    <button class="btn-cadastrar" type="button" onclick="cadastrarDoca()">Cadastrar doca + sensor</button>
+                    <button class="btn-editar" type="button" onclick="editarDoca()">Editar</button>
+                    <button class="btn-cadastrar" type="button" onclick="listarDoca()">Cadastrar doca + sensor</button>
                 </div>
 
             </div>
@@ -190,5 +190,9 @@
             </div>
         </div>
 </body>
+
+<script>
+    
+</script>
 
 </html>

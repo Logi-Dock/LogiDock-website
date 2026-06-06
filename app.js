@@ -21,6 +21,7 @@ var usuarioRouter = require("./src/routes/usuarios");
 var empresaRouter = require("./src/routes/empresas");
 var nivelAcessoRouter = require("./src/routes/nivelAcesso.js");
 var dashboardRouter = require("./src/routes/dashboard.js");
+var docaRouter = require("./src/routes/doca.js");
 // var bobRouter = require("./src/routes/bob.js"); // BOBIA
 
 app.use(express.json());
@@ -42,6 +43,7 @@ app.use("/usuarios", usuarioRouter);
 app.use("/empresas", empresaRouter);
 app.use("/nivelAcesso", nivelAcessoRouter);
 app.use("/dashboard", dashboardRouter);
+app.use("/doca", docaRouter);
 // app.use("/bob", bobRouter); // BOBIA
 
 app.listen(PORTA_APP, function () {
