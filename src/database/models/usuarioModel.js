@@ -110,6 +110,7 @@ function PegarIdUsuario(email_user) {
 
 function listarUsuarios(fk_empresa) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():",fk_empresa);
+    console.log(fk_empresa)
     var instrucaoSql = `
    SELECT 
     u.nome_user,
@@ -119,7 +120,7 @@ FROM usuario u
 JOIN nivel_acesso n ON n.id_nivel_acesso = u.fk_nivel_acesso   
 JOIN permissoes_compartilhadas pc ON pc.fk_nivel_acesso = n.id_nivel_acesso     
 JOIN permissao p ON pc.fk_permissao = p.id_permissao     
-WHERE u.fk_empresa = 3   
+WHERE u.fk_empresa = ${fk_empresa} 
 GROUP BY 
     u.nome_user, 
     n.nome_nivel_acesso;

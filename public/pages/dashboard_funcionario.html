@@ -13,7 +13,7 @@
     <script src="../assets/js/dashboard_user.js" defer></script>
 </head>
 
-<body onload="pesquisarUsuario()">
+<body onload="pesquisarUsuario(), totalUsuarios()">
     <div class="tela_graficos container">
         <div class="navegacao">
             <div class="titulo">
@@ -128,13 +128,12 @@
 
                 <div class="topo">
                     <div class="contadores">
-                        <span>Total: <strong>5</strong></span>
-                        <span>Administradores: <strong>1</strong></span>
-                        <span>Gestores: <strong>3</strong></span>
-                        <span>Funcionários: <strong>1</strong></span>
+                        <span>Total: <strong id="total">5</strong></span>
+                        <span>Administradores: <strong id="adm">1</strong ></span>
+                        <span>Gestores: <strong id="gestor">3</strong></span>
+                        <span>Funcionários: <strong id="func">1</strong></span>
                     </div>
                     <input type="text" class="busca" placeholder="Buscar por nome..." oninput="filtrarUsuarios(this)">
-                    <button class="pesquisarUsuario" onclick="pesquisarUsuario()">Buscar 🔍</button>
                 </div>
 
                 <table class="tabela">
@@ -155,10 +154,11 @@
         </div>
 </body>
 <script>
+    let id_empresa = sessionStorage.FK_EMPRESA
     let usuariosCadastrados = []
     function pesquisarUsuario() {
         console.log()
-        fetch(`/usuarios/listarUsuarios`)
+        fetch(`/usuarios/listarUsuarios/${id_empresa}`)
             .then((resposta) => resposta.json())
             .then((usuarios) => {
                 usuariosCadastrados = usuarios
@@ -209,12 +209,12 @@
     }
 
     function filtrarUsuarios(campo) {
-    const termo = campo.value.toLowerCase().trim()
-    const filtrados = usuariosCadastrados.filter(u =>
-        u.nome_user.toLowerCase().includes(termo)
-    )
-    renderizarTabela(filtrados)
-}
+        const termo = campo.value.toLowerCase().trim()
+        const filtrados = usuariosCadastrados.filter(u =>
+            u.nome_user.toLowerCase().includes(termo)
+        )
+        renderizarTabela(filtrados)
+    }
 
     function cadastrarUsuario() {
 
@@ -230,7 +230,6 @@
         }
 
 
-        let id_empresa = sessionStorage.FK_EMPRESA
 
         fetch("/usuarios/CadastrarUsuario", {
             method: "POST",
@@ -253,6 +252,23 @@
             }
 
         })
+    }
+
+    function totalUsuarios(){
+        fetch(`/nivelAcesso/totalUsuarios/${id_empresa}`)
+              .then((resposta) => resposta.json())
+              .then((usuarios) => {
+                console.log(usuarios)
+                total.innerHTML= usuarios[0].Total
+                adm.innerHTML= usuarios[0].ADMINISTRADORES
+                gestor.innerHTML=usuarios[0].GESTORES
+                func.innerHTML=usuarios[0].FUNCIONÁRIOS
+
+              })
+              .catch((erro) => {
+                  console.error('Erro ao buscar os Usuarios!!', erro)
+              })
+
     }
 
 

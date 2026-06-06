@@ -178,13 +178,13 @@ function PegarIdUsuario(req, res) {
 
 function listarUsuarios(req,res){
 
-    var fk_empresa = req.body.fk_empresa;
+    var fk_empresa = req.params.fk_empresa;
     usuarioModel.listarUsuarios(fk_empresa)
     .then(
         function (resultado){
             res.json(resultado)
             console.log(resultado);
-            console.log("tesstes")
+            console.log("testes")
         }
     ).catch(
         function(erro){
