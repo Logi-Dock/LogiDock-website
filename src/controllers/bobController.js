@@ -37,7 +37,6 @@ async function gerarResposta(mensagem)
     }
 }
 
-module.exports =
-{
+module.exports = {
     gerarResposta
 };
