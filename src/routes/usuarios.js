@@ -43,6 +43,13 @@ router.get("/listarUsuarios/:fk_empresa", function(req,res){
 usuarioController.listarUsuarios(req,res);
 });
 
+router.delete("/excluirUsuario/:id", function(req, res) {
+usuarioController.excluirUsuario(req, res);
+});
+
+router.put("/editarUsuario/:id", function(req, res) {
+usuarioController.editarUsuario(req, res);
+});
 
 
 module.exports = router;

@@ -130,7 +130,7 @@
                 <div class="topo">
                     <div class="contadores">
                         <span>Total: <strong id="total">5</strong></span>
-                        <span>Administradores: <strong id="adm">1</strong ></span>
+                        <span>Administradores: <strong id="adm">1</strong></span>
                         <span>Gestores: <strong id="gestor">3</strong></span>
                         <span>Funcionários: <strong id="func">1</strong></span>
                     </div>
@@ -157,6 +157,7 @@
 <script>
     let id_empresa = sessionStorage.FK_EMPRESA
     let usuariosCadastrados = []
+    
     function pesquisarUsuario() {
         console.log()
         fetch(`/usuarios/listarUsuarios/${id_empresa}`)
@@ -207,6 +208,12 @@
         if (lista.length == 0) {
             listaUsuarios.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#888">Nenhum usuário encontrado.</td></tr>'
         }
+
+        function badgeClass(nivel) {
+            const map = { 'ADMINISTRADOR': 'badge-admin', 'GESTOR': 'badge-gestor', 'FUNCIONÁRIO': 'badge-func' };
+            return map[nivel] || 'badge-func';
+        }
+        `<span class="badge ${badgeClass(lista[i].nome_nivel_acesso)}"> ${lista[i].nome_nivel_acesso} </span>`
     }
 
     function filtrarUsuarios(campo) {
@@ -255,21 +262,87 @@
         })
     }
 
-    function totalUsuarios(){
+    function totalUsuarios() {
         fetch(`/nivelAcesso/totalUsuarios/${id_empresa}`)
-              .then((resposta) => resposta.json())
-              .then((usuarios) => {
+            .then((resposta) => resposta.json())
+            .then((usuarios) => {
                 console.log(usuarios)
-                total.innerHTML= usuarios[0].Total
-                adm.innerHTML= usuarios[0].ADMINISTRADORES
-                gestor.innerHTML=usuarios[0].GESTORES
-                func.innerHTML=usuarios[0].FUNCIONÁRIOS
+                total.innerHTML = usuarios[0].Total
+                adm.innerHTML = usuarios[0].ADMINISTRADORES
+                gestor.innerHTML = usuarios[0].GESTORES
+                func.innerHTML = usuarios[0].FUNCIONÁRIOS
 
-              })
-              .catch((erro) => {
-                  console.error('Erro ao buscar os Usuarios!!', erro)
-              })
+            })
+            .catch((erro) => {
+                console.error('Erro ao buscar os Usuarios!!', erro)
+            })
 
+    }
+
+    function renderizarTabela(lista) {
+        const listaUsuarios = document.getElementById('listaUsuarios')
+        listaUsuarios.innerHTML = ''
+        for (let i = 0; i < lista.length; i++) {
+            listaUsuarios.innerHTML += ` <tr> <td>${lista[i].nome_user}</td> <td><span class="badge ${badgeClass(lista[i].nome_nivel_acesso)}"> 
+                ${lista[i].nome_nivel_acesso} </span></td> <td>${lista[i].permissoes}</td> <td> <button onclick="abrirEditar(${lista[i].id_usuario})" class="btn-editar">✎</button> <button onclick="excluirUsuario(${lista[i].id_usuario})" class="btn-excluir">🗑</button> </td> </tr> `
+        }
+    }
+
+    function badgeClass(nivel) {
+        const map = { 'ADMINISTRADOR': 'badge-admin', 'GESTOR': 'badge-gestor', 'FUNCIONÁRIO': 'badge-func' }
+        return map[nivel] ?? 'badge-func'
+    }
+
+    function excluirUsuario(id) {
+        if (confirm('Deseja excluir este usuário?'))
+            return fetch(`/usuarios/excluirUsuario/${id}`,
+                { method: 'DELETE' })
+                .then(function (resposta) {
+                    if (resposta.ok) {
+                        alert('Usuário excluído com sucesso!')
+                        pesquisarUsuario()
+                    } else {
+                        alert('Erro ao excluir o usuário.')
+
+                    }
+                }).catch(function (erro) {
+                    console.error('Erro ao excluir usuário', erro)
+                })
+    }
+
+    function abrirEditar(id) {
+        const u = usuariosCadastrados.find(x => x.id_usuario === id)
+        document.getElementById('nomeUser').value = u.nome_user
+        document.getElementById('emailUser').value = u.email_user
+        document.getElementById('nivelUser').value = u.fk_nivel_acesso
+        document.querySelector('.btn-salvar').onclick = function () { salvarEdicao(id) }
+        document.querySelector('.nome-usuario-card').scrollIntoView({ behavior: 'smooth' })
+    }
+
+    function salvarEdicao(id) {
+        var nome = document.getElementById('nomeUser').value
+        var email = document.getElementById('emailUser').value
+        var nivel = Number(document.getElementById('nivelUser').value)
+        if (nome == '' || email == '') {
+            alert('Nome e e-mail são obrigatórios!')
+            return
+        }
+
+        fetch(`/usuarios/editarUsuario/${id}`,
+            {
+                method: 'PUT', headers:
+                    { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    nomeServer: nome, emailServer: email, nivelServer: nivel
+
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    alert('Usuário atualizado com sucesso!')
+                    pesquisarUsuario()
+                    document.querySelector('.btn-salvar').onclick = cadastrarUsuario
+                } else { alert('Erro ao salvar alterações.') }
+            }).catch(function (erro) { console.error('Erro ao editar usuário', erro) })
     }
 
 

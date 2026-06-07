@@ -15,6 +15,7 @@
     <script src="../assets/js/permissoes.js" defer></script>
     <script src="../assets/js/sidebar.js" defer></script>
 </head>
+<div id="toast-container"></div>
 
 <body onload="inicializarDashboard(), verificarNivel()">
     <div class="tela_graficos container">
@@ -73,7 +74,7 @@
             <div class="hello">
                 <div class="informacoes_hello">
                     <span id="titulo_hello">Olá, <span id="nome_usuario">funcionárioUser!</span></span>
-    
+
                     <div class="informacoes_hello">
                         <span id="empresaNome">empresa</span>
                         <span id="divisor"> | </span>
@@ -86,7 +87,7 @@
                         <a>Alertas</a>
                         <img src="../assets/icons/alerta.png" alt="Ícone de alerta">
                     </button>
-    
+
                     <div class="filtro-periodo">
                         <select id="periodo" onchange="inicializarDashboard()">
                             <option value="24horas">Últimas 24 horas</option>
@@ -109,8 +110,8 @@
                             <p id="ipt_DocaMaisAtrasos"></p>
                             <span id="detalhesKPI1" class='detalhesKPI'></span>
                         </div>
-                        
-                        
+
+
                     </div>
 
                     <div class="kpi-item">
@@ -136,7 +137,7 @@
                         <!-- <span id="kpi_tempo">(3 Meses)</span> -->
                         <div class="kpi-item-content">
                             <p id="ipt_DocaMaiorTempo"></p>
-                            <span id="detalhesKPI4" class='detalhesKPI'></span/>
+                            <span id="detalhesKPI4" class='detalhesKPI'></span />
                         </div>
                     </div>
                 </div>
@@ -158,4 +159,32 @@
         </div>
     </div>
 </body>
+<script>
+  const TOAST_DURACAO = 6000  (6000) 
+  function fecharToast(el) { 
+    el.style.animation = 'toastOut .3s ease forwards' 
+    setTimeout(() => el.remove(), 300) 
+    } function verificarAlertas() { 
+        fetch(`/empresas/PegarAvisos/${sessionStorage.FK_EMPRESA}`) 
+        .then(r => r.json()) 
+        .then(dados => { 
+        const container = document.getElementById('toast-container') 
+        container.innerHTML = '' 
+        dados.forEach(d => { if (d.tempo_acumulado_min < 240) return 
+        const critico = d.tempo_acumulado_min >= 300 
+        const h = Math.floor(d.tempo_acumulado_min / 60) 
+        const m = d.tempo_acumulado_min % 60 
+        const tipo = critico ? 'toast-critical' : 'toast-warning' 
+        const msg = critico ? `Doca ${d.numero_doca} ultrapassou 5h (${h}h ${m}min)` : `Doca ${d.numero_doca} está há ${h}h ${m}min` 
+        const toast = document.createElement('div') 
+        toast.className = `toast ${tipo}` 
+        toast.innerHTML = `<strong>${msg}</strong><br> <small>Clique para ver alertas</small>` 
+        toast.onclick = () => window.location.href = 'dashboard_alertas.html' 
+        container.appendChild(toast) 
+        setTimeout(() => fecharToast(toast), TOAST_DURACAO) }) 
+        }) 
+        } verificarAlertas() 
+        setInterval(verificarAlertas, 60000)
+</script>
+
 </html>

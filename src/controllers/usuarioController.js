@@ -133,69 +133,99 @@ function cadastrarUsuario(req, res) {
 
     usuarioModel.cadastrarUsuario(nome_user, email_user, senha_user, fk_empresa, fk_nivel_acesso)
         .then(
-            function(resultado) {
+            function (resultado) {
                 res.json(resultado)
             }
-        ).catch (
+        ).catch(
             function (erro) {
-            console.log(erro);
-            console.log(
-                "\nHouve um erro ao realizar o cadastro! Erro: ",
-                erro.sqlMessage
-            );
-            res.status(500).json(erro.sqlMessage);
-        }
-    );
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao realizar o cadastro! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
 }
 
 function PegarIdUsuario(req, res) {
     var email_user = req.params.email;
 
     usuarioModel.PegarIdUsuario(email_user)
-    .then(
-        function (resultado) {
+        .then(
+            function (resultado) {
 
-            if (resultado.length == 1) {
-            console.log(resultado);
-            res.json({
-                id_usuario: resultado[0].id_usuario,
-            });
+                if (resultado.length == 1) {
+                    console.log(resultado);
+                    res.json({
+                        id_usuario: resultado[0].id_usuario,
+                    });
 
-            } else if (resultado.length == 0) {
-                res.status(403).send("Email inválido");
-            } else {
-                res.status(403).send("Erro de duplicidade");
-            } 
-        }
-    ).catch(
-        function (erro) {
-            console.log(erro);
-            console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
-            res.status(500).json(erro.sqlMessage);
-        }
-    );
+                } else if (resultado.length == 0) {
+                    res.status(403).send("Email inválido");
+                } else {
+                    res.status(403).send("Erro de duplicidade");
+                }
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
 }
 
-function listarUsuarios(req,res){
+function listarUsuarios(req, res) {
 
     var fk_empresa = req.params.fk_empresa;
     usuarioModel.listarUsuarios(fk_empresa)
-    .then(
-        function (resultado){
-            res.json(resultado)
-            console.log(resultado);
-            console.log("testes")
-        }
-    ).catch(
-        function(erro){
+        .then(
+            function (resultado) {
+                res.json(resultado)
+                console.log(resultado);
+                console.log("testes")
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao listar usuarios! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        )
+}
+
+function excluirUsuario(req, res) {
+    var id_usuario = req.params.id;
+    usuarioModel.excluirUsuario(id_usuario)
+        .then(function (resultado) {
+            res.json(resultado);
+        }).catch(function (erro) {
             console.log(erro);
-            console.log(
-                  "\nHouve um erro ao listar usuarios! Erro: ",
-                erro.sqlMessage
-            );
-             res.status(500).json(erro.sqlMessage);
+            console.log("\nHouve um erro ao excluir o usuário! Erro: ", erro.sqlMessage
+
+            ); res.status(500).json(erro.sqlMessage);
         }
-    )
+        );
+}
+
+function editarUsuario(req, res) {
+    var id_usuario = req.params.id;
+    var nome = req.body.nomeServer;
+    var email = req.body.emailServer;
+    var nivel = req.body.nivelServer;
+    usuarioModel.editarUsuario(id_usuario, nome, email, nivel)
+        .then(function (resultado) {
+            res.json(resultado);
+        }).catch(function (erro) {
+            console.log(erro); console.log("\nHouve um erro ao editar o usuário! Erro: ", erro.sqlMessage
+
+            ); res.status(500).json(erro.sqlMessage);
+        }
+        );
 }
 
 
@@ -209,5 +239,7 @@ module.exports = {
     atualizarSenha,
     verificarSenha,
     PegarIdUsuario,
-    listarUsuarios
+    listarUsuarios,
+    excluirUsuario,
+    editarUsuario
 };
