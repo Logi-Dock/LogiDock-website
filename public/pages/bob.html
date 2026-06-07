@@ -72,12 +72,14 @@
         </div>
 
         <div class="conteudo">
-            <div id="container">
+            <div class="boxBob">
                 <h1>BobIA</h1>
+                <h2>Como posso te ajudar agora?</h2>
                 <textarea id="pergunta" type="text" placeholder="Digite a pergunta..."></textarea>
-                <br><br>
+                <br>
                 <button onclick="gerarResposta()">Gerar Resposta</button>
-                <h3>Resposta da IA:</h3>
+                <h3 id="subtituloResposta">Resposta da Bob IA:</h3>
+                <img id="spinMensage" class="CarregandoMensagem" src="../assets/images/loader-bola.gif" alt="">
                 <div id="resposta"></div>
             </div>
         </div>
@@ -86,6 +88,9 @@
     <script>
         async function gerarResposta()
         {
+            subtituloResposta.style.display = 'flex'
+            spinMensage.style.display = 'flex'
+
             const pergunta = document.getElementById('pergunta').value;
 
             const response = await fetch('http://localhost:6767/bob/perguntar', {
@@ -97,9 +102,16 @@
             });
 
             const data = await response.json();
+            console.log(data);
 
             document.getElementById('resposta').style.display = 'block';
-            document.getElementById('resposta').innerText = data.resultado;
+            if(data.resultado == undefined) {
+                spinMensage.style.display = 'none'
+                document.getElementById('resposta').innerText = 'Aconteceu um erro, tente novamente mais tarde';
+            } else {
+                spinMensage.style.display = 'none'
+                document.getElementById('resposta').innerText = data.resultado;
+            }
         }
     </script>
 </html>

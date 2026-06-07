@@ -2,4 +2,69 @@
     grid-column: 2;
     min-height: 100vh;
     background-color: #F4F6FA;
+    border: 1px solid black;
+    padding-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.boxBob {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+.boxBob h1 {
+    font-size: 40px;
+}
+
+.boxBob h2 {
+    font-size: 30px;
+}
+
+.boxBob textarea {
+    margin-top: 50px;
+    width: 50%;
+    align-self: center;
+    height: 150px;
+    border-radius: 10px 10px 0 0;
+    padding: 5px;
+}
+
+.boxBob button {
+    width: 20%;
+    height: 40px;
+    align-self: center;
+    border-radius: 10px;
+    background-color: blue;
+    color: #F4F6FA;
+    font-weight: bolder;
+    transition: 0.5s;
+}
+
+.boxBob button:hover {
+    background-color: #F4F6FA;
+    color: blue;
+}
+
+.boxBob h3 {
+    display: none;
+}
+
+.boxBob .CarregandoMensagem {
+    display: none;
+    align-self: center;
+    width: 150px;
+}
+
+.boxBob #resposta {
+    display: none;
+    margin-top: 30px;
+    border: 1px solid black;
+    width: 80%;
+    align-self: center;
+    border-radius: 10px 10px 0 0;
+    padding: 10px;
 }
