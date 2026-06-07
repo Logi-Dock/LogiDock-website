@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="../assets/css/side_bar.css">
 
     <script src="../assets/js/dashboard_user.js" defer></script>
-    <script src="../assets/js/permissoes.js"></script>
+    <script src="../assets/js/sidebar.js" defer></script>
+    <script src="../assets/js/permissoes.js" defer></script>
 </head>
 
 <body onload="pesquisarUsuario(), totalUsuarios(), verificarNivel()">
@@ -25,31 +26,36 @@
             <div class="divisor"></div>
 
             <div class="navegadores">
-                <div class="navegador" onclick="window.location.href='dashboard_graficos.html';">
+                <div class="navegador" onclick="window.location.href='bob.html';" id="navegador_bob_ia">
+                    <img src="../assets/icons/icone_dashboard.png" alt="">
+                    <span>Bob IA</span>
+                </div>
+
+                <div class="navegador" onclick="window.location.href='dashboard_graficos.html';" id="navegador_agora">
                     <img src="../assets/icons/icone_dashboard.png" alt="">
                     <span>Dashboard</span>
                 </div>
 
-                <div class="navegador" onclick="window.location.href='dashboard_alertas.html';">
+                <div class="navegador" onclick="window.location.href='dashboard_alertas.html';" id="navegador_alertas">
                     <img src="../assets/icons/icone_alerta.png" alt="">
                     <span>Alertas</span>
                 </div>
 
-                <div class="navegador" onclick="window.location.href='dashboard_docas.html';">
+                <div class="navegador" onclick="window.location.href='dashboard_docas.html';" id="navegador_docas">
                     <img src="../assets/icons/icone_docas.png" alt="">
                     <span>Docas</span>
                 </div>
 
-                <div id="empresa" class="navegador" onclick="window.location.href='dashboard_empresa.html';">
+                <div class="navegador" onclick="window.location.href='dashboard_empresa.html';" id="navegador_empresa">
                     <img src="../assets/icons/icone_empresa.png" alt="">
                     <span>Empresa</span>
                 </div>
 
-                <div class="navegador" onclick="window.location.href='dashboard_funcionario.html';"
-                    id="navegador_agora">
+                <div class="navegador" onclick="window.location.href='dashboard_funcionario.html';" id="navegador_funcionario">
                     <img src="../assets/icons/icone_funcionario.png" alt="">
                     <span>Funcionário</span>
                 </div>
+
                 <div class="navegador"
                     onclick="window.location.href = `https://logidock.atlassian.net/servicedesk/customer/portal/1`">
                     <img src="../assets/icons/icone_usuario_help.svg" alt="">
