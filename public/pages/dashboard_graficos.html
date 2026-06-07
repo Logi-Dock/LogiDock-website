@@ -33,7 +33,8 @@
                     <span>Bob IA</span>
                 </div>
 
-                <div class="navegador navegador_selecionado" onclick="window.location.href='dashboard_graficos.html';" id="navegador_agora">
+                <div class="navegador navegador_selecionado" onclick="window.location.href='dashboard_graficos.html';"
+                    id="navegador_agora">
                     <img src="../assets/icons/icone_dashboard.png" alt="">
                     <span>Dashboard</span>
                 </div>
@@ -53,7 +54,8 @@
                     <span>Empresa</span>
                 </div>
 
-                <div class="navegador" onclick="window.location.href='dashboard_funcionario.html';" id="navegador_funcionario">
+                <div class="navegador" onclick="window.location.href='dashboard_funcionario.html';"
+                    id="navegador_funcionario">
                     <img src="../assets/icons/icone_funcionario.png" alt="">
                     <span>Funcionário</span>
                 </div>
@@ -84,12 +86,12 @@
                     <div class="informacoes_hello">
                         <span id="empresaNome">empresa</span>
                         <span id="divisor"> | </span>
-                        <span id="data">Sexta-feira, 08 de maio de 2026</span>
+                        <span id="data_atual"></span>
                     </div>
                 </div>
 
                 <div class="botoes_hello">
-                    <button>
+                    <button onclick="window.location.href='dashboard_alertas.html'">
                         <a>Alertas</a>
                         <img src="../assets/icons/alerta.png" alt="Ícone de alerta">
                     </button>
@@ -166,31 +168,43 @@
     </div>
 </body>
 <script>
-  const TOAST_DURACAO = 6000  (6000) 
-  function fecharToast(el) { 
-    el.style.animation = 'toastOut .3s ease forwards' 
-    setTimeout(() => el.remove(), 300) 
-    } function verificarAlertas() { 
-        fetch(`/empresas/PegarAvisos/${sessionStorage.FK_EMPRESA}`) 
-        .then(r => r.json()) 
-        .then(dados => { 
-        const container = document.getElementById('toast-container') 
-        container.innerHTML = '' 
-        dados.forEach(d => { if (d.tempo_acumulado_min < 240) return 
-        const critico = d.tempo_acumulado_min >= 300 
-        const h = Math.floor(d.tempo_acumulado_min / 60) 
-        const m = d.tempo_acumulado_min % 60 
-        const tipo = critico ? 'toast-critical' : 'toast-warning' 
-        const msg = critico ? `Doca ${d.numero_doca} ultrapassou 5h (${h}h ${m}min)` : `Doca ${d.numero_doca} está há ${h}h ${m}min` 
-        const toast = document.createElement('div') 
-        toast.className = `toast ${tipo}` 
-        toast.innerHTML = `<strong>${msg}</strong><br> <small>Clique para ver alertas</small>` 
-        toast.onclick = () => window.location.href = 'dashboard_alertas.html' 
-        container.appendChild(toast) 
-        setTimeout(() => fecharToast(toast), TOAST_DURACAO) }) 
-        }) 
-        } verificarAlertas() 
-        setInterval(verificarAlertas, 60000)
+    const TOAST_DURACAO = 6000;
+    function fecharToast(el) {
+        el.style.animation = 'toastOut .3s ease forwards'
+        setTimeout(() => el.remove(), 300)
+    }
+
+    function verificarAlertas() {
+        fetch(`/empresas/PegarAvisos/${sessionStorage.FK_EMPRESA}`)
+            .then(r => r.json())
+            .then(dados => {
+                const container = document.getElementById('toast-container')
+                container.innerHTML = ''
+
+                dados.forEach(d => {
+                    const critico = d.tempo_acumulado_min >= 300
+                    const h = Math.floor(d.tempo_acumulado_min / 60)
+                    const m = d.tempo_acumulado_min % 60
+                    const tipo = critico ? 'toast-critical' : 'toast-warning'
+                    const msg = critico ? `Doca ${d.numero_doca} ultrapassou 5h (${h}h ${m}min)` : `Doca ${d.numero_doca} está há ${h}h ${m}min`
+                    const toast = document.createElement('div')
+                    toast.className = `toast ${tipo}`
+                    toast.innerHTML = `<strong>${msg}</strong><br> <small>Clique para ver alertas</small>`
+                    toast.onclick = () => window.location.href = 'dashboard_alertas.html'
+                    container.appendChild(toast)
+                    setTimeout(() => fecharToast(toast), TOAST_DURACAO)
+                })
+            })
+    }
+
+    function exibirData() {
+        var agora = new Date();
+        data_atual.innerHTML = `${String(agora.getDate()).padStart(2,'0')}/${String(agora.getMonth() + 1).padStart(2, '0')}/${agora.getFullYear()}`;
+    }
+
+    exibirData()
+    verificarAlertas()
+    setInterval(verificarAlertas, 60000)
 </script>
 
 </html>

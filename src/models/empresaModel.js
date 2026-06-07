@@ -36,12 +36,13 @@ function PegarAvisos(fk_empresa) {
         JOIN historico_sensor hs ON hs.fk_sensor = s.id_sensor
             WHERE hs.dt_registro = (
                 SELECT MAX(dt_registro)
-                FROM historico_sensor
-                WHERE fk_sensor = s.id_sensor
+                    FROM historico_sensor
+                    WHERE fk_sensor = s.id_sensor
                 ) 
                 AND hs.status_sensor = 1 
                 AND e.id_empresa = ${fk_empresa}
-                AND TIMESTAMPDIFF(MINUTE, hs.dt_registro, NOW()) >= 270;
+                AND TIMESTAMPDIFF(MINUTE, hs.dt_registro, NOW()) >= 270
+        ORDER BY hs.dt_registro DESC;
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
