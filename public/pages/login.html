@@ -85,9 +85,15 @@ function entrar() {
                 sessionStorage.NOME_NIVEL_ACESSO = json.nome_nivel_acesso;
                 sessionStorage.FK_EMPRESA = json.fk_empresa;
                                 
-                setTimeout(function () {
-                    window.location = "dashboard_graficos.html";
-                }, 1000);
+                if(json.nome_nivel_acesso == 'TÉCNICO') {
+                    setTimeout(function () {
+                        window.location = "bob.html";
+                    }, 1000); 
+                } else {
+                    setTimeout(function () {
+                        window.location = "dashboard_graficos.html";
+                    }, 1000);
+                }
 
             });
 
