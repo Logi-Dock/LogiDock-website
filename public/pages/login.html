@@ -42,7 +42,9 @@
                     <img id="olho" src="../assets/icons/olho_fechado.png" alt="" onclick="visualizar_senha()">
                 </div>
             </div>
-
+            <div id="BoxMensagemErro" style="display: none;">
+                <span id="MensagemEro"></span>
+            </div>
             <div class="botoes">
                 <button id="botao_cancelar" onclick="window.location.href='../index.html'">Cancelar</button>
                 <button id="botao_entrar" onclick="entrar()">Entrar</button>
@@ -57,9 +59,13 @@ function entrar() {
     let senha = ipt_senha.value;
 
     if (!email || !senha) {
-        return alert("Preencha usuário e senha.");
+        BoxMensagemErro.style.display = 'flex';
+        MensagemEro.innerHTML = 'Preencha usuário e senha.';
+        return;
     } else if (!email.includes('@') || !email.includes('.')) {
-        return alert("Preencha o email corretamente");
+        BoxMensagemErro.style.display = 'flex';
+        MensagemEro.innerHTML = 'Preencha o email corretamente';
+        return;
     }
     
     fetch("/usuarios/autenticar", {
@@ -74,6 +80,8 @@ function entrar() {
         }).then(function (resposta) {
             if (resposta.ok) {
             console.log(resposta);
+
+
 
             resposta.json().then(json => {
                 console.log(json);
@@ -98,8 +106,10 @@ function entrar() {
             });
 
         } else {
+            BoxMensagemErro.style.display = 'flex';
+            MensagemEro.innerHTML = 'E-mail ou senha incorretos.';
+            
             console.log("Houve um erro ao tentar realizar o login!");
-
             resposta.text().then(texto => {
                 console.error(texto);
                 console.log('E-mail ou senha incorretos.');
