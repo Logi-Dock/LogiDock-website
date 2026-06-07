@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/side_bar.css">
 
-    <script src="../assets/js/dashboard_user.js" defer></script>
     <script src="../assets/js/sidebar.js" defer></script>
     <script src="../assets/js/permissoes.js" defer></script>
 </head>
@@ -51,7 +50,7 @@
                     <span>Empresa</span>
                 </div>
 
-                <div class="navegador" onclick="window.location.href='dashboard_funcionario.html';" id="navegador_funcionario">
+                <div class="navegador navegador_selecionado" onclick="window.location.href='dashboard_funcionario.html';" id="navegador_funcionario">
                     <img src="../assets/icons/icone_funcionario.png" alt="">
                     <span>Funcionário</span>
                 </div>
@@ -66,10 +65,10 @@
             <div class="divisor"></div>
 
             <div class="info_perfil" onclick="window.location.href='dashboard_user.html'">
-                <img src="../assets/icons/teste_ft_perfil.png" alt="">
+                <p id="FakeFoto">A</p>
                 <div id="nome_permissao">
-                    <span id="nome">Fernando Brandão</span>
-                    <span id="permissao">Administrador</span>
+                    <span id="nome"></span>
+                    <span id="permissao"></span>
                 </div>
             </div>
         </div>
@@ -171,31 +170,10 @@
             .then((usuarios) => {
                 usuariosCadastrados = usuarios
                 renderizarTabela(usuariosCadastrados)
-                //console.log(usuarios)
-                //for (let i = 0; i < usuarios.length; i++) {
-                //  usuariosCadastrados.push(usuarios[i])
-                //}
             })
             .catch((erro) => {
                 console.error('Erro ao buscar usuários', erro)
             })
-        //.then(() => {
-
-        //  for (let j = 0; j < usuariosCadastrados.length; j++) {
-        //    listaUsuarios.innerHTML += `
-        //  <tr>
-        //    <td>${usuariosCadastrados[j].nome_user}</td>
-        //  <td><span class="badge-admin">${usuariosCadastrados[j].nome_nivel_acesso}</span></td>
-        //<td>${usuariosCadastrados[j].permissoes}</td>
-        //<td><button class="btn-editar">✎</button></td>
-        // </tr>
-        //  `
-        //}
-        //})
-        //.catch((erro) => {
-
-        //})
-
     }
 
     function renderizarTabela(lista) {

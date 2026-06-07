@@ -18,7 +18,7 @@
 <div id="toast-container"></div>
 
 <body onload="inicializarDashboard(), verificarNivel()">
-    <div class="tela_graficos container">
+    <div class="container">
         <div class="navegacao">
             <div class="titulo">
                 <img src="../assets/images/logidock_logo.svg" alt="" onclick="window.location.href='../index.html';">
@@ -33,7 +33,7 @@
                     <span>Bob IA</span>
                 </div>
 
-                <div class="navegador" onclick="window.location.href='dashboard_graficos.html';" id="navegador_agora">
+                <div class="navegador navegador_selecionado" onclick="window.location.href='dashboard_graficos.html';" id="navegador_agora">
                     <img src="../assets/icons/icone_dashboard.png" alt="">
                     <span>Dashboard</span>
                 </div>
@@ -68,10 +68,10 @@
             <div class="divisor"></div>
 
             <div class="info_perfil" onclick="window.location.href='dashboard_user.html'">
-                <img src="../assets/icons/teste_ft_perfil.png" alt="">
+                <p id="FakeFoto"></p>
                 <div id="nome_permissao">
-                    <span id="nome">Fernando Brandão</span>
-                    <span id="permissao">Administrador</span>
+                    <span id="nome"></span>
+                    <span id="permissao"></span>
                 </div>
             </div>
         </div>

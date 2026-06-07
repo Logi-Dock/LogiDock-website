@@ -44,6 +44,9 @@ function preencherDadosUsuario(data) {
     email_usuario.innerHTML = data[0].email_user;
     empresa_usuario.innerHTML = data[0].razao_social;
     nivel_usuario.innerHTML = data[0].nome_nivel_acesso;
+    FakeFotoUser.innerHTML = data[0].nome_user[0];
+    let espaco = data[0].nome_user.indexOf(' ');
+    FakeFotoUser.innerHTML += data[0].nome_user[espaco + 1];
     ipt_nome.value = data[0].nome_user;
     ipt_email.value = data[0].email_user;
 }
