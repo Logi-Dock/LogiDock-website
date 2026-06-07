@@ -9,9 +9,12 @@
     <link rel="stylesheet" href="../assets/css/dashboard_docas.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/side_bar.css">
+
+    <script src="../assets/js/dashboard_user.js" defer></script>
+
 </head>
 
-<body>
+<body  onload="listarDocas()">
     <!-- Side Bar -->
     <div class="tela-graficos container">
         <div class="navegacao">
@@ -69,12 +72,13 @@
         <div class="conteudo">
 
             <div class="conteudo-header">
-                <h1>Cadastrar nova doca</h1>
+                <h1 id="titulo-formulario">Cadastrar nova doca</h1>
                 <h3>O sensor é vinculado automaticamente ao salvar</h3>
             </div>
             
             <!-- painel principal -->
             <div class="cadastrar-doca-painel">
+                <input type="hidden" id="idDocaEdicao">
 
                 <div class="painel-titulo">
                 <img src="../assets/icons/icone_caminhao.svg">
@@ -86,12 +90,12 @@
                 <div class="doca-campo-linha">
                     <div>
                         <label>Número/Identificador</label>
-                        <input type="text" id="numero_doca" placeholder="Ex: D03, A02, Doca Sul">
+                        <input type="text" id="numeroDocaInput" placeholder="Ex: D03, A02, Doca Sul">
                     </div>
 
                     <div class="doca-campo">
                         <label>Status inicial</label>
-                        <select id="status_doca">
+                        <select id="statusDocaSelect">
                             <option value="ATIVO">ATIVO</option>
                             <option value="INATIVO">INATIVO</option>
                         </select>
@@ -108,6 +112,7 @@
                     </div>
 
                     <div class="doca-campo-linha">
+                        
                         <div class="sensor-campo">
                             <label>Modelo do sensor</label>
                             <input type="text" placeholder="HC-SR04" readonly>
@@ -131,8 +136,9 @@
                 <!-- Botões -->
                 <div class="doca-botoes">
                     <button class="btn-cancelar" type="button" onclick="cancelarCadastrarDoca()">Cancelar</button>
-                    <button class="btn-editar" type="button" onclick="editarDoca()">Editar</button>
-                    <button class="btn-cadastrar" type="button" onclick="listarDoca()">Cadastrar doca + sensor</button>
+                    <button class="btn-editar" type="button" id="btnEditar" onclick="editarDoca()">Editar</button>
+                    <button class="btn-cadastrar" type="button" id="btnCadastrar" onclick="cadastrarDoca()" style="display: none">Cadastrar doca + sensor</button>
+                    <button class="btn-cadastrar" type="button" id="btnSalvarEdicao" onclick="salvarEdicao()" style="display:none">Salvar edição</button>
                 </div>
 
             </div>
@@ -147,43 +153,12 @@
                             <tr>
                                 <th>IDENTIFICADOR</th>
                                 <th>STATUS</th>
+                                <th>AÇÕES</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>D01</td>
-                                <td><span class="badge ativo">ATIVO</span></td>
-                            </tr>
 
-                            <tr>
-                                <td>D02</td>
-                                <td><span class="badge ativo">ATIVO</span></td>
-                            </tr>
 
-                            <tr>
-                                <td>D03</td>
-                                <td><span class="badge ativo">ATIVO</span></td> 
-                            </tr>
-
-                            <tr>
-                                <td>D04</td>
-                                <td><span class="badge ativo">ATIVO</span></td> 
-                            </tr>
-
-                            <tr>
-                                <td>D05</td>
-                                <td><span class="badge ativo">ATIVO</span></td> 
-                            </tr>
-
-                            <tr>
-                                <td>D06</td>
-                                <td><span class="badge ativo">ATIVO</span></td> 
-                            </tr>
-
-                            <tr>
-                                <td>D07</td>
-                                <td><span class="badge ativo">ATIVO</span></td> 
-                            </tr>
+                        <tbody id="listaDocas">
                         </tbody>
                     </table>
                 </div>
@@ -192,6 +167,172 @@
 </body>
 
 <script>
+
+    let fk_empresa = sessionStorage.FK_EMPRESA
+
+    let docasCadastradas = []
+
+    function listarDocas() {
+
+        fetch(`/docas/listar/${fk_empresa}`)
+            .then(function (resposta) {
+                return resposta.json()
+            })
+            .then(function (docas) {
+                docasCadastradas = docas
+                renderizarTabela(docasCadastradas)
+            })
+            .catch(function (erro) {
+                console.error('Erro ao listar docas:', erro)
+            })
+    }
+
+
+    function renderizarTabela(lista) {
+
+        const tbody = document.getElementById('listaDocas')
+        tbody.innerHTML = ''
+ 
+        if (lista.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:#888">Nenhuma doca cadastrada.</td></tr>'
+            return
+        }
+ 
+        for (let i = 0; i < lista.length; i++) {
+            const badgeClass = lista[i].status_doca === 'ATIVO' ? 'ativo' : 'inativo'
+ 
+            tbody.innerHTML += `
+                <tr>
+                    <td>${lista[i].numero_doca}</td>
+                    <td><span class="badge ${badgeClass}">${lista[i].status_doca}</span></td>
+                    <td>
+                        <button class="btn-editar"
+                            onclick="preencherEdicao(
+                                '${lista[i].id_doca}'',
+                                '${lista[i].numero_doca}',
+                                '${lista[i].status_doca}'
+                            )">✎</button>
+                    </td>
+                </tr>
+            `
+        }
+    }
+  
+
+
+    function cadastrarDoca() {
+
+        let numeroDoca = document.getElementById('numeroDocaInput').value.trim()
+        let statusDoca = document.getElementById('statusDocaSelect').value
+ 
+        if (numeroDoca == '') {
+            alert('Preencha o Número/Identificador da doca!')
+            return
+        }
+ 
+        fetch('/docas/cadastrar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                numeroDocaServer: numeroDoca,
+                statusDocaServer: statusDoca,
+                fk_empresaServer: fk_empresa
+            })
+        })
+        .then(function (resposta) {
+            if (resposta.ok) {
+                alert('Doca e sensor cadastrados com sucesso!')
+                cancelarCadastrarDoca()
+                listarDocas()
+            } else {
+                throw 'Erro ao cadastrar doca!'
+            }
+        })
+        .catch(function (erro) {
+            console.error('Erro ao cadastrar doca:', erro)
+            alert('Erro ao cadastrar doca. Verifique o console.')
+        })
+    }
+
+    function preencherEdicao(id_doca, numero_doca, status_doca) {
+
+        document.getElementById('idDocaEdicao').value = id_doca
+        document.getElementById('numeroDocaInput').value = numero_doca
+        document.getElementById('statusDocaSelect').value = status_doca
+        document.getElementById('tituloFormulario').textContent = 'Editar doca'
+
+        document.getElementById('numeroDocaInput').disabled = true
+        document.getElementById('statusDocaSelect').disabled = true
+ 
+        document.getElementById('btnCadastrar').style.display = 'none'
+        document.getElementById('btnEditar').style.display = 'inline-block'
+        document.getElementById('btnSalvarEdicao').style.display = 'none'
+
+        document.querySelector('.cadastrar-doca-painel').scrollIntoView({ behavior: 'smooth' })
+
+        }
+
+
+    function habilitarEdicao() {
+
+        document.getElementById('numeroDocaInput').disabled = false
+        document.getElementById('statusDocaSelect').disabled = false
+ 
+        document.getElementById('btnEditar').style.display = 'none'
+        document.getElementById('btnSalvarEdicao').style.display = 'inline-block'
+    }
+ 
+    function salvarEdicao() {
+        
+        let id_doca    = document.getElementById('idDocaEdicao').value
+        let numeroDoca = document.getElementById('numeroDocaInput').value.trim()
+        let statusDoca = document.getElementById('statusDocaSelect').value
+ 
+        if (numeroDoca == '') {
+            alert('Preencha o Número/Identificador da doca!')
+            return
+        }
+ 
+        fetch('/docas/editar', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                idDocaServer:      id_doca,
+                numeroDocaServer:  numeroDoca,
+                statusDocaServer:  statusDoca
+            })
+        })
+        .then(function (resposta) {
+            if (resposta.ok) {
+                alert('Doca atualizada com sucesso!')
+                cancelarCadastrarDoca()
+                listarDocas()
+            } else {
+                throw 'Erro ao editar doca!'
+            }
+        })
+        .catch(function (erro) {
+            console.error('Erro ao editar doca:', erro)
+            alert('Erro ao editar doca. Verifique o console.')
+        })
+    }
+
+    function cancelarCadastrarDoca() {
+
+        document.getElementById('idDocaEdicao').value       = ''
+        document.getElementById('numeroDocaInput').value    = ''
+        document.getElementById('numeroDocaInput').disabled = false
+        document.getElementById('statusDocaSelect').value   = 'ATIVO'
+        document.getElementById('statusDocaSelect').disabled = false
+        document.getElementById('tituloFormulario').textContent = 'Cadastrar nova doca'
+
+        document.getElementById('btnCadastrar').style.display    = 'inline-block'
+        document.getElementById('btnEditar').style.display       = 'none'
+        document.getElementById('btnSalvarEdicao').style.display = 'none'
+    }
+ 
+ 
+
     
 </script>
 
