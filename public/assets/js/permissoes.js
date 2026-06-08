@@ -35,5 +35,6 @@ function verificarNivel()
         document.getElementById('navegador_alertas').remove();
         document.getElementById('navegador_docas').remove();
         document.getElementById('navegador_funcionario').remove();
+        document.getElementById('navegador_empresa').remove();
     }
 }
