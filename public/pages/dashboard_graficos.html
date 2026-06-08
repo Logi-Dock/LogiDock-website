@@ -181,7 +181,7 @@
                 const container = document.getElementById('toast-container')
                 container.innerHTML = ''
 
-                const ultimo_alerta = dados[dados.length-1];
+                let ultimo_alerta = dados[0];
 
                 const critico = ultimo_alerta.tempo_acumulado_min*60 >= 20
                 const h = Math.floor(ultimo_alerta.tempo_acumulado_min / 60)
