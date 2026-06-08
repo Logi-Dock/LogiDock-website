@@ -331,7 +331,9 @@
                 if (resposta.ok) {
                     alert('Usuário atualizado com sucesso!')
                     pesquisarUsuario()
-                    document.querySelector('.btn-salvar').onclick = cadastrarUsuario
+                    document.querySelector('.btn-salvar').onclick = cadastrarUsuario;
+                    sessionStorage.NOME_USUARIO = nome;
+                    location.reload();
                 } else { 
                     alert('Erro ao salvar alterações.') }
             }).catch(function (erro) { 

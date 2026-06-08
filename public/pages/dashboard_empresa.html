@@ -256,6 +256,8 @@
                 if (resposta.ok) {
                     alert('Alterado com sucesso!!')
                     vizualizarDadosEmpresa();
+                    sessionStorage.RAZAO_SOCIAL = razao_social;
+                    location.reload();
                 } else {
                     throw 'Teve um erro!!!'
                 }

@@ -183,6 +183,7 @@
                 container.innerHTML = ''
 
                 let ultimo_alerta = dados[0];
+                console.log(ultimo_alerta)
 
                 const critico = ultimo_alerta.tempo_acumulado_min*60 >= 20
                 const h = Math.floor(ultimo_alerta.tempo_acumulado_min / 60)
