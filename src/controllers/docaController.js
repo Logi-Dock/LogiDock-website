@@ -48,7 +48,7 @@ function editarDoca(req, res){
 function listarDoca(req, res){
     var fk_empresa = req.params.fk_empresa;
 
-    docaModel.listarDocas(fk_empresa)
+    docaModel.listarDoca(fk_empresa)
         .then(function (resultado) {
             res.json(resultado);
         })

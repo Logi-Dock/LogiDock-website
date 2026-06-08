@@ -247,6 +247,7 @@
     }
 
     function totalUsuarios() {
+
         fetch(`/nivelAcesso/totalUsuarios/${id_empresa}`)
             .then((resposta) => resposta.json())
             .then((usuarios) => {
@@ -264,6 +265,7 @@
     }
 
     function renderizarTabela(lista) {
+
         const listaUsuarios = document.getElementById('listaUsuarios')
         listaUsuarios.innerHTML = ''
         for (let i = 0; i < lista.length; i++) {
@@ -273,11 +275,13 @@
     }
 
     function badgeClass(nivel) {
+
         const map = { 'ADMINISTRADOR': 'badge-admin', 'GESTOR': 'badge-gestor', 'FUNCIONÁRIO': 'badge-func' }
         return map[nivel] ?? 'badge-func'
     }
 
     function excluirUsuario(id) {
+
         if (confirm('Deseja excluir este usuário?'))
             return fetch(`/usuarios/excluirUsuario/${id}`,
                 { method: 'DELETE' })
@@ -295,6 +299,7 @@
     }
 
     function abrirEditar(id) {
+
         const u = usuariosCadastrados.find(x => x.id_usuario === id)
         document.getElementById('nomeUser').value = u.nome_user
         document.getElementById('emailUser').value = u.email_user
@@ -304,6 +309,7 @@
     }
 
     function salvarEdicao(id) {
+
         var nome = document.getElementById('nomeUser').value
         var email = document.getElementById('emailUser').value
         var nivel = Number(document.getElementById('nivelUser').value)
@@ -325,8 +331,11 @@
                     alert('Usuário atualizado com sucesso!')
                     pesquisarUsuario()
                     document.querySelector('.btn-salvar').onclick = cadastrarUsuario
-                } else { alert('Erro ao salvar alterações.') }
-            }).catch(function (erro) { console.error('Erro ao editar usuário', erro) })
+                } else { 
+                    alert('Erro ao salvar alterações.') }
+            }).catch(function (erro) { 
+                console.error('Erro ao editar usuário', erro) 
+            })
     }
 
 

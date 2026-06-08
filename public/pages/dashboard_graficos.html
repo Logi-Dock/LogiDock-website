@@ -167,10 +167,13 @@
 </body>
 <script>
   const TOAST_DURACAO = 6000  (6000) 
+
   function fecharToast(el) { 
     el.style.animation = 'toastOut .3s ease forwards' 
     setTimeout(() => el.remove(), 300) 
-    } function verificarAlertas() { 
+    } 
+    function verificarAlertas() { 
+        
         fetch(`/empresas/PegarAvisos/${sessionStorage.FK_EMPRESA}`) 
         .then(r => r.json()) 
         .then(dados => { 
