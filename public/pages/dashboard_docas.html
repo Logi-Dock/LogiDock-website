@@ -327,13 +327,15 @@
     function salvarEdicao() {
         let id_doca    = document.getElementById('idDocaEdicao').value
         let numeroDoca = document.getElementById('numeroDocaInput').value.trim()
-        let statusDoca = document.getElementById('statusDocaSelect').value
+        let statusDoca = document.getElementById('status_sensor').value
  
 
         if (numeroDoca === '') {
             alert('Preencha o Número/Identificador da doca!')
             return
         }
+
+        console.log(statusDoca)
 
         fetch('/doca/editarDoca', {
             method: 'PUT',
