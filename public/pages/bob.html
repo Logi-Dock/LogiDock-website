@@ -4,25 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BobIA</title>
+
+    <link rel="stylesheet" href="../assets/css/side_bar.css">
+    <link rel="stylesheet" href="../assets/css/bobIa.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <script src="../assets/js/sidebar.js" defer></script>
+    <script src="../assets/js/permissoes.js" defer></script>
 </head>
-<body>
+<body onload="verificarNivel()">
+    <div class="container">
+        <div class="navegacao">
+            <div class="titulo">
+                <img src="../assets/images/logidock_logo.svg" alt="" onclick="window.location.href='../index.html';">
+                <span id="empresaUser">empresaUser</span>
+            </div>
 
-    <div id="container">
-        <h1>BobIA</h1>
-        <textarea id="pergunta" type="text" placeholder="Digite a pergunta..."></textarea>
-        <br><br>
-        <button onclick="gerarResposta()">Gerar Resposta</button>
-        <h3>Resposta da IA:</h3>
-        <div id="resposta"></div>
+            <div class="divisor"></div>
+
+            <div class="navegadores">
+                <div class="navegador navegador_selecionado" onclick="window.location.href='bob.html';" id="navegador_bob_ia">
+                    <img src="../assets/icons/icone_dashboard.png" alt="">
+                    <span>Bob IA</span>
+                </div>
+
+                <div class="navegador" onclick="window.location.href='dashboard_graficos.html';" id="navegador_agora">
+                    <img src="../assets/icons/icone_dashboard.png" alt="">
+                    <span>Dashboard</span>
+                </div>
+
+                <div class="navegador" onclick="window.location.href='dashboard_alertas.html';" id="navegador_alertas">
+                    <img src="../assets/icons/icone_alerta.png" alt="">
+                    <span>Alertas</span>
+                </div>
+
+                <div class="navegador" onclick="window.location.href='dashboard_docas.html';" id="navegador_docas">
+                    <img src="../assets/icons/icone_docas.png" alt="">
+                    <span>Docas</span>
+                </div>
+
+                <div class="navegador" onclick="window.location.href='dashboard_empresa.html';" id="navegador_empresa">
+                    <img src="../assets/icons/icone_empresa.png" alt="">
+                    <span>Empresa</span>
+                </div>
+
+                <div class="navegador" onclick="window.location.href='dashboard_funcionario.html';" id="navegador_funcionario">
+                    <img src="../assets/icons/icone_funcionario.png" alt="">
+                    <span>Funcionário</span>
+                </div>
+
+                <div class="navegador"
+                    onclick="window.location.href = `https://logidock.atlassian.net/servicedesk/customer/portal/1`">
+                    <img src="../assets/icons/icone_usuario_help.svg" alt="">
+                    <span>Suporte</span>
+                </div>
+            </div>
+
+            <div class="divisor"></div>
+
+            <div class="info_perfil" onclick="window.location.href='dashboard_user.html'">
+                <p id="FakeFoto"></p>
+                <div id="nome_permissao">
+                    <span id="nome"></span>
+                    <span id="permissao"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="conteudo">
+            <div class="boxBob">
+                <h1>BobIA</h1>
+                <h2>Como posso te ajudar agora?</h2>
+                <textarea id="pergunta" type="text" placeholder="Digite a pergunta..."></textarea>
+                <br>
+                <button onclick="gerarResposta()">Gerar Resposta</button>
+                <h3 id="subtituloResposta">Resposta da Bob IA:</h3>
+                <img id="spinMensage" class="CarregandoMensagem" src="../assets/images/loader-bola.gif" alt="">
+                <div id="resposta"></div>
+            </div>
+        </div>
     </div>
-
+</body>
     <script>
-        
         async function gerarResposta()
         {
+            subtituloResposta.style.display = 'flex'
+            spinMensage.style.display = 'flex'
+
             const pergunta = document.getElementById('pergunta').value;
 
-            const response = await fetch('/bob/perguntar', {
+            const response = await fetch('http://localhost:6767/bob/perguntar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -31,12 +102,16 @@
             });
 
             const data = await response.json();
+            console.log(data);
 
             document.getElementById('resposta').style.display = 'block';
-            document.getElementById('resposta').innerText = data.resultado;
+            if(data.resultado == undefined) {
+                spinMensage.style.display = 'none'
+                document.getElementById('resposta').innerText = 'Aconteceu um erro, tente novamente mais tarde';
+            } else {
+                spinMensage.style.display = 'none'
+                document.getElementById('resposta').innerText = data.resultado;
+            }
         }
-
     </script>
-    
-</body>
 </html>

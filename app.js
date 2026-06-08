@@ -7,14 +7,17 @@ var caminho_env = ambiente_processo === 'producao' ? '.env' : '.env.dev';
 
 require("dotenv").config({ path: caminho_env });
 
+// const { GoogleGenAI } = require("@google/genai");
 var express = require("express");
 var cors = require("cors");
 var path = require("path");
 
 var PORTA_APP = process.env.APP_PORT;
 var HOST_APP = process.env.APP_HOST;
+const PORTA_SERVIDOR = process.env.PORTA;
 
 var app = express();
+var BobIa = express();
 
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
@@ -22,21 +25,16 @@ var empresaRouter = require("./src/routes/empresas");
 var nivelAcessoRouter = require("./src/routes/nivelAcesso.js");
 var dashboardRouter = require("./src/routes/dashboard.js");
 var docaRouter = require("./src/routes/doca.js");
-// var bobRouter = require("./src/routes/bob.js"); // BOBIA
+var bobRouter = require("./src/routes/bob.js");
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
-// configurando CORS - BOBIA
-/*app.use((req, res, next) => { // BOBIA
-    res.header('Access-Control-Allow-Origin', '*'); // BOBIA
-    res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept'); // BOBIA
-    next(); // BOBIA
-}); // BOBIA */
-
-
-app.use(cors());
+BobIa.use(cors());
+BobIa.use(express.json());
+BobIa.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
@@ -44,7 +42,8 @@ app.use("/empresas", empresaRouter);
 app.use("/nivelAcesso", nivelAcessoRouter);
 app.use("/dashboard", dashboardRouter);
 app.use("/doca", docaRouter);
-// app.use("/bob", bobRouter); // BOBIA
+
+BobIa.use("/Bob", bobRouter)
 
 app.listen(PORTA_APP, function () {
     console.log(`
@@ -61,4 +60,19 @@ app.listen(PORTA_APP, function () {
     \tSe .:desenvolvimento:. você está se conectando ao banco local. \n
     \tSe .:producao:. você está se conectando ao banco remoto. \n\n
     \t\tPara alterar o ambiente, comente ou descomente as linhas 1 ou 2 no arquivo 'app.js'\n\n`);
+});
+
+BobIa.listen(PORTA_SERVIDOR, () => {
+    console.info(
+        `
+        ######                ###    #    
+        #     #  ####  #####   #    # #   
+        #     # #    # #    #  #   #   #  
+        ######  #    # #####   #  #     # 
+        #     # #    # #    #  #  ####### 
+        #     # #    # #    #  #  #     # 
+        ######   ####  #####  ### #     # 
+        `
+    );
+    console.info(`A API BobIA iniciada, acesse http://localhost:${PORTA_SERVIDOR}`);
 });

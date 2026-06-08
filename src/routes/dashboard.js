@@ -33,7 +33,7 @@ router.get("/graficoDocasComMaisAtrasos/:fk_empresa/:periodo", function (req, re
     dashboardController.graficoDocasComMaisAtrasos(req, res);
 })
 
-router.get("/graficoTempoDePermanenciaPorOperacao/:fk_empresa/:periodo", function (req, res)
+router.get("/graficoTempoDePermanenciaPorOperacao/:fk_empresa", function (req, res)
 {
     dashboardController.graficoTempoDePermanenciaPorOperacao(req, res);
 })

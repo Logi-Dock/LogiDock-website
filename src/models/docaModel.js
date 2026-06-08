@@ -4,7 +4,7 @@ function cadastrarDocaESensor(numero_doca,status_doca, fk_empresa){
     console.log("ACESSEI O DOCA MODEL\n\n\t\t >> function cadastrarDocaESensor():", numero_doca, status_doca, fk_empresa);
 
     var instrucaoSql = `
-            INSERT INTO doca (numero_doca , status_doca, fk_empresa) VALUES (${numero_doca}, ${status_doca}, ${fk_empresa});
+            INSERT INTO doca (numero_doca , status_doca, fk_empresa) VALUES ('${numero_doca}', '${status_doca}', ${fk_empresa});
         `;
         console.log("Executando a instrução SQL: \n" + instrucaoSql);
         return database.executar(instrucaoSql).then(function (resultado) {

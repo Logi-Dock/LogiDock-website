@@ -146,8 +146,7 @@ function graficoDocasComMaisAtrasos(fk_empresa, periodo) {
         AND \`ID da Empresa\` = ${fk_empresa}
         AND \`Data de Entrada\` >= NOW() - INTERVAL ${periodo}
         GROUP BY \`Número da Doca\`
-        ORDER BY quantidade DESC
-        LIMIT 4;
+        ORDER BY quantidade DESC;
     `;
 
 
@@ -155,7 +154,7 @@ function graficoDocasComMaisAtrasos(fk_empresa, periodo) {
     return database.executar(instrucaoSql);
 }
 
-function graficoTempoDePermanenciaPorOperacao(fk_empresa, periodo, limite_linhas) {
+function graficoTempoDePermanenciaPorOperacao(fk_empresa, limite_linhas) {
     var instrucaoSql = `
         SELECT
             \`Número da Doca\` AS doca,
@@ -173,7 +172,7 @@ function graficoTempoDePermanenciaPorOperacao(fk_empresa, periodo, limite_linhas
         FROM ocorrencias_docas
 
         WHERE \`ID da Empresa\` = ${fk_empresa}
-        AND \`Data de Entrada\` >= NOW() - INTERVAL ${periodo}
+        AND \`Data de Entrada\` >= NOW() - INTERVAL 24 HOUR
 
         ORDER BY
         CASE

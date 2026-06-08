@@ -130,11 +130,9 @@ function graficoDocasComMaisAtrasos(req, res) {
 
 function graficoTempoDePermanenciaPorOperacao(req, res) {
     var fk_empresa = req.params.fk_empresa;
-    var periodo = req.params.periodo;
-
     const limite_linhas = 10; // numero de docas que vai aparecer no gráfico
     
-    dashboardModel.graficoTempoDePermanenciaPorOperacao(fk_empresa, periodo, limite_linhas)
+    dashboardModel.graficoTempoDePermanenciaPorOperacao(fk_empresa, limite_linhas)
     .then(
         function(resultado) {
             res.json(resultado)
