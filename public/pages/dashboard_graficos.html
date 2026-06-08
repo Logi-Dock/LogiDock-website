@@ -182,7 +182,7 @@
                 container.innerHTML = ''
 
                 dados.forEach(d => {
-                    const critico = d.tempo_acumulado_min >= 300
+                    const critico = d.tempo_acumulado_min*60 >= 20
                     const h = Math.floor(d.tempo_acumulado_min / 60)
                     const m = d.tempo_acumulado_min % 60
                     const tipo = critico ? 'toast-critical' : 'toast-warning'

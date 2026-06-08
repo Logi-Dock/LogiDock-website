@@ -41,7 +41,7 @@ function PegarAvisos(fk_empresa) {
                 ) 
                 AND hs.status_sensor = 1 
                 AND e.id_empresa = ${fk_empresa}
-                AND TIMESTAMPDIFF(MINUTE, hs.dt_registro, NOW()) >= 270
+                AND TIMESTAMPDIFF(SECOND, hs.dt_registro, NOW()) >= 6
         ORDER BY hs.dt_registro DESC;
     `;
 

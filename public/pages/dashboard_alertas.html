@@ -129,8 +129,8 @@
             var horas = Math.floor(dados[i].tempo_acumulado_min / 60);
             var minutos = dados[i].tempo_acumulado_min % 60;
 
-            var corBorda = dados[i].tempo_acumulado_min >= 300 ? "bordaStatusVermelha" : "bordaStatusAmarela";
-            var icone = dados[i].tempo_acumulado_min >= 300 ? "alerta_vermelho.svg" : "alerta_amarelo.svg";
+            var corBorda = dados[i].tempo_acumulado_min*60 >= 20 ? "bordaStatusVermelha" : "bordaStatusAmarela";
+            var icone = dados[i].tempo_acumulado_min*60 >= 20 ? "alerta_vermelho.svg" : "alerta_amarelo.svg";
 
             ConteudoHistorico.innerHTML += `
             <div class="BoxHistorico">
