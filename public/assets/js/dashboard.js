@@ -394,7 +394,7 @@ function plotarGraficoTempoDePermanenciaPorOperacao(dadosApi) {
         const item = {
             duracaoMinutos,
             x: [horaInicio, horaFim],
-            y: `Doca ${registro.doca} - ${Math.floor(duracaoMinutos / 60)}h ${duracaoMinutos % 60}min`
+            y: `Doca ${registro.doca}`
         };
 
         if (registro.status.includes("Em Atraso") || registro.status.includes("Quase fora do prazo")) {
@@ -443,7 +443,7 @@ function plotarGraficoTempoDePermanenciaPorOperacao(dadosApi) {
             plugins: {
                 title: {
                     display: true,
-                    text: 'VISÃO DIÁRIA – TEMPO DE PERMANÊNCIA POR OPERAÇÃO (06h–22h)',
+                    text: 'VISÃO DIÁRIA – TEMPO DE PERMANÊNCIA POR OPERAÇÃO (ONTEM)',
                     color: 'black',
                     font: {
                         size: 32
