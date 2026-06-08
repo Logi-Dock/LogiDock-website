@@ -443,7 +443,7 @@ function plotarGraficoTempoDePermanenciaPorOperacao(dadosApi) {
             plugins: {
                 title: {
                     display: true,
-                    text: 'VISÃO DIÁRIA – TEMPO DE PERMANÊNCIA POR OPERAÇÃO (ONTEM)',
+                    text: 'VISÃO DIÁRIA – TEMPO DE PERMANÊNCIA POR OPERAÇÃO',
                     color: 'black',
                     font: {
                         size: 32
